@@ -1,0 +1,49 @@
+{
+  "name": "dude",
+  "description": "Per-tab navigation graphs with screenshots and playback \u2014 an own history next to the browser's",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "scripts/node22.sh wxt",
+    "dev:firefox": "scripts/node22.sh wxt -b firefox",
+    "build": "scripts/node22.sh wxt build",
+    "build:firefox": "scripts/node22.sh wxt build -b firefox",
+    "zip": "scripts/node22.sh wxt zip",
+    "zip:firefox": "scripts/node22.sh wxt zip -b firefox",
+    "check": "scripts/node22.sh svelte-check --tsconfig ./tsconfig.json",
+    "postinstall": "scripts/node22.sh wxt prepare",
+    "s1:site": "scripts/node22.sh node scripts/s1/site.mjs",
+    "s1:chromium": "scripts/node22.sh wxt build && scripts/node22.sh node scripts/s1/auto-chromium.mjs",
+    "s1:firefox": "scripts/node22.sh wxt zip -b firefox && scripts/node22.sh node scripts/s1/auto-firefox.mjs",
+    "s1:split": "scripts/node22.sh node scripts/s1/split.mjs",
+    "s1:summary": "scripts/node22.sh node scripts/s1/summary.mjs",
+    "s1b:check": "scripts/node22.sh node scripts/s1/s1b-check.mjs",
+    "test": "scripts/node22.sh vitest run",
+    "e2e:chromium": "scripts/node22.sh wxt build && scripts/node22.sh node scripts/s1/auto-chromium.mjs --e2e",
+    "e2e:firefox": "scripts/node22.sh wxt zip -b firefox && scripts/node22.sh node scripts/s1/auto-firefox.mjs --e2e",
+    "e2e": "npm run e2e:chromium && npm run e2e:firefox"
+  },
+  "devDependencies": {
+    "@tsconfig/svelte": "^5.0.8",
+    "@types/node": "^26.6.2",
+    "@wxt-dev/module-svelte": "^2.0.5",
+    "playwright": "^1.63.0",
+    "selenium-webdriver": "^4.49.0",
+    "svelte": "^5.57.1",
+    "svelte-check": "^4.7.6",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.1",
+    "web-ext": "^10.7.0",
+    "wxt": "^0.21.4"
+  },
+  "dependencies": {
+    "elkjs": "^0.12.0"
+  }
+}

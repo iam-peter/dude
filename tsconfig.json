@@ -1,0 +1,8 @@
+{
+  "extends": "./.wxt/tsconfig.json",
+  "compilerOptions": {
+    // The projector indexes its maps by ids its own invariants guarantee to exist;
+    // per-lookup undefined checks would only add noise there.
+    "noUncheckedIndexedAccess": false
+  }
+}
