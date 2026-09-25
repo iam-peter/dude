@@ -1,8 +1,19 @@
+import fs from 'node:fs';
 import { defineConfig } from 'wxt';
+
+// Test hooks (S1/S2 spike tooling, the automation relay, test-only commands) are compiled
+// in only with DUDE_TEST_HOOKS=1, into a separate output directory so a test build can
+// never be shipped by mistake. Normal builds, dev mode and release zips don't contain them.
+const testHooks = process.env.DUDE_TEST_HOOKS === '1';
+const TEST_ONLY_ENTRYPOINTS = ['s1'];
+const entrypoints = fs.readdirSync('src/entrypoints').map((f) => f.replace(/(\.content)?\.ts$/, ''));
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
   srcDir: 'src',
+  outDir: testHooks ? '.output-test' : '.output',
+  filterEntrypoints: testHooks ? undefined : entrypoints.filter((e) => !TEST_ONLY_ENTRYPOINTS.includes(e)),
+  vite: () => ({ define: { __DUDE_TEST_HOOKS__: JSON.stringify(testHooks) } }),
   modules: ['@wxt-dev/module-svelte'],
   manifestVersion: 3,
   manifest: ({ browser }) => ({

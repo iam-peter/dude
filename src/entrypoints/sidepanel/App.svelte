@@ -15,6 +15,7 @@
 
   // ?tab=<id> / ?session=<id> / ?mode=<view> open the panel on a fixed tab or session,
   // e.g. as a normal tab for debugging and screenshots.
+  const testHooks = __DUDE_TEST_HOOKS__;
   const params = new URLSearchParams(location.search);
   const fixedTab = params.has('tab') ? Number(params.get('tab')) : undefined;
 
@@ -200,7 +201,7 @@
     <button class="link" onclick={() => (debug ? (debug = null) : refreshDebug())}>{debug ? 'hide' : 'debug'}</button>
     <a href={browser.runtime.getURL('/sessions.html') + (data ? `?session=${data.session.id}` : '')} target="_blank">All sessions</a>
     <a href={browser.runtime.getURL('/options.html')} target="_blank">Settings</a>
-    <a href={browser.runtime.getURL('/s1.html')} target="_blank">S1 recorder</a>
+    {#if testHooks}<a href={browser.runtime.getURL('/s1.html')} target="_blank">S1 recorder</a>{/if}
   </footer>
   {#if debug}
     <section class="debug">

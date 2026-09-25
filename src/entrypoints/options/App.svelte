@@ -7,6 +7,7 @@
   import { pack, readAll, unpack, writeBlobs } from '@/storage/backup';
 
   const firefox = import.meta.env.BROWSER === 'firefox';
+  const testHooks = __DUDE_TEST_HOOKS__;
   const welcome = location.hash === '#welcome';
 
   let hostAccess = $state<boolean | null>(null);
@@ -213,7 +214,7 @@
       <button onclick={deleteRange} disabled={!!busy}>Delete this time range</button>
     </div>
     <div class="row"><button class="bad" onclick={deleteAll} disabled={!!busy}>Delete everything…</button></div>
-    <p class="hint">Single pages and sessions can be deleted from the sessions app. The S1 recorder’s raw spike log, if you used it, is separate: clear it on the S1 page.</p>
+    <p class="hint">Single pages and sessions can be deleted from the sessions app.{#if testHooks} The S1 recorder’s raw spike log (test builds) is separate: clear it on the S1 page.{/if}</p>
   </section>
 </main>
 

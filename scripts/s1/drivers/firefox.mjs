@@ -8,7 +8,8 @@ import { SITE } from '../../../src/spike/scenarios.ts';
 import { sleep } from '../runner.mjs';
 
 const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-const XPI = path.resolve(`.output/${pkg.name}-${pkg.version}-firefox.zip`);
+// Test builds only (npm run zip:firefox:test): the drivers need the test hooks.
+const XPI = path.resolve(`.output-test/${pkg.name}-${pkg.version}-firefox.zip`);
 const GECKO_ID = '{53952834-ba6a-4072-9c32-c836b5a38a3c}';
 const EXT_UUID = 'd0de5100-0000-4000-8000-000000000001'; // pinned so the control page URL is known
 

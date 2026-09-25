@@ -59,7 +59,7 @@ Architecture: `src/background/recorder.ts` turns browser events into observation
 three views, and `src/ui/GraphView.svelte` draws them.
 
 Screenshots of the sidebar in all three views after a scripted browsing sequence
-(Chromium, headless; needs the test site and a `npm run build`):
+(Chromium, headless; needs the test site and a `npm run build:test`):
 
 ```bash
 scripts/node22.sh node scripts/m1/screens.mjs /tmp/dude-screens
@@ -104,11 +104,37 @@ shell even when the system Node is older.
 `.profiles/` (snap Firefox can't read web-ext's temporary profiles in `/tmp`) and points
 `npm run dev` at Playwright's Chrome for Testing.
 
+## Test builds
+
+The automation drivers, the S1 recorder page and the S2 probe need **test hooks**: a relay
+that lets the Firefox driver talk to the extension through the test site, the spike
+recorders, and a few test-only commands. They are compiled in only with
+`DUDE_TEST_HOOKS=1`, into `.output-test/`. Normal builds, dev mode and release zips in
+`.output/` don't contain them, and the background accepts commands only from the
+extension's own pages (`src/background/trust.ts`).
+
+```bash
+npm run build:test
+```
+
+```bash
+npm run zip:firefox:test
+```
+
+(`dev:test` / `dev:firefox:test` for dev mode with the hooks.) The `s1:*` and `e2e:*`
+scripts build test builds by themselves. Before shipping a zip, check that no test code
+got in:
+
+```bash
+npm run check:release
+```
+
 ## S1: recording raw navigation events
 
-The raw recorder is off by default since M1, because it logs everything unfiltered. The
-automation drivers switch it on; for manual runs use the **raw recording** checkbox on the
-S1 page (sidebar footer → S1 recorder). `--projection` on either driver also prints what
+The raw recorder only exists in test builds, and is off by default there too, because it
+logs everything unfiltered. The automation drivers switch it on; for manual runs start
+`npm run dev:firefox:test` and use the **raw recording** checkbox on the S1 page (sidebar
+footer → S1 recorder). `--projection` on either driver also prints what
 the live M1 projector made of the run.
 
 Start the test site (localhost:8765, with 127.0.0.1:8765 as the second origin):
@@ -149,10 +175,10 @@ npm run s1b:check -- fixtures/s1/*/spa*.json
 
 ### Manual scenarios
 
-Load the extension:
+Load the extension with test hooks:
 
 ```bash
-npm run dev:firefox
+npm run dev:firefox:test
 ```
 
 (or `npm run dev` for Chromium). Then open the S1 recorder page (sidebar footer → S1

@@ -1,6 +1,6 @@
 // S1 spike: report what the user did on the page, so the recorded navigation that follows
 // can be attributed (link text for C1, "was there a click?" for back/forward detection §6.3).
-import { SITE as S1_CONTROL_ORIGIN } from '@/spike/scenarios';
+import { SITE as S1_CONTROL_ORIGIN } from '@/spike/site';
 import { HISTORY_EVENT } from '@/spike/history-event';
 
 export default defineContentScript({
@@ -47,8 +47,9 @@ export default defineContentScript({
     window.addEventListener('auxclick', onClick, true);
 
     // Automation relay: WebDriver can't open moz-extension:// pages, so the Firefox driver
-    // talks to the background through this one test-site page instead.
-    if (location.origin === S1_CONTROL_ORIGIN && location.pathname === '/s1-control') {
+    // talks to the background through this one test-site page instead. Test builds only:
+    // anything that can serve that page could otherwise drive the extension.
+    if (__DUDE_TEST_HOOKS__ && location.origin === S1_CONTROL_ORIGIN && location.pathname === '/s1-control') {
       window.addEventListener('message', (e) => {
         if (e.source !== window || !e.data?.dudeS1) return;
         const reply = (res: unknown) => window.postMessage({ dudeS1Reply: e.data.id, res }, location.origin);

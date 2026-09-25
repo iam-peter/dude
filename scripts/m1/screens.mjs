@@ -9,7 +9,7 @@ import { chromium } from 'playwright';
 
 const out = path.resolve(process.argv[2] ?? 'screens');
 fs.mkdirSync(out, { recursive: true });
-const EXT = path.resolve('.output/chrome-mv3');
+const EXT = path.resolve('.output-test/chrome-mv3'); // test build: npm run build:test
 const cache = path.join(os.homedir(), '.cache/ms-playwright');
 const exe = fs.readdirSync(cache).filter((d) => /^chromium-\d+$/.test(d)).sort().map((d) => path.join(cache, d, 'chrome-linux64/chrome')).filter(fs.existsSync).at(-1);
 const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'dude-screens-'));

@@ -8,6 +8,8 @@ import { LiveSettings } from '@/background/settings';
 import { importChromeHistory } from '@/background/history-import';
 import { REPORT_KEY } from '@/background/maintenance';
 import { getMeta } from '@/storage/db';
+import { fromExtensionPage, fromTestRelay } from '@/background/trust';
+import { SITE } from '@/spike/site';
 import { Service } from '@/background/service';
 import type { Request } from '@/background/protocol';
 import { installS1Recorder } from '@/spike/s1-recorder';
@@ -20,20 +22,47 @@ export default defineBackground(() => {
   installCapture(service, settings);
   installMaintenance(service, settings);
   const nav = installNavigation(service);
-  installS1Recorder();
-  installS2Probe();
+  if (__DUDE_TEST_HOOKS__) {
+    // Spike tooling, compiled in only for test builds (wxt.config.ts).
+    installS1Recorder();
+    installS2Probe();
+  }
 
   // First run: explain what is recorded and which permissions are for what (H1).
   browser.runtime.onInstalled.addListener((d) => {
     if (d.reason === 'install') browser.tabs.create({ url: browser.runtime.getURL('/options.html#welcome') });
   });
 
-  browser.runtime.onMessage.addListener((msg: Request, _sender, sendResponse) => {
+  const extensionBase = browser.runtime.getURL('/');
+  // Compiled out of normal builds entirely, together with the test site's address.
+  const testRelay = (sender: Browser.runtime.MessageSender) => __DUDE_TEST_HOOKS__ && fromTestRelay(sender, true, `${SITE}/s1-control`);
+
+  browser.runtime.onMessage.addListener((msg: Request, sender, sendResponse) => {
+    // Only the extension's own pages may use these commands (see trust.ts); in test builds
+    // also the automation relay.
+    if (!msg?.cmd?.startsWith('dude.')) return undefined;
+    if (!fromExtensionPage(sender, extensionBase, browser.runtime.id) && !testRelay(sender)) {
+      console.warn('dude: refused', msg.cmd, 'from', sender.url);
+      return undefined;
+    }
     const reply = (p: Promise<unknown>) => {
       p.then(sendResponse, (e) => sendResponse({ error: String(e) }));
       return true;
     };
-    switch (msg?.cmd) {
+    if (__DUDE_TEST_HOOKS__) {
+      // Commands only the automation uses.
+      switch (msg.cmd) {
+        case 'dude.describeSince':
+          return reply(service.describeSince(msg.since, msg.media));
+        case 'dude.quickSearch':
+          return reply(service.quickSearch(msg.q));
+        case 'dude.setDenyHosts':
+          return reply(browser.storage.local.set({ 'dude.denyHosts': msg.hosts }).then(() => settings.ready).then(() => true));
+        case 'dude.grepLog':
+          return reply(service.grepLog(msg.needle));
+      }
+    }
+    switch (msg.cmd) {
       case 'dude.session':
         return reply(service.session(msg));
       case 'dude.sessions':
@@ -50,12 +79,8 @@ export default defineBackground(() => {
         return reply(Promise.resolve(nav.takePendingFocus(msg.tabId)));
       case 'dude.searchDocs':
         return reply(service.searchDocs());
-      case 'dude.quickSearch':
-        return reply(service.quickSearch(msg.q));
       case 'dude.debug':
         return reply(service.debug());
-      case 'dude.describeSince':
-        return reply(service.describeSince(msg.since, msg.media));
       case 'dude.pause':
         return reply(
           settings.setPaused(msg.paused, msg.tabId).then(() => {
@@ -73,10 +98,6 @@ export default defineBackground(() => {
         return reply(service.importLog(msg.observations).then((n) => (recorder.restart(), n)));
       case 'dude.importHistory':
         return reply(importChromeHistory(service, settings, msg.days));
-      case 'dude.setDenyHosts':
-        return reply(browser.storage.local.set({ 'dude.denyHosts': msg.hosts }).then(() => settings.ready).then(() => true));
-      case 'dude.grepLog':
-        return reply(service.grepLog(msg.needle));
       case 'dude.storageReport':
         return reply(getMeta(REPORT_KEY));
       case 'dude.delete':

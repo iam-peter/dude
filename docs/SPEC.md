@@ -363,6 +363,12 @@ storage/       Dexie over IndexedDB: events, sessions, visits, edges, blobs, tex
 - Every handler persists its event before returning, because the background can be killed
   at any time.
 - The extension makes **no network requests** (H2).
+- **Who may command the background:** only the extension's own pages (popup, sidebar,
+  sessions app, settings), checked by sender URL and extension id. Content scripts run
+  inside web pages, so their messages are limited to reporting page data for their own
+  tab. Spike and test tooling (the S1/S2 recorders, the automation relay, test-only
+  commands) exists only in test builds (`DUDE_TEST_HOOKS=1`, output in `.output-test/`);
+  `npm run check:release` fails if any of it reaches a normal build.
 
 ## 12. Storage, retention and privacy (E1–E7, H1)
 

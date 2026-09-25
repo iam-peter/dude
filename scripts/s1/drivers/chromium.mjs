@@ -5,7 +5,8 @@ import os from 'node:os';
 import path from 'node:path';
 import { chromium } from 'playwright';
 
-const EXT = path.resolve('.output/chrome-mv3');
+// Test builds only (npm run build:test): the drivers need the test hooks.
+const EXT = path.resolve('.output-test/chrome-mv3');
 
 function findChromium() {
   if (process.env.S1_CHROMIUM) return process.env.S1_CHROMIUM;

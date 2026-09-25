@@ -2,8 +2,9 @@
 // drivers in scripts/s1/ (Node imports this file directly via type stripping, so keep it
 // to erasable TypeScript: no enums, no namespaces, no parameter properties).
 
-export const SITE = 'http://localhost:8765';
-export const OTHER_ORIGIN = 'http://127.0.0.1:8765';
+import { SITE } from './site.ts';
+
+export { SITE, OTHER_ORIGIN } from './site.ts';
 
 export type Step =
   | { op: 'goto'; url: string } // address bar / typed navigation
