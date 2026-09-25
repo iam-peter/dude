@@ -1,0 +1,6 @@
+s1 closed
+  /a
+    /b *
+s2 closed  from s1@/b (duplicate)
+  /a {inh} *
+    /b {inh}

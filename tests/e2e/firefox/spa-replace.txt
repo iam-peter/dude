@@ -1,0 +1,4 @@
+s1 closed
+  /spa *
+    /spa/p1 (spa)
+      /spa/p3 (spa)

@@ -1,0 +1,4 @@
+s1 closed
+  /a *
+s2 closed  from s1@/a (link)
+  /b (spawn) *

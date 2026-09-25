@@ -1,0 +1,6 @@
+s1 closed
+  /newtab *
+s2 closed  from s1@/newtab (link)
+  /b (spawn) *
+s3 closed  from s1@/newtab (link)
+  /c (spawn) *

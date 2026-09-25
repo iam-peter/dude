@@ -1,0 +1,2 @@
+s1 closed
+  /a (jump) #1 *

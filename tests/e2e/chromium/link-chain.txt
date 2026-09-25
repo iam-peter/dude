@@ -1,0 +1,4 @@
+s1 closed
+  /a (jump)
+    /b
+      /c *

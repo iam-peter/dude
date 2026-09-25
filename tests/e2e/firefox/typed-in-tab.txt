@@ -1,0 +1,3 @@
+s1 closed
+  /a
+    /c via[/b] *
