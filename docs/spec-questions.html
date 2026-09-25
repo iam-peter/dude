@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dude — Tab-Session History — Specification Questionnaire</title>
+<style>
+  :root {
+    --bg: #12131a;
+    --panel: #1a1c26;
+    --panel-2: #21242f;
+    --line: #2e3242;
+    --text: #e7e9f0;
+    --muted: #979db4;
+    --accent: #6ea8fe;
+    --accent-dim: #24344f;
+    --rec: #ffd166;
+    --ok: #5fd08a;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6f7fa; --panel: #ffffff; --panel-2: #f0f2f7; --line: #dcdfe8;
+      --text: #1a1c26; --muted: #5c6378; --accent: #2563eb; --accent-dim: #e3ecfd;
+      --rec: #a06a00; --ok: #1a7f46;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header {
+    padding: 28px 24px 18px; border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--panel), var(--bg));
+  }
+  .wrap { max-width: 940px; margin: 0 auto; }
+  h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: -0.02em; }
+  .sub { color: var(--muted); margin: 0 0 16px; font-size: 14px; }
+  .sub code { background: var(--panel-2); padding: 1px 5px; border-radius: 4px; }
+  .bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  button {
+    font: inherit; font-size: 13px; padding: 7px 13px; border-radius: 8px;
+    border: 1px solid var(--line); background: var(--panel-2); color: var(--text);
+    cursor: pointer;
+  }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #0b1020; font-weight: 600; }
+  @media (prefers-color-scheme: light) { button.primary { color: #fff; } }
+  .progress-wrap {
+    position: sticky; top: 0; z-index: 10; background: var(--bg);
+    border-bottom: 1px solid var(--line); padding: 10px 24px;
+  }
+  .prow { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--muted); }
+  .track { flex: 1; height: 6px; background: var(--panel-2); border-radius: 99px; overflow: hidden; }
+  .fill { height: 100%; width: 0%; background: var(--ok); transition: width .2s; }
+  main { padding: 8px 24px 80px; }
+  section { margin: 26px 0 0; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); overflow: hidden; }
+  .shead {
+    display: flex; align-items: baseline; gap: 10px; padding: 14px 16px;
+    background: var(--panel-2); border-bottom: 1px solid var(--line); cursor: pointer;
+  }
+  .shead h2 { margin: 0; font-size: 16px; letter-spacing: -0.01em; }
+  .shead .tag { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .shead .chev { margin-left: auto; color: var(--muted); font-size: 12px; }
+  .sbody { padding: 4px 16px 16px; }
+  section.collapsed .sbody { display: none; }
+  .q { padding: 14px 0; border-bottom: 1px dashed var(--line); }
+  .q:last-child { border-bottom: 0; }
+  .qt { font-weight: 600; margin-bottom: 2px; }
+  .qt .id { color: var(--accent); font-weight: 700; margin-right: 6px; font-variant-numeric: tabular-nums; }
+  .qn { color: var(--muted); font-size: 13px; margin: 0 0 8px; }
+  .qn.multi::before { content: "multi-select — "; color: var(--accent); }
+  label.opt {
+    display: flex; gap: 9px; align-items: flex-start; padding: 6px 9px; border-radius: 7px;
+    cursor: pointer; border: 1px solid transparent;
+  }
+  label.opt:hover { background: var(--panel-2); }
+  label.opt.on { background: var(--accent-dim); border-color: var(--accent); }
+  label.opt input { margin: 4px 0 0; accent-color: var(--accent); flex: none; }
+  .star { color: var(--rec); font-size: 12px; margin-left: 5px; white-space: nowrap; }
+  .hint { color: var(--muted); font-size: 12.5px; display: block; }
+  .other { margin: 6px 0 0 9px; }
+  .other input {
+    font: inherit; font-size: 13px; width: 100%; max-width: 560px; padding: 6px 9px;
+    border-radius: 7px; border: 1px solid var(--line); background: var(--bg); color: var(--text);
+  }
+  .other input:focus { outline: none; border-color: var(--accent); }
+  footer { color: var(--muted); font-size: 13px; padding: 0 24px 60px; }
+  #toast {
+    position: fixed; left: 50%; transform: translateX(-50%); bottom: 26px;
+    background: var(--ok); color: #06210f; padding: 10px 18px; border-radius: 99px;
+    font-weight: 600; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .2s;
+  }
+  #toast.show { opacity: 1; }
+  dialog {
+    border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--text);
+    max-width: 800px; width: 92vw; padding: 0;
+  }
+  dialog::backdrop { background: rgba(0,0,0,.6); }
+  dialog .dh { padding: 14px 16px; border-bottom: 1px solid var(--line); display: flex; gap: 10px; align-items: center; }
+  dialog textarea {
+    width: 100%; height: 55vh; border: 0; background: var(--bg); color: var(--text);
+    font: 12.5px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; padding: 14px; resize: vertical;
+  }
+  dialog textarea:focus { outline: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>dude — Tab-Session History Extension — Specification Questionnaire</h1>
+    <p class="sub">
+      Firefox/Chrome WebExtension that replaces history with per-tab navigation graphs, branches,
+      cross-tab provenance, screenshots and playback (see <code>SPEC.md</code>). Every question has a <span class="star">★ suggested default</span> —
+      hit <b>Accept all ★</b>, then only change what you disagree with. Answers are saved in this browser
+      (<code>localStorage</code>). When done, press <b>Copy answers</b> and paste them back into the chat.
+    </p>
+    <div class="bar">
+      <button class="primary" onclick="acceptAll()">Accept all ★ defaults</button>
+      <button onclick="showAnswers()">Copy answers</button>
+      <button onclick="download()">Download .md</button>
+      <button onclick="toggleAll(true)">Expand all</button>
+      <button onclick="toggleAll(false)">Collapse all</button>
+      <button onclick="reset()">Reset</button>
+    </div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="wrap prow">
+    <span id="pcount">0 / 0</span>
+    <span class="track"><span class="fill" id="pfill"></span></span>
+    <span id="pleft"></span>
+  </div>
+</div>
+
+<main class="wrap" id="main"></main>
+
+<footer class="wrap">
+  Tip: you don't have to answer everything. Sections B (graph model) and F (history takeover &amp; UI) decide the architecture;
+  the rest can stay at ★ defaults and be revisited later.
+</footer>
+
+<div id="toast"></div>
+
+<dialog id="dlg">
+  <div class="dh">
+    <b>Your answers</b>
+    <span class="hint" style="display:inline">paste this into the chat</span>
+    <button style="margin-left:auto" onclick="copyText()">Copy to clipboard</button>
+    <button onclick="document.getElementById('dlg').close()">Close</button>
+  </div>
+  <textarea id="out" spellcheck="false"></textarea>
+</dialog>
+
+<script>
+// t = option text, r = recommended, h = extra hint
+const S = [
+{ id:"A", title:"Scope, platforms & stack", qs:[
+  { id:"A1", q:"Which browsers for v1?",
+    o:[{t:"Firefox and Chrome equally, one code base",r:1},{t:"Firefox first, Chrome port right after"},{t:"Chrome first, Firefox later"},{t:"Firefox only"}] },
+  { id:"A2", q:"Other Chromium browsers (Edge, Brave, Vivaldi)?",
+    o:[{t:"Best effort: should work, not tested",r:1},{t:"Officially supported and tested"},{t:"Don't care"}] },
+  { id:"A3", q:"Firefox for Android?",
+    o:[{t:"Out of scope (no sidebar, different tab APIs)",r:1},{t:"Later, keep the core portable"},{t:"Needed in v1"}] },
+  { id:"A4", q:"Distribution?",
+    o:[{t:"Personal use: AMO unlisted (self-signed XPI) and Chrome 'load unpacked'",r:1},{t:"Public listing on AMO and the Chrome Web Store"},{t:"Company-internal via enterprise policy"}] },
+  { id:"A5", q:"License?",
+    o:[{t:"MPL-2.0 (Mozilla's weak copyleft, common for extensions)"},{t:"MIT",r:1},{t:"GPLv3"},{t:"Proprietary / undecided"}] },
+  { id:"A6", q:"Build tooling?",
+    o:[{t:"TypeScript + WXT (Vite-based, builds Firefox and Chrome MV3 from one source)",r:1},{t:"TypeScript + plain Vite + webextension-polyfill, hand-written manifests"},{t:"Plain JavaScript, no build step"}] },
+  { id:"A7", q:"UI framework for the history app and sidebar?",
+    o:[{t:"Svelte (small bundles, fast)",r:1},{t:"React / Preact"},{t:"Vue"},{t:"Vanilla TS + Web Components"}] },
+  { id:"A8", q:"Manifest version?",
+    o:[{t:"MV3 in both browsers",r:1},{t:"MV2 for Firefox (persistent background page), MV3 for Chrome"}],
+    h:"Chrome only accepts MV3. Firefox still supports MV2, and its persistent background page avoids the 'background killed mid-event' problem." },
+], },
+
+{ id:"B", title:"Session & graph model (the core)", qs:[
+  { id:"B1", q:"What is one session, i.e. one graph?",
+    o:[{t:"One tab's lifetime (open → close)",r:1},{t:"One window's lifetime, all its tabs in one graph"},{t:"One tab, but a session also ends after N hours idle"}] },
+  { id:"B2", q:"The same URL is reached again in the same tab by a new link (not Back). What happens?",
+    o:[{t:"New node (the session stays a tree); both nodes linked with a faint 'same page' connector",r:1},{t:"Reuse the existing node: a true network with cycles"},{t:"New node, no linking"}],
+    h:"A tree keeps 'which page led here' unambiguous. Merging gives a more compact network, but then a node has several parents." },
+  { id:"B3", q:"Back/Forward in a tab: how is it recorded?",
+    o:[{t:"Moves the cursor to the existing node, logged as an event (playback shows it), no new node or edge",r:1},{t:"Also drawn as a 'back' edge in the graph"}] },
+  { id:"B4", q:"Redirect chains (A → 302 → B → JS redirect → C)?",
+    o:[{t:"One node for the final page; hops kept as metadata",r:1},{t:"Each hop is its own node"},{t:"Drop the hops entirely"}] },
+  { id:"B5", q:"Single-page-app navigations (pushState: YouTube, GitHub, search result paging)?",
+    o:[{t:"New node when path or query changes (debounced ~500 ms)",r:1},{t:"New node only when the path changes; query changes update the current node"},{t:"Never a node, only a sub-event of the page"}] },
+  { id:"B6", q:"Pure #fragment changes (in-page anchors)?",
+    o:[{t:"Sub-event on the current node, no new node",r:1},{t:"New node"},{t:"Ignore completely"}] },
+  { id:"B7", q:"Reload?",
+    o:[{t:"Same node, reload counter +1",r:1},{t:"New node"}] },
+  { id:"B8", q:"Typed URL, bookmark or address-bar search inside an existing tab?",
+    o:[{t:"Child of the current node, drawn as a dashed 'jump' edge",r:1},{t:"Starts a new, disconnected root in the same tab session"},{t:"Ends the session and starts a new one in the same tab"}] },
+  { id:"B9", q:"Link opened in a new tab (middle-click, target=_blank)?",
+    o:[{t:"New session with its own graph, cross-linked to the source node; a 'family' view shows them together",r:1},{t:"Added as a child in the source tab's graph (one graph per tab family)"},{t:"Both views available, same data"}] },
+  { id:"B10", q:"Tab moved to another window / detached?",
+    o:[{t:"Same session continues",r:1},{t:"New session linked to the old one"}] },
+  { id:"B11", q:"Closed tab restored (Ctrl+Shift+T / 'Undo close tab')?",
+    o:[{t:"The same session continues",r:1},{t:"New session linked to the closed one"}] },
+  { id:"B12", q:"After a browser restart with session restore?",
+    o:[{t:"Continue the old sessions (reliable in Firefox; best-effort URL+index match in Chrome, else new linked session)",r:1},{t:"Always start new sessions, linked to the old ones by URL"},{t:"Always start fresh, no link"}] },
+  { id:"B13", q:"Duplicate tab?",
+    o:[{t:"New session forked at the current node (points back to it)",r:1},{t:"Treat as an unrelated new tab"}] },
+  { id:"B14", q:"Pages that were the result of a form POST?",
+    o:[{t:"Normal node, flagged POST; 'reopen' warns, the screenshot is the record",r:1},{t:"Record, but hide from search by default"},{t:"Don't record"}] },
+  { id:"B15", q:"iframes / subframe navigations?",
+    o:[{t:"Top-level frame only",r:1},{t:"Also log subframe navigations as sub-events (for playback)"}] },
+], },
+
+{ id:"C", title:"Recording & playback", qs:[
+  { id:"C1", q:"Besides navigations, what should be recorded?", multi:1,
+    o:[{t:"Tab open / close / move / activate (timeline and dwell time)",r:1},{t:"Window focus changes",r:1},{t:"Text of the link that was clicked (anchor text): helps 'which page linked here'",r:1},{t:"Scroll position per visit (restore on reopen, show in playback)"},{t:"Search terms extracted from search-engine URLs",r:1},{t:"Text selections / copy events"}] },
+  { id:"C2", q:"What does 'play back' mean?",
+    o:[{t:"Animated replay in the extension: graph builds up step by step, screenshot per step, timeline scrubber",r:1},{t:"Live replay: a real tab is driven through the recorded URLs"},{t:"Both: animated by default, live replay as an explicit action"}] },
+  { id:"C3", q:"Playback timing?",
+    o:[{t:"Real order, idle gaps compressed (e.g. max 2 s per step), speed control",r:1},{t:"Fixed step per event"},{t:"Real time"}] },
+  { id:"C4", q:"Playback scope?", multi:1,
+    o:[{t:"A single tab session",r:1},{t:"A tab family (source tab + spawned tabs, interleaved)",r:1},{t:"A whole day / time range across all tabs",r:1},{t:"A window"}] },
+  { id:"C5", q:"When is recording active?",
+    o:[{t:"Always on, with a global pause, per-tab pause and per-site exclusion rules",r:1},{t:"Opt-in per tab"},{t:"Always on, no pause"}] },
+  { id:"C6", q:"Private / incognito windows?",
+    o:[{t:"Never recorded",r:1},{t:"Recorded in memory only, wiped when the private window closes"},{t:"Recorded like normal tabs"}] },
+  { id:"C7", q:"Store the page's text for full-text search?",
+    o:[{t:"Yes: readable main text (Readability-style), max ~50 KB/visit, compressed",r:1},{t:"No: title and URL only"},{t:"Yes, and also OCR the screenshots (heavy, offline OCR via tesseract.js)"}] },
+], },
+
+{ id:"D", title:"Screenshots", qs:[
+  { id:"D1", q:"When to capture?",
+    o:[{t:"After load + ~1 s settle, and on tab activation if the node has none or a stale one",r:1},{t:"Once per visit only"},{t:"Also again after scrolling stops (several per visit)"}] },
+  { id:"D2", q:"Tabs opened in the background and closed without ever being viewed?",
+    o:[{t:"Firefox: captureTab if it works in background; Chrome: favicon placeholder",r:1},{t:"Briefly switch to the tab to capture it (visible flicker)"},{t:"No screenshot in either browser"}] },
+  { id:"D3", q:"Capture area?",
+    o:[{t:"Visible viewport",r:1},{t:"Full page (scroll and stitch, slow, may trigger lazy loading)"},{t:"Viewport, plus a full-page capture on demand from the details panel"}] },
+  { id:"D4", q:"Resolution / format?",
+    o:[{t:"Thumbnail ~320 px + preview ~1280 px, both WebP",r:1},{t:"Thumbnail only"},{t:"Full resolution PNG + thumbnail"}] },
+  { id:"D5", q:"Page changes after load (feeds, SPAs, dialogs)?",
+    o:[{t:"Keep up to N distinct screenshots per visit (perceptual-hash dedupe)",r:1},{t:"Keep only the latest"},{t:"Keep only the first"}] },
+  { id:"D6", q:"Sensitive pages?", multi:1,
+    o:[{t:"Built-in deny list (banking, payment, password managers)",r:1},{t:"User-editable deny list (domain globs)",r:1},{t:"Skip capture while a password field is visible",r:1},{t:"Excluded visits still leave an anonymous placeholder node (tree keeps its shape)",r:1},{t:"Capture everything"}] },
+], },
+
+{ id:"E", title:"Storage & retention", qs:[
+  { id:"E1", q:"Where is data stored?",
+    o:[{t:"Local IndexedDB only (unlimitedStorage)",r:1},{t:"Local, plus mirror to a user folder via the downloads API / native host"},{t:"Local, plus a self-hosted backend"}] },
+  { id:"E2", q:"Retention?",
+    o:[{t:"Graph + text forever; screenshot previews 90 days, then thumbnail only; global size cap",r:1},{t:"Everything forever"},{t:"Everything for N days (configurable), then delete"},{t:"Size cap only, oldest first"}] },
+  { id:"E3", q:"Default size cap?",
+    o:[{t:"2 GB",r:1},{t:"500 MB"},{t:"10 GB"},{t:"No cap"}] },
+  { id:"E4", q:"Sync between machines?",
+    o:[{t:"No",r:1},{t:"Later, e.g. WebDAV / Nextcloud, end-to-end encrypted"},{t:"Needed in v1"}] },
+  { id:"E5", q:"Export / import?",
+    o:[{t:"Zip: event log as JSON + screenshot blobs",r:1},{t:"Not needed"},{t:"Also a static HTML export of a session (shareable)"}] },
+  { id:"E6", q:"Encryption at rest?",
+    o:[{t:"No: rely on the OS / browser profile",r:1},{t:"Optional passphrase encryption (unlock per browser start)"}] },
+  { id:"E7", q:"Backfill from existing native history on install?",
+    o:[{t:"Chrome: import as read-only 'imported' sessions using referringVisitId; Firefox: skip",r:1},{t:"No backfill, start empty"},{t:"Flat import in both browsers (no tree, no screenshots)"}] },
+], },
+
+{ id:"F", title:"History takeover & UI", qs:[
+  { id:"F1", q:"What does 'take over the history function' mean exactly?",
+    o:[{t:"Replace the UI where possible (Chrome overrides chrome://history); native history keeps recording underneath, untouched",r:1},{t:"Replace the UI and also clear native history entries, so the extension is the only history"},{t:"No override; the extension's own page sits next to native history"}],
+    h:"Firefox does not allow replacing about:history, the Library or the history sidebar. There, the extension can only offer its own page, sidebar and shortcut." },
+  { id:"F2", q:"Keyboard shortcut to open the history app (Ctrl+H stays native in Firefox)?",
+    o:[{t:"Configurable, default Alt+Shift+H; Chrome additionally gets Ctrl+H through the override",r:1},{t:"Ctrl+Shift+H (Firefox: conflicts with the Library window)"},{t:"No shortcut, toolbar button only"}] },
+  { id:"F3", q:"Which UI surfaces?", multi:1,
+    o:[{t:"Full-page history app",r:1},{t:"Sidebar / side panel with the live graph of the current tab",r:1},{t:"Toolbar popup: 'you came here from …' ancestor path",r:1},{t:"Page context menu: 'Show where I came from'",r:1},{t:"Omnibox keyword (e.g. type 'h ' + search)",r:1},{t:"Override the new-tab page with recent sessions"}] },
+  { id:"F4", q:"Default view when opening the history app?",
+    o:[{t:"Session list grouped by day; cards with thumbnail strip; click → graph",r:1},{t:"A day timeline with one swimlane per tab"},{t:"One big zoomable canvas of all graphs"},{t:"Search box first, nothing else"}] },
+  { id:"F5", q:"Graph layout?",
+    o:[{t:"Left-to-right tree, order of first visit on the x-axis, branches stacked vertically",r:1},{t:"Top-down tree"},{t:"Force-directed network"},{t:"Switchable"}] },
+  { id:"F6", q:"Node appearance?",
+    o:[{t:"Thumbnail card with favicon + title",r:1},{t:"Favicon dot + title, thumbnail on hover (denser)"},{t:"Switchable density (zoom level decides)"}] },
+  { id:"F7", q:"Graph rendering library?",
+    o:[{t:"ELK.js for layout + own SVG/Canvas renderer",r:1},{t:"Cytoscape.js"},{t:"Svelte Flow / React Flow"},{t:"D3 + d3-dag"}] },
+  { id:"F8", q:"Search capabilities?", multi:1,
+    o:[{t:"Title + URL",r:1},{t:"Full page text",r:1},{t:"Filters: date range, domain, tab family",r:1},{t:"Visual browse: thumbnail wall",r:1},{t:"'Find visually similar' (perceptual hash)"},{t:"Natural-language / semantic search (local embeddings)"}] },
+  { id:"F9", q:"How does a search hit show 'which page linked here'?",
+    o:[{t:"Breadcrumb of ancestors with thumbnails on every hit, plus 'Open parent' / 'Show in graph'",r:1},{t:"Hit opens the graph centered on the node"},{t:"Both, breadcrumb inline, graph on click"}] },
+  { id:"F10", q:"Theme & language?",
+    o:[{t:"Follow browser light/dark; English only",r:1},{t:"Follow browser light/dark; English + German"},{t:"Own theme setting; English + German"}] },
+], },
+
+{ id:"G", title:"Re-opening pages & navigation", qs:[
+  { id:"G1", q:"Clicking a node in the history app?",
+    o:[{t:"Open in a new tab",r:1},{t:"Navigate the current tab"},{t:"Show details panel first; open via buttons"}] },
+  { id:"G2", q:"'Open with path': rebuild a real back stack by loading the ancestor chain in a new tab?",
+    o:[{t:"Offer it as an explicit action (GET pages only, POST ancestors skipped)",r:1},{t:"Make it the default when opening a node"},{t:"Don't offer it"}],
+    h:"This gives the reopened tab a working native Back button. The cost: one page load per ancestor, possible side effects, slow on long chains." },
+  { id:"G3", q:"A tab reopened from the history app belongs to…",
+    o:[{t:"A new session, linked to the original node ('reopened from')",r:1},{t:"The original session, continuing as a new branch"}] },
+  { id:"G4", q:"'Semantic back' command (go to the graph parent, even if the native Back would go elsewhere)?",
+    o:[{t:"Yes: shortcut + sidebar button",r:1},{t:"Sidebar button only"},{t:"No"}] },
+], },
+
+{ id:"H", title:"Privacy, permissions & quality", qs:[
+  { id:"H1", q:"Host permission <all_urls> (needed for screenshots and text)?",
+    o:[{t:"Required at install, clearly explained",r:1},{t:"Optional permission, requested on first use (features degrade without it)"}] },
+  { id:"H2", q:"Telemetry / network access?",
+    o:[{t:"None at all, the extension never makes network requests",r:1},{t:"Opt-in anonymous error reports"}] },
+  { id:"H3", q:"Test strategy?",
+    o:[{t:"Unit tests of the projector on recorded event fixtures + Playwright (Chromium) and web-ext (Firefox) E2E scenarios",r:1},{t:"Unit tests only"},{t:"Manual testing"}] },
+  { id:"H4", q:"First milestone?",
+    o:[{t:"Recorder + projector + sidebar tree (no screenshots) in Firefox, to validate the model",r:1},{t:"Recorder + screenshots + session list, graph later"},{t:"Full v1 feature set before first use"}] },
+], },
+];
+
+const KEY = "dude-spec-answers-v1";
+// localStorage is unavailable in some sandboxed/file contexts — never let it break the page.
+const store = {
+  get() { try { return JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) { return {}; } },
+  set(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} },
+  clear() { try { localStorage.removeItem(KEY); } catch (e) {} },
+};
+let A = store.get();
+let total = 0;
+
+function save() { store.set(A); updateProgress(); }
+
+function build() {
+  const main = document.getElementById("main");
+  S.forEach(sec => {
+    total += sec.qs.length;
+    const el = document.createElement("section");
+    el.id = "sec" + sec.id;
+    const head = document.createElement("div");
+    head.className = "shead";
+    head.innerHTML = '<h2>' + sec.id + '. ' + sec.title + '</h2><span class="tag">' + sec.qs.length + ' questions</span><span class="chev">▾</span>';
+    head.onclick = () => el.classList.toggle("collapsed");
+    el.appendChild(head);
+    const body = document.createElement("div");
+    body.className = "sbody";
+    sec.qs.forEach(q => body.appendChild(renderQ(q)));
+    el.appendChild(body);
+    main.appendChild(el);
+  });
+  updateProgress();
+}
+
+function renderQ(q) {
+  const d = document.createElement("div");
+  d.className = "q";
+  d.id = "q" + q.id;
+  const t = document.createElement("div");
+  t.className = "qt";
+  t.innerHTML = '<span class="id">' + q.id + '</span>' + esc(q.q);
+  d.appendChild(t);
+  if (q.multi || q.h) {
+    const n = document.createElement("p");
+    n.className = "qn" + (q.multi ? " multi" : "");
+    n.textContent = q.h || "pick all that apply";
+    d.appendChild(n);
+  }
+  q.o.forEach((o, i) => {
+    const lab = document.createElement("label");
+    lab.className = "opt";
+    const inp = document.createElement("input");
+    inp.type = q.multi ? "checkbox" : "radio";
+    inp.name = q.id;
+    inp.value = i;
+    inp.checked = isOn(q, i);
+    if (inp.checked) lab.classList.add("on");
+    inp.onchange = () => {
+      if (q.multi) {
+        const cur = new Set(A[q.id] && A[q.id].sel || []);
+        inp.checked ? cur.add(i) : cur.delete(i);
+        setSel(q, [...cur].sort((a,b)=>a-b));
+      } else {
+        setSel(q, [i]);
+      }
+      refresh(q);
+      save();
+    };
+    const span = document.createElement("span");
+    span.innerHTML = esc(o.t) + (o.r ? '<span class="star">★</span>' : '');
+    lab.appendChild(inp); lab.appendChild(span);
+    d.appendChild(lab);
+  });
+  const ow = document.createElement("div");
+  ow.className = "other";
+  const oi = document.createElement("input");
+  oi.placeholder = "Other / notes for " + q.id + "…";
+  oi.value = (A[q.id] && A[q.id].other) || "";
+  oi.oninput = () => { A[q.id] = A[q.id] || {sel:[]}; A[q.id].other = oi.value; save(); };
+  ow.appendChild(oi);
+  d.appendChild(ow);
+  return d;
+}
+
+function isOn(q, i) { return !!(A[q.id] && A[q.id].sel && A[q.id].sel.includes(i)); }
+function setSel(q, sel) { A[q.id] = A[q.id] || {}; A[q.id].sel = sel; }
+
+function refresh(q) {
+  document.querySelectorAll('#q' + q.id + ' label.opt').forEach((lab, i) => {
+    const inp = lab.querySelector("input");
+    inp.checked = isOn(q, i);
+    lab.classList.toggle("on", inp.checked);
+  });
+}
+
+function eachQ(fn) { S.forEach(s => s.qs.forEach(q => fn(q, s))); }
+
+function answered(q) {
+  const a = A[q.id];
+  return !!(a && ((a.sel && a.sel.length) || (a.other && a.other.trim())));
+}
+
+function updateProgress() {
+  let n = 0; eachQ(q => { if (answered(q)) n++; });
+  document.getElementById("pcount").textContent = n + " / " + total + " answered";
+  document.getElementById("pfill").style.width = (100 * n / total) + "%";
+  const missing = [];
+  eachQ((q, s) => { if (!answered(q)) missing.push(q.id); });
+  document.getElementById("pleft").textContent = missing.length ? ("open: " + missing.slice(0, 8).join(", ") + (missing.length > 8 ? " +" + (missing.length - 8) : "")) : "complete ✓";
+}
+
+function acceptAll() {
+  eachQ(q => {
+    if (answered(q)) return;
+    const rec = q.o.map((o, i) => o.r ? i : -1).filter(i => i >= 0);
+    if (!rec.length) return;
+    setSel(q, q.multi ? rec : [rec[0]]);
+    refresh(q);
+  });
+  save();
+  toast("★ defaults filled in for unanswered questions");
+}
+
+function toggleAll(open) {
+  document.querySelectorAll("section").forEach(s => s.classList.toggle("collapsed", !open));
+}
+
+function reset() {
+  if (!confirm("Clear all answers?")) return;
+  A = {}; store.clear();
+  eachQ(q => { refresh(q); const i = document.querySelector('#q' + q.id + ' .other input'); if (i) i.value = ""; });
+  save();
+}
+
+function text() {
+  const L = ["# dude spec answers", ""];
+  S.forEach(sec => {
+    const lines = [];
+    sec.qs.forEach(q => {
+      if (!answered(q)) return;
+      const a = A[q.id];
+      const picks = (a.sel || []).map(i => q.o[i] && q.o[i].t).filter(Boolean);
+      if (a.other && a.other.trim()) picks.push("OTHER: " + a.other.trim());
+      lines.push("- **" + q.id + "** " + q.q + "\n  → " + picks.join("\n  → "));
+    });
+    if (lines.length) { L.push("## " + sec.id + ". " + sec.title, "", ...lines, ""); }
+  });
+  const missing = [];
+  eachQ(q => { if (!answered(q)) missing.push(q.id); });
+  if (missing.length) L.push("## Unanswered", "", missing.join(", "), "");
+  return L.join("\n");
+}
+
+function showAnswers() {
+  document.getElementById("out").value = text();
+  document.getElementById("dlg").showModal();
+}
+function copyText() {
+  const ta = document.getElementById("out");
+  ta.select();
+  navigator.clipboard.writeText(ta.value).then(() => toast("Copied — paste it into the chat"),
+    () => { document.execCommand("copy"); toast("Copied"); });
+}
+function download() {
+  const b = new Blob([text()], {type: "text/markdown"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(b);
+  a.download = "dude-spec-answers.md";
+  a.click();
+}
+function toast(m) {
+  const t = document.getElementById("toast");
+  t.textContent = m; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2200);
+}
+function esc(s) { return s.replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+
+build();
+</script>
+</body>
+</html>
