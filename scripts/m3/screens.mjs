@@ -52,6 +52,15 @@ try {
     await pause(1500);
     await app.screenshot({ path: path.join(out, `sessions-${mode}.png`) });
   }
+  // M4: search results with breadcrumbs, and the thumbnail wall.
+  for (const [name, query] of [['search-text', 'lorem ipsum'], ['search-title', 'page b']]) {
+    await app.goto(`chrome-extension://${extId}/sessions.html?session=${session}&q=${encodeURIComponent(query)}`);
+    await pause(2500);
+    await app.screenshot({ path: path.join(out, `sessions-${name}.png`) });
+  }
+  await app.goto(`chrome-extension://${extId}/sessions.html?session=${session}&panel=wall`);
+  await pause(2000);
+  await app.screenshot({ path: path.join(out, 'sessions-wall.png') });
   console.log(fs.readdirSync(out).filter((f) => f.startsWith('popup') || f.startsWith('sessions')).join('\n'));
 } finally {
   await close();

@@ -27,7 +27,13 @@ export type Observation =
   // says which page of which tab they belong to, so a replay attaches them correctly even
   // if visit ids change after a projector fix.
   | { type: 'page.capture'; t: number; tabId: number; url: string; shotId: string; hash: string }
-  | { type: 'page.text'; t: number; tabId: number; url: string; textId: string; hash: string };
+  | { type: 'page.text'; t: number; tabId: number; url: string; textId: string; hash: string }
+  // Navigations dude itself starts (open with path, semantic back): they carry no user
+  // gesture, so without this they would look like client redirects and get folded (§9).
+  | { type: 'nav.intent'; t: number; tabId: number; url: string; reason: 'open-path' | 'semantic-back' }
+  // A tab dude opened from a recorded visit (G3). The visit is named by URL and first-visit
+  // time, which survive a rebuild; visit ids might not.
+  | { type: 'tab.reopened'; t: number; tabId: number; visitUrl: string; visitFirstAt: number };
 
 export interface WakeTab {
   tabId: number;

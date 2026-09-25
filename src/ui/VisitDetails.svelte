@@ -14,10 +14,11 @@
   interface Props {
     visits: Visit[]; // oldest first
     children: SessionSummary[]; // tabs opened from these visits
-    onOpen: (url: string) => void;
+    onOpen: (v: Visit) => void;
+    onOpenPath: (v: Visit) => void;
     onShowSession: (id: string) => void;
   }
-  let { visits, children, onOpen, onShowSession }: Props = $props();
+  let { visits, children, onOpen, onOpenPath, onShowSession }: Props = $props();
 
   const v = $derived(visits.at(-1)!);
   const shots = $derived(visits.flatMap((x) => x.screenshots));
@@ -87,7 +88,7 @@
 
   <div class="facts">
     <h2>{v.title || shortUrl(v.url)}</h2>
-    <a class="url" href={v.url} onclick={(e) => { e.preventDefault(); onOpen(v.url); }}>{v.url}</a>
+    <a class="url" href={v.url} onclick={(e) => { e.preventDefault(); onOpen(v); }}>{v.url}</a>
     <dl>
       <dt>When</dt>
       <dd>{time(v.firstAt)}{#if v.lastAt - v.firstAt > 60_000} – {time(v.lastAt)}{/if}{#if v.dwellMs > 1000} · looked at {Math.round(v.dwellMs / 1000)} s{/if}</dd>
@@ -108,7 +109,10 @@
       {/each}
     {/if}
     <div class="actions">
-      <button class="primary" onclick={() => onOpen(v.url)}>Open in new tab</button>
+      <button class="primary" onclick={() => onOpen(v)}>Open in new tab</button>
+      {#if v.parentId}
+        <button onclick={() => onOpenPath(v)} title="Opens a new tab and loads the pages that led here one after another, so the tab's Back button works (GET pages only)">Open with path</button>
+      {/if}
       <button onclick={copy}>{copied ? 'Copied' : 'Copy URL'}</button>
       {#if v.text}<button onclick={showText}>{text === null ? 'Show page text' : 'Hide text'}</button>{/if}
     </div>

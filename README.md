@@ -4,9 +4,9 @@ A Firefox/Chrome WebExtension that records every tab as its own navigation tree,
 branches, cross-tab provenance, screenshots and playback: an own history next to the
 browser's. See [docs/SPEC.md](docs/SPEC.md).
 
-Current state: **M3**. Every tab is recorded as its own tree with screenshots and page
+Current state: **M4**. Every tab is recorded as its own tree with screenshots and page
 text. It's shown live in the Firefox sidebar or the Chrome side panel, and in full in the
-sessions app. Search comes with M4. The S1
+sessions app, which also searches everything recorded. The S1
 spike findings behind the recording rules are in [docs/S1-FINDINGS.md](docs/S1-FINDINGS.md).
 
 ## Using it
@@ -23,6 +23,15 @@ npm run dev:firefox
   selected session it shows a left-to-right graph with screenshot cards and the three
   views; click a page for its details (screenshots, how you got there, link text, search
   terms, redirects, stored page text), double-click to open it.
+- **Search** (sessions app, or type `h <words>` in the address bar): titles, addresses,
+  page text, search terms and link texts, filterable by time, domain and tab family. Each
+  hit shows the pages that led to it, across tabs too. **Wall** shows every screenshot,
+  newest first.
+- **Open with path** (details panel) reopens a page in a new tab by walking through the
+  pages that led to it, so the tab's Back button works.
+- **Semantic back**: Alt+Shift+Up, or the ↑ link in the sidebar, goes to the page you came
+  from, even when Back would go somewhere else. Right-click a page → **Show where I came
+  from** opens the sidebar with that page highlighted.
 - **Screenshots** are taken about 1 s after a page loads (Firefox also captures
   background tabs), never on banking, payment or password-manager sites, and never while
   a password field is visible. Previews of pages you only glanced at are pruned; thumbnails
@@ -56,7 +65,8 @@ scripts/node22.sh node scripts/m3/screens.mjs /tmp/dude-screens
 ```
 
 `scripts/m3/capture-check.mjs chromium|firefox` browses slowly and prints which pages got
-screenshots (▣) and text (¶).
+screenshots (▣) and text (¶). `scripts/m4/nav-check.mjs chromium|firefox` checks open with
+path, semantic back and "reopened from".
 
 Tests (the projector against every S1 fixture, plus rule tests):
 

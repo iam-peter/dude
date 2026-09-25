@@ -270,7 +270,11 @@ not extracted.
 3. **Visual browse:** a thumbnail wall filtered by date, domain and tab family (F8).
 4. **Search:** title, URL, full text, search terms and anchor text, with filters for date
    range, domain and tab family (F8). Every hit shows a **breadcrumb of its ancestors with
-   thumbnails**, plus *Open parent* and *Show in graph* (F9).
+   thumbnails**, plus *Open parent* and *Show in graph* (F9). The breadcrumb continues
+   across "opened from" links into the tab a page was opened from. The index (MiniSearch)
+   lives in the sessions page, cached in IndexedDB and synced incrementally, so each page
+   text is indexed once. The omnibox searches titles, URLs, search terms and link texts
+   only, straight from the projection.
 5. **Settings:** exclusion list, retention and size cap, export/import, Chrome history
    backfill.
 
@@ -302,9 +306,13 @@ The native back stack of a tab can't be edited, so the extension provides:
   GET ancestors one URL at a time, which gives it a real native back stack. POST
   ancestors are skipped. Progress is shown, and the action can be cancelled.
 - **Semantic back** (G4): navigates the current tab to its graph parent, even when the
-  native Back button would go somewhere else. It is available as a sidebar button and as
-  a command with a suggested shortcut of Alt+Shift+Up, which the user can rebind. It is
-  logged as a navigation, not as `nav.back`.
+  native Back button would go somewhere else. At a tab's first page, the parent is the page
+  the tab was opened from. It is available as a sidebar button and as a command with a
+  suggested shortcut of Alt+Shift+Up, which the user can rebind. It is logged as a
+  navigation, not as `nav.back`.
+- Navigations dude starts itself (open with path, semantic back) carry no user gesture,
+  so each is announced to the log with a `nav.intent` observation first; otherwise the
+  projector would fold them as client redirects (§6.1).
 
 ## 10. Playback (C2–C4)
 
@@ -386,7 +394,7 @@ storage/       Dexie over IndexedDB: events, sessions, visits, edges, blobs, tex
 | **S2** | Spike: Firefox `captureTab` on background tabs; capture cost in both browsers. *Done, see [S2-FINDINGS](S2-FINDINGS.md)* |
 | **M3** | Screenshots and page text, history app (session list, graph view, details panel), toolbar popup. *Built 2026-09-25. Not yet: pause toggles (M6), deleting visits/sessions from the details panel (M6)* |
 | **S3** | Spike: renderer comparison behind `GraphView` (F7) |
-| **M4** | Search, visual browse, omnibox, context menu, open / open with path, semantic back |
+| **M4** | Search, visual browse, omnibox, context menu, open / open with path, semantic back. *Built 2026-09-25. Context menu, omnibox UI and the shortcut are not automatable; they need a manual check* |
 | **M5** | Playback (all three scopes) |
 | **M6** | Retention and size cap, export/import, Chrome backfill, exclusion settings UI |
 

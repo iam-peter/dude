@@ -55,7 +55,9 @@
         const [active] = await browser.tabs.query({ active: true, windowId });
         tabId = active?.id;
       }
-      load();
+      await load();
+      // Opened by the context menu? Then show the parent.
+      if (await request<number | undefined>({ cmd: 'dude.pendingFocus', tabId })) focusParent();
     })();
 
     const onActivated = (info: { tabId: number; windowId: number }) => {
@@ -64,7 +66,11 @@
       pinned = null;
       load();
     };
-    const onMessage = (m: ChangedMessage) => {
+    const onMessage = (m: ChangedMessage | { type: 'dude.focusParent'; tabId: number }) => {
+      if (m?.type === 'dude.focusParent') {
+        if (m.tabId === tabId) load().then(focusParent);
+        return;
+      }
       if (m?.type !== 'dude.changed') return;
       // A restore can merge the tab into another session, so follow any change when unpinned.
       if (!pinned || m.sessionIds.includes(pinned)) load();
@@ -87,7 +93,24 @@
     load();
   }
 
-  const open = (row: Row) => request({ cmd: 'dude.open', url: row.url });
+  const open = (row: Row) => request({ cmd: 'dude.open', url: row.url, visitId: row.visitIds.at(-1) });
+
+  // Semantic back (G4): to the graph parent of the tab's current page.
+  const parentRow = $derived.by(() => {
+    if (!data || pinned) return undefined;
+    const cur = data.session.cursorId ? data.visits[data.session.cursorId] : undefined;
+    return cur?.parentId ? data.visits[cur.parentId] : undefined;
+  });
+  const back = () => tabId !== undefined && request({ cmd: 'dude.semanticBack', tabId });
+
+  // "Show where I came from" (context menu): point out the parent for a few seconds.
+  let highlight = $state<string | undefined>();
+  function focusParent() {
+    if (!parentRow) return;
+    mode = mode === 'network' ? 'tree' : mode;
+    highlight = parentRow.id;
+    setTimeout(() => (highlight = undefined), 4000);
+  }
 
   function tooltip(row: Row): string {
     if (!data) return row.url;
@@ -139,6 +162,11 @@
     {/if}
     {#if data}
       <h1 title={title}>{title}</h1>
+      {#if parentRow}
+        <button class="link back" onclick={back} title="Semantic back (Alt+Shift+Up): go to the page you came here from, even if the Back button would go elsewhere">
+          ↑ {parentRow.title ?? parentRow.url}
+        </button>
+      {/if}
       {#if data.parent}
         <button class="link" onclick={() => show(data!.parent)} title="Show the tab this one was opened from">
           {data.session.spawnedFrom?.kind === 'duplicate' ? 'duplicated from' : 'opened from'}: {data.spawnVisit?.title ?? data.parent.title ?? '…'}
@@ -154,7 +182,7 @@
         <NetworkView {view} onOpen={open} {tooltip} />
       {/key}
     {:else}
-      <GraphView {view} {mode} onOpen={open} {tooltip} {badge} />
+      <GraphView {view} {mode} onOpen={open} {tooltip} {badge} {highlight} />
     {/if}
     {#if data && data.children.length}
       <section class="children">

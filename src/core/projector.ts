@@ -91,6 +91,15 @@ export function apply(st: State, o: Observation): Set<string> {
     case 'page.text':
       onMedia(ctx, o);
       break;
+    case 'nav.intent': {
+      // Counts like a click on a link to `url`: the next commit is a navigation, not a redirect.
+      const tab = ensureTab(ctx, o.tabId);
+      tab.click = { href: o.url, text: '', t: o.t, newTab: false };
+      break;
+    }
+    case 'tab.reopened':
+      onReopened(ctx, o);
+      break;
   }
 
   resumeDwell(st, o.t);
@@ -605,6 +614,21 @@ function onFragment(ctx: Ctx, o: Extract<Observation, { type: 'nav.fragment' }>)
   const hash = o.url.includes('#') ? o.url.slice(o.url.indexOf('#')) : '';
   if (hash) v.fragments.push({ hash, at: o.t });
   ctx.changed.add(s.id);
+}
+
+/** Tab opened by dude from a recorded visit (G3): "reopened from" provenance. */
+function onReopened(ctx: Ctx, o: Extract<Observation, { type: 'tab.reopened' }>) {
+  const tab = ensureTab(ctx, o.tabId);
+  const s = ctx.st.sessions[tab.sessionId];
+  if (s.spawnedFrom) return;
+  const v = Object.values(ctx.st.visits).find((x) => x.firstAt === o.visitFirstAt && x.url === o.visitUrl && x.sessionId !== s.id);
+  if (!v) return;
+  s.spawnedFrom = { sessionId: v.sessionId, visitId: v.id, kind: 'reopen' };
+  // The tab may already have committed its first page before this arrived.
+  const root = s.rootId ? ctx.st.visits[s.rootId] : undefined;
+  if (root && s.visitIds.length === 1) root.edge = 'spawn';
+  ctx.changed.add(s.id);
+  ctx.changed.add(v.sessionId);
 }
 
 // ---------------------------------------------------------------- screenshots and text

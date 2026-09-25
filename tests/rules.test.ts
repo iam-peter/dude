@@ -161,6 +161,26 @@ describe('screenshots and text (SPEC §7, D5)', () => {
   });
 });
 
+describe('navigations dude starts (§9, G2, G3)', () => {
+  const intent = (t: number, tabId: number, path: string): O => ({ type: 'nav.intent', t, tabId, url: U(path), reason: 'open-path' });
+
+  test('open with path: each step is a navigation, not a folded redirect', () => {
+    const obs = [created(0, 1), commit(10, 1, '/a', 'typed'), completed(40, 1, '/a'), intent(60, 1, '/b'), commit(80, 1, '/b'), completed(100, 1, '/b'), intent(120, 1, '/c'), commit(140, 1, '/c')];
+    expect(tree(obs)).toBe('s1 open\n  /a (jump)\n    /b\n      /c *');
+  });
+
+  test('without the intent the same timing would fold (the reason it exists)', () => {
+    const obs = [created(0, 1), commit(10, 1, '/a', 'typed'), completed(40, 1, '/a'), commit(80, 1, '/b')];
+    expect(tree(obs)).toBe('s1 open\n  /b (jump) via[/a] *');
+  });
+
+  test('a reopened tab is linked to the visit it came from, even if its first commit came first', () => {
+    const src = [created(0, 1), commit(10, 1, '/a', 'typed'), click(900, 1, '/b'), commit(1000, 1, '/b')];
+    const obs = [...src, created(5000, 2), commit(5010, 2, '/b', 'link'), { type: 'tab.reopened', t: 5020, tabId: 2, visitUrl: U('/b'), visitFirstAt: 1000 } as O];
+    expect(tree(obs)).toBe(['s1 open', '  /a (jump)', '    /b *', 's4 open  from s1@/b (reopen)', '  /b (spawn) *'].join('\n'));
+  });
+});
+
 describe('preview retention (S2 #7, E2)', () => {
   const shot = (t: number, tabId: number, path: string, id: string): O => ({ type: 'page.capture', t, tabId, url: U(path), shotId: id, hash: id });
   const focus: O[] = [{ type: 'tab.activated', t: 0, tabId: 1, windowId: 1 }, { type: 'window.focus', t: 0, windowId: 1 }];

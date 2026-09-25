@@ -1,12 +1,18 @@
 <script lang="ts">
-  // Sessions app (SPEC §8.2): all recorded tab sessions by day, and for the selected one
-  // its graph with screenshots and the details of the selected page. Search and visual
-  // browse come with M4.
+  // Sessions app (SPEC §8.2): all recorded tab sessions by day, search (F8, F9) and the
+  // thumbnail wall; for the selected session its graph with screenshots and the details
+  // of the selected page.
   import { request, type ChangedMessage, type SessionCard, type SessionPayload } from '@/background/protocol';
   import { buildView, type Row, type ViewMode } from '@/core/views';
   import SessionGraph from '@/ui/SessionGraph.svelte';
   import VisitDetails from '@/ui/VisitDetails.svelte';
+  import SearchResults from '@/ui/SearchResults.svelte';
+  import ThumbWall from '@/ui/ThumbWall.svelte';
   import { shotUrls } from '@/ui/shots';
+  import { resync, searchIndex } from '@/ui/search-client';
+  import type { Hit, SearchDoc, SearchIndex } from '@/search';
+  import type { Visit } from '@/core/model';
+  import type { OpenPathProgress } from '@/background/navigate';
 
   const MODES: { id: ViewMode; label: string }[] = [
     { id: 'tree', label: 'Tree' },
@@ -21,6 +27,18 @@
   let mode = $state<ViewMode>((params.get('mode') ?? localStorage.getItem('dude.sessions.mode') ?? 'tree') as ViewMode);
   let selectedKey = $state<string | undefined>();
   let thumbs = $state<Record<string, string>>({});
+
+  // Search and wall
+  let q = $state(params.get('q') ?? '');
+  let range = $state<'any' | 'day' | 'week' | 'month'>('any');
+  let host = $state('');
+  let familyOnly = $state(false);
+  let panel = $state<'sessions' | 'wall'>(params.get('panel') === 'wall' ? 'wall' : 'sessions');
+  let ix = $state<SearchIndex | null>(null);
+  let indexing = $state<{ done: number; total: number } | null>(null);
+  let hits = $state<Hit[]>([]);
+  let pendingVisit: string | undefined;
+  let job = $state<OpenPathProgress | null>(null);
 
   $effect(() => localStorage.setItem('dude.sessions.mode', mode));
 
@@ -38,6 +56,11 @@
     if (!selectedId) return;
     data = await request<SessionPayload | null>({ cmd: 'dude.session', sessionId: selectedId });
     if (data) loadThumbs(Object.values(data.visits).flatMap((v) => v.screenshots.map((s) => s.id)));
+    if (data && pendingVisit) {
+      const id = pendingVisit;
+      pendingVisit = undefined;
+      selectedKey = buildView(data, mode).rows.find((r) => r.visitIds.includes(id))?.key;
+    }
   }
 
   async function loadThumbs(ids: string[]) {
@@ -48,20 +71,99 @@
   function select(id: string) {
     selectedId = id;
     selectedKey = undefined;
-    history.replaceState(null, '', `?session=${id}`);
+    history.replaceState(null, '', `?session=${id}${q ? `&q=${encodeURIComponent(q)}` : ''}`);
     loadSession();
   }
+
+  /** From a search hit or a wall tile: its session, with that page selected. */
+  function showDoc(d: SearchDoc) {
+    panel = 'sessions';
+    pendingVisit = d.id;
+    if (d.sessionId === selectedId && data) {
+      pendingVisit = undefined;
+      selectedKey = buildView(data, mode).rows.find((r) => r.visitIds.includes(d.id))?.key;
+    } else select(d.sessionId);
+  }
+
+  async function ensureIndex() {
+    if (ix) return ix;
+    indexing = { done: 0, total: 0 };
+    const index = await searchIndex((done, total) => (indexing = { done, total }));
+    indexing = null;
+    ix = index;
+    return index;
+  }
+
+  // Sessions linked by "opened from" (both directions) — the tab family filter.
+  const family = $derived.by(() => {
+    if (!selectedId) return undefined;
+    const ids = new Set([selectedId]);
+    let grew = true;
+    while (grew) {
+      grew = false;
+      for (const c of cards) {
+        const p = c.spawnedFrom?.sessionId;
+        if (!p) continue;
+        if (ids.has(p) !== ids.has(c.id)) {
+          ids.add(p);
+          ids.add(c.id);
+          grew = true;
+        }
+      }
+    }
+    return ids;
+  });
+  const since = $derived(range === 'any' ? undefined : Date.now() - { day: 864e5, week: 7 * 864e5, month: 30 * 864e5 }[range]);
+
+  $effect(() => {
+    const query = q;
+    const filters = { since, host, sessionIds: familyOnly ? family : undefined };
+    if (!query.trim()) {
+      hits = [];
+      return;
+    }
+    ensureIndex().then((index) => {
+      if (query !== q) return;
+      hits = index.search(query, filters);
+      loadThumbs(hits.slice(0, 60).flatMap((h) => [h.doc.shotId, ...index.ancestors(h.doc.id).map((a) => a.shotId)]).filter((x): x is string => !!x));
+    });
+  });
+
+  const wallDocs = $derived.by(() => {
+    if (!ix || panel !== 'wall') return [];
+    const h = host.trim().toLowerCase();
+    return [...ix.docs.values()]
+      .filter((d) => d.shotId && !d.inherited && (since === undefined || d.lastAt >= since) && (!h || d.host.toLowerCase().includes(h)) && (!familyOnly || !family || family.has(d.sessionId)))
+      .sort((a, b) => b.lastAt - a.lastAt);
+  });
+  $effect(() => {
+    if (panel === 'wall') ensureIndex();
+  });
+
+  async function openPath(v: Visit) {
+    const r = await request<{ job: string; total: number }>({ cmd: 'dude.openPath', visitId: v.id });
+    job = { type: 'dude.openPath', job: r.job, step: 0, total: r.total, done: false };
+  }
+  const cancelPath = () => job && request({ cmd: 'dude.openPath.cancel', job: job.job });
 
   $effect(() => {
     loadList();
     loadSession();
     let timer: ReturnType<typeof setTimeout> | undefined;
-    const onMessage = (m: ChangedMessage) => {
+    const onMessage = (m: ChangedMessage | OpenPathProgress) => {
+      if (m?.type === 'dude.openPath') {
+        if (job && m.job === job.job) {
+          job = m;
+          if (m.done) setTimeout(() => job?.job === m.job && (job = null), 2500);
+        }
+        return;
+      }
       if (m?.type !== 'dude.changed') return;
       clearTimeout(timer);
       timer = setTimeout(() => {
         loadList();
         if (selectedId && m.sessionIds.includes(selectedId)) loadSession();
+        if (ix) resync().then(() => ix && q && (hits = ix.search(q, { since, host, sessionIds: familyOnly ? family : undefined })));
       }, 300);
     };
     browser.runtime.onMessage.addListener(onMessage);
@@ -78,7 +180,7 @@
     return undefined;
   }
 
-  const open = (url: string) => request({ cmd: 'dude.open', url });
+  const open = (url: string, visitId?: string) => request({ cmd: 'dude.open', url, visitId });
 
   /** Tabs opened from the visits of a row (↗ badge). */
   const spawnedFrom = (row: Row) => (data ? data.children.filter((c) => c.spawnedFromVisitId && row.visitIds.includes(c.spawnedFromVisitId)).length : 0);
@@ -103,6 +205,25 @@
 <div class="app">
   <aside>
     <header><h1>dude</h1><span class="sub">tab sessions</span></header>
+    <input class="search" type="search" placeholder="Search titles, addresses, page text…" bind:value={q} aria-label="Search" />
+    <div class="filters">
+      <select bind:value={range} aria-label="Time range">
+        <option value="any">any time</option>
+        <option value="day">last 24 h</option>
+        <option value="week">last 7 days</option>
+        <option value="month">last 30 days</option>
+      </select>
+      <input type="text" placeholder="domain" bind:value={host} aria-label="Domain" />
+      <label title="Only the selected session and the tabs linked to it by 'opened from'"><input type="checkbox" bind:checked={familyOnly} disabled={!selectedId} /> this tab family</label>
+    </div>
+    <div class="panels" role="tablist">
+      <button role="tab" aria-selected={panel === 'sessions'} class:on={panel === 'sessions'} onclick={() => (panel = 'sessions')}>Sessions</button>
+      <button role="tab" aria-selected={panel === 'wall'} class:on={panel === 'wall'} onclick={() => (panel = 'wall')}>Wall</button>
+    </div>
+    {#if indexing}<p class="empty">Indexing page text… {indexing.total ? `${indexing.done}/${indexing.total}` : ''}</p>{/if}
+    {#if q.trim()}
+      {#if ix}<SearchResults {hits} ancestors={(id) => ix!.ancestors(id)} {thumbs} onShow={showDoc} onOpen={(d) => open(d.url, d.id)} />{/if}
+    {:else}
     {#each days as day (day.label)}
       <h2>{day.label}</h2>
       {#each day.cards as c (c.id)}
@@ -121,10 +242,20 @@
     {:else}
       <p class="empty">Nothing recorded yet. Browse a little and come back.</p>
     {/each}
+    {/if}
   </aside>
 
   <main>
-    {#if data && view}
+    {#if job}
+      <div class="toast" role="status">
+        {#if job.cancelled}Open with path cancelled.
+        {:else if job.done}Opened {job.total} page{job.total === 1 ? '' : 's'} — the new tab's Back button now walks back through them.
+        {:else}Opening page {job.step} of {job.total}… <button class="link" onclick={cancelPath}>Cancel</button>{/if}
+      </div>
+    {/if}
+    {#if panel === 'wall'}
+      {#if ix}<ThumbWall docs={wallDocs} onShow={showDoc} />{:else}<p class="empty">Loading…</p>{/if}
+    {:else if data && view}
       <header class="head">
         <div>
           <h1>{selectedCard?.title ?? 'Session'}</h1>
@@ -142,13 +273,14 @@
         </div>
       </header>
       {#key data.session.id + mode}
-        <SessionGraph {view} {mode} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url)} />
+        <SessionGraph {view} {mode} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
       {/key}
       {#if selectedVisits.length}
         <VisitDetails
           visits={selectedVisits}
           children={data.children.filter((c) => selectedVisits.some((v) => v.id === c.spawnedFromVisitId))}
-          onOpen={open}
+          onOpen={(v) => open(v.url, v.id)}
+          onOpenPath={openPath}
           onShowSession={select}
         />
       {/if}
@@ -303,5 +435,65 @@
   .empty {
     opacity: 0.7;
     padding: 8px 4px;
+  }
+  .search {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 7px 9px;
+    border-radius: 7px;
+    border: 1px solid color-mix(in srgb, CanvasText 20%, transparent);
+    background: Canvas;
+    color: CanvasText;
+    font: inherit;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin: 6px 0;
+    font-size: 11.5px;
+  }
+  .filters select,
+  .filters input[type='text'] {
+    font: inherit;
+    padding: 2px 5px;
+    border-radius: 5px;
+    border: 1px solid color-mix(in srgb, CanvasText 18%, transparent);
+    background: Canvas;
+    color: CanvasText;
+  }
+  .filters input[type='text'] {
+    width: 90px;
+  }
+  .panels {
+    display: flex;
+    gap: 2px;
+    background: color-mix(in srgb, CanvasText 8%, transparent);
+    border-radius: 7px;
+    padding: 2px;
+    margin: 4px 0 6px;
+  }
+  .panels button {
+    all: unset;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    padding: 3px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+  .panels button.on {
+    background: Canvas;
+    box-shadow: 0 0 0 1px color-mix(in srgb, CanvasText 15%, transparent);
+  }
+  .toast {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: color-mix(in srgb, #2f7de1 16%, Canvas);
+    border: 1px solid color-mix(in srgb, #2f7de1 40%, transparent);
   }
 </style>

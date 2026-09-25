@@ -46,7 +46,7 @@
     [shortUrl(v.url), v.searchQuery && `search “${v.searchQuery}”`, i > 0 && v.anchorText && `via “${v.anchorText}”`].filter(Boolean).join(' · ');
 
   function open(v: Visit) {
-    request({ cmd: 'dude.open', url: v.url });
+    request({ cmd: 'dude.open', url: v.url, visitId: v.id });
     window.close();
   }
 </script>

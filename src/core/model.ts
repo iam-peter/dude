@@ -67,7 +67,7 @@ export interface Session {
   closedAt?: number;
   rootId?: string;
   cursorId?: string;
-  spawnedFrom?: { sessionId: string; visitId?: string; kind: 'link' | 'duplicate' };
+  spawnedFrom?: { sessionId: string; visitId?: string; kind: 'link' | 'duplicate' | 'reopen' };
   lifecycle: LifecycleEntry[];
   moves: Move[];
   visitIds: string[];

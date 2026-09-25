@@ -3,6 +3,7 @@
 import { installRecorder } from '@/background/recorder';
 import { installCapture } from '@/background/capture';
 import { installMaintenance, run as runMaintenance } from '@/background/maintenance';
+import { installNavigation } from '@/background/navigate';
 import { Service } from '@/background/service';
 import type { Request } from '@/background/protocol';
 import { installS1Recorder } from '@/spike/s1-recorder';
@@ -13,6 +14,7 @@ export default defineBackground(() => {
   installRecorder(service);
   installCapture(service);
   installMaintenance(service);
+  const nav = installNavigation(service);
   installS1Recorder();
   installS2Probe();
 
@@ -27,7 +29,19 @@ export default defineBackground(() => {
       case 'dude.sessions':
         return reply(service.sessions(msg));
       case 'dude.open':
-        return reply(browser.tabs.create({ url: msg.url }).then(() => true));
+        return reply(nav.open(msg.url, msg.visitId).then(() => true));
+      case 'dude.openPath':
+        return reply(nav.openPath(msg.visitId));
+      case 'dude.openPath.cancel':
+        return reply(Promise.resolve(nav.cancel(msg.job)));
+      case 'dude.semanticBack':
+        return reply(nav.semanticBack(msg.tabId));
+      case 'dude.pendingFocus':
+        return reply(Promise.resolve(nav.takePendingFocus(msg.tabId)));
+      case 'dude.searchDocs':
+        return reply(service.searchDocs());
+      case 'dude.quickSearch':
+        return reply(service.quickSearch(msg.q));
       case 'dude.debug':
         return reply(service.debug());
       case 'dude.describeSince':

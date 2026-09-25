@@ -15,8 +15,15 @@
     onOpen: (row: Row) => void;
     tooltip: (row: Row) => string;
     badge?: (row: Row) => { text: string; title: string; onClick: () => void } | undefined;
+    /** Row to point out (context menu "Show where I came from"). */
+    highlight?: string;
   }
-  let { view, mode, onOpen, tooltip, badge }: Props = $props();
+  let { view, mode, onOpen, tooltip, badge, highlight }: Props = $props();
+
+  let rowEls: Record<string, HTMLElement> = {};
+  $effect(() => {
+    if (highlight) rowEls[highlight]?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  });
 
   const ROW_H = 30;
   const PAD = 10;
@@ -92,7 +99,9 @@
   {#each view.rows as r, i (r.key)}
     {@const b = badge?.(r)}
     <div
+      bind:this={rowEls[r.key]}
       class="row"
+      class:highlight={highlight === r.key}
       class:cursor={r.cursor}
       class:off={!r.onPath}
       class:inherited={r.inherited}
@@ -202,6 +211,10 @@
   }
   .row.cursor .open {
     background: color-mix(in srgb, var(--accent) 16%, transparent);
+  }
+  .row.highlight .open {
+    outline: 2px solid #e8912d;
+    background: color-mix(in srgb, #e8912d 16%, transparent);
   }
   .row.off .open {
     opacity: 0.72;

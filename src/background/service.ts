@@ -7,6 +7,7 @@ import type { Observation } from '@/core/observations';
 import { apply, visitFor } from '@/core/projector';
 import { describeAll, describeSince } from '@/core/describe';
 import { mediaPlan, type MediaPlan } from '@/core/media';
+import type { SearchDoc } from '@/search';
 import { append, getMeta, logSize, putMeta, replay } from '@/storage/db';
 import type { SessionCard, SessionPayload, SessionSummary } from './protocol';
 
@@ -157,6 +158,88 @@ export class Service {
    * previews can go — visits looked at for less than `minDwellMs` that are no longer
    * current, and anything older than `maxAgeMs` (S2 #7, E2).
    */
+  /** One document per visit for the search index (F8). */
+  searchDocs(): Promise<SearchDoc[]> {
+    return this.after(() =>
+      Object.values(this.st.visits).map((v) => {
+        // A tab's first page continues the breadcrumb in the tab it was opened from.
+        const s = this.st.sessions[v.sessionId];
+        const viaTab = !v.parentId && s?.rootId === v.id && !!s.spawnedFrom?.visitId;
+        return {
+        id: v.id,
+        sessionId: v.sessionId,
+        parentId: viaTab ? s.spawnedFrom!.visitId : v.parentId,
+        viaTab,
+        url: v.url,
+        host: hostOf(v.url),
+        title: v.title,
+        query: v.searchQuery,
+        anchor: v.anchorText,
+        firstAt: v.firstAt,
+        lastAt: v.lastAt,
+        textId: v.text?.id,
+        shotId: v.screenshots.at(-1)?.id,
+        favIconUrl: v.favIconUrl,
+        inherited: !!v.inheritedFrom,
+        };
+      }),
+    );
+  }
+
+  /** Stable reference of a visit for `tab.reopened` (G3). */
+  visitRef(visitId: string): Promise<{ url: string; firstAt: number } | undefined> {
+    return this.after(() => {
+      const v = this.st.visits[visitId];
+      return v && { url: v.url, firstAt: v.firstAt };
+    });
+  }
+
+  /** URLs from the root to a visit, for "open with path" (G2). POST results are skipped. */
+  pathTo(visitId: string): Promise<string[]> {
+    return this.after(() => {
+      const urls: string[] = [];
+      for (let id: string | undefined = visitId; id; id = this.st.visits[id]?.parentId) {
+        const v = this.st.visits[id];
+        if (v && v.method !== 'post') urls.unshift(v.url);
+      }
+      return urls;
+    });
+  }
+
+  /** Graph parent of the page a tab shows (semantic back, G4). */
+  parentOf(tabId: number): Promise<{ url: string; title?: string } | undefined> {
+    return this.after(() => {
+      const tab = this.st.tabs[tabId];
+      const s = tab && this.st.sessions[tab.sessionId];
+      const cur = s?.cursorId ? this.st.visits[s.cursorId] : undefined;
+      const p = cur?.parentId ? this.st.visits[cur.parentId] : undefined;
+      if (p) return { url: p.url, title: p.title };
+      // At the root: the page the tab was opened from, if any.
+      const from = s?.spawnedFrom?.visitId ? this.st.visits[s.spawnedFrom.visitId] : undefined;
+      return from && { url: from.url, title: from.title };
+    });
+  }
+
+  /** Metadata-only search for the omnibox: every word in title, URL, search terms or link text. */
+  quickSearch(q: string, limit = 6): Promise<{ url: string; title?: string; visitId: string }[]> {
+    return this.after(() => {
+      const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+      if (!words.length) return [];
+      const seen = new Set<string>();
+      return Object.values(this.st.visits)
+        .filter((v) => !v.inheritedFrom)
+        .sort((a, b) => b.lastAt - a.lastAt)
+        .filter((v) => {
+          const hay = [v.title, v.url, v.searchQuery, v.anchorText].join(' ').toLowerCase();
+          if (!words.every((w) => hay.includes(w)) || seen.has(v.normUrl)) return false;
+          seen.add(v.normUrl);
+          return true;
+        })
+        .slice(0, limit)
+        .map((v) => ({ url: v.url, title: v.title, visitId: v.id }));
+    });
+  }
+
   media(now: number, minDwellMs: number, maxAgeMs: number): Promise<MediaPlan> {
     return this.after(() => mediaPlan(this.st, now, minDwellMs, maxAgeMs));
   }
@@ -203,3 +286,12 @@ export class Service {
     this.checkpointSeq = seq;
   }
 }
+
+function hostOf(url: string): string {
+  try {
+    return new URL(url).host;
+  } catch {
+    return '';
+  }
+}
+
