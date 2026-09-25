@@ -2,7 +2,7 @@
   "name": "dude",
   "description": "Per-tab navigation graphs with screenshots and playback \u2014 an own history next to the browser's",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "license": "MIT",
   "engines": {
@@ -31,7 +31,9 @@
     "zip:firefox:test": "DUDE_TEST_HOOKS=1 scripts/node22.sh wxt zip -b firefox",
     "dev:test": "DUDE_TEST_HOOKS=1 scripts/node22.sh wxt",
     "dev:firefox:test": "DUDE_TEST_HOOKS=1 scripts/node22.sh wxt -b firefox",
-    "check:release": "scripts/node22.sh node scripts/check-release.mjs"
+    "check:release": "scripts/node22.sh node scripts/check-release.mjs",
+    "release": "scripts/node22.sh node scripts/release.mjs",
+    "icons": "scripts/node22.sh node scripts/icons.mjs"
   },
   "devDependencies": {
     "@tsconfig/svelte": "^5.0.8",

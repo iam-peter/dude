@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules
 .output
 .output-test
+dist
+web-ext-artifacts
 stats.html
 stats-*.json
 .wxt

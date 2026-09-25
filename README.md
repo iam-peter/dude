@@ -9,6 +9,36 @@ text. It's shown live in the Firefox sidebar or the Chrome side panel, and in fu
 sessions app, which also searches everything recorded. The S1
 spike findings behind the recording rules are in [docs/S1-FINDINGS.md](docs/S1-FINDINGS.md).
 
+## Installing (release build)
+
+Builds a release for personal use (A4). The release check runs first, so no test hooks
+can get in.
+
+```bash
+npm run release
+```
+
+- **Chrome:** open `chrome://extensions`, turn on *Developer mode*, choose *Load unpacked*
+  and pick `dist/chrome`. That folder stays put, so after the next release press the
+  reload button on dude's card.
+- **Firefox** needs a signed `.xpi`, signed as an *unlisted* add-on: AMO signs it, but it
+  isn't published. Create API credentials once at
+  <https://addons.mozilla.org/developers/addon/api/key/>, then run the release with them in
+  your environment (not in any file in this repo):
+
+  ```bash
+  WEB_EXT_API_KEY=… WEB_EXT_API_SECRET=… npm run release -- --sign
+  ```
+
+  Install `dist/firefox/*.xpi` via `about:addons` → ⚙ → *Install Add-on From File*. Every
+  signed upload needs a new version in `package.json`.
+
+The installed extension keeps its data in your normal browser profile, separate from the
+dev profile in `.profiles/` that `npm run dev:firefox` uses.
+
+The icon is `assets/icon.svg` (plus a simplified `assets/icon-16.svg` for the toolbar
+size); `npm run icons` renders them to `public/icon/`.
+
 ## Using it
 
 ```bash

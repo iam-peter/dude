@@ -14,6 +14,9 @@ export default defineConfig({
   outDir: testHooks ? '.output-test' : '.output',
   filterEntrypoints: testHooks ? undefined : entrypoints.filter((e) => !TEST_ONLY_ENTRYPOINTS.includes(e)),
   vite: () => ({ define: { __DUDE_TEST_HOOKS__: JSON.stringify(testHooks) } }),
+  // Sources zip for AMO review: everything needed to build, not the recorded fixtures (the
+  // manual ones contain real browsing). .gitignore'd files (dev profiles) are never included.
+  zip: { excludeSources: ['fixtures/**'] },
   modules: ['@wxt-dev/module-svelte'],
   manifestVersion: 3,
   manifest: ({ browser }) => ({
@@ -33,7 +36,8 @@ export default defineConfig({
       browser_specific_settings: {
         gecko: {
           id: '{53952834-ba6a-4072-9c32-c836b5a38a3c}',
-          strict_min_version: '128.0',
+          // 140: data_collection_permissions (below) needs it; MV3 world: MAIN needs 128.
+          strict_min_version: '140.0',
           // Nothing ever leaves the browser (H2).
           data_collection_permissions: { required: ['none'] },
         },

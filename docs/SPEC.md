@@ -72,7 +72,9 @@ Everything in §2 fits in a WebExtension. The limits that shape the design:
 
 Stack (A4–A8): TypeScript, WXT, Svelte, Manifest V3 in both browsers, MIT license.
 Distributed for personal use: an unlisted, self-signed XPI from AMO for Firefox, and
-"load unpacked" in Chrome.
+"load unpacked" in Chrome. `npm run release [-- --sign]` builds both; the Firefox
+sources zip for AMO review excludes the recorded fixtures (they contain real browsing).
+Firefox 140 is the minimum (`data_collection_permissions`).
 
 ## 5. Data model
 

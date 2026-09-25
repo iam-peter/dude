@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- dude: pages visited one after another; after going back, a branch to a new page — the
+       orange one, where you are now. (Not three nodes in a V: that reads as "share".) -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4b93ec"/>
+      <stop offset="1" stop-color="#1f63c4"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#bg)"/>
+  <path d="M26 46 H102 M60 46 C 60 76, 72 88, 98 88" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="26" cy="46" r="11" fill="#fff"/>
+  <circle cx="60" cy="46" r="11" fill="#fff"/>
+  <circle cx="102" cy="46" r="11" fill="#fff" fill-opacity="0.55"/>
+  <circle cx="100" cy="88" r="14" fill="#e8912d" stroke="#fff" stroke-width="5"/>
+</svg>
