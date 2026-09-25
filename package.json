@@ -1,8 +1,8 @@
 {
   "name": "dude",
-  "description": "Per-tab navigation graphs with screenshots and playback \u2014 an own history next to the browser's",
+  "description": "Per-tab navigation graphs with screenshots and playback — an own history next to the browser's",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "license": "MIT",
   "engines": {
@@ -39,6 +39,7 @@
     "@tsconfig/svelte": "^5.0.8",
     "@types/node": "^26.6.2",
     "@wxt-dev/module-svelte": "^2.0.5",
+    "jose": "^5.9.6",
     "playwright": "^1.63.0",
     "selenium-webdriver": "^4.49.0",
     "svelte": "^5.57.1",

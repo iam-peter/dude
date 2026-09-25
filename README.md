@@ -23,11 +23,13 @@ npm run release
   reload button on dude's card.
 - **Firefox** needs a signed `.xpi`, signed as an *unlisted* add-on: AMO signs it, but it
   isn't published. Create API credentials once at
-  <https://addons.mozilla.org/developers/addon/api/key/>, then run the release with them in
-  your environment (not in any file in this repo):
+  <https://addons.mozilla.org/developers/addon/api/key/>, then run the following. It asks
+  for the JWT issuer and, with hidden input, the secret, so neither ends up in your shell
+  history or in any file in this repo. `WEB_EXT_API_KEY` / `WEB_EXT_API_SECRET` in the
+  environment work too.
 
   ```bash
-  WEB_EXT_API_KEY=… WEB_EXT_API_SECRET=… npm run release -- --sign
+  npm run release -- --sign
   ```
 
   Install `dist/firefox/*.xpi` via `about:addons` → ⚙ → *Install Add-on From File*. Every

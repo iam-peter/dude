@@ -33,3 +33,4 @@ fixtures/s1/raw/
 
 # persistent dev browser profiles (web-ext.config.ts)
 .profiles/
+.amo-upload-uuid
