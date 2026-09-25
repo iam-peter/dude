@@ -15,8 +15,9 @@ export default defineConfig({
   filterEntrypoints: testHooks ? undefined : entrypoints.filter((e) => !TEST_ONLY_ENTRYPOINTS.includes(e)),
   vite: () => ({ define: { __DUDE_TEST_HOOKS__: JSON.stringify(testHooks) } }),
   // Sources zip for AMO review: everything needed to build, not the recorded fixtures (the
-  // manual ones contain real browsing). .gitignore'd files (dev profiles) are never included.
-  zip: { excludeSources: ['fixtures/**'] },
+  // manual ones contain real browsing). WXT leaves out dot-folders such as the dev profiles
+  // but not .gitignore'd build output, so the release copies in dist/ are listed here.
+  zip: { excludeSources: ['fixtures/**', 'dist/**', 'web-ext-artifacts/**', 'stats*'] },
   modules: ['@wxt-dev/module-svelte'],
   manifestVersion: 3,
   manifest: ({ browser }) => ({
