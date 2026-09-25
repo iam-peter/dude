@@ -1,0 +1,796 @@
+{
+ "scenario": "reload",
+ "browser": "chromium",
+ "driver": "playwright-chromium",
+ "status": "ok",
+ "source": "chromium-auto-20260925074450.json",
+ "recordedAt": "2026-09-25T07:44:22.254Z",
+ "records": [
+  {
+   "t": 1790322262270,
+   "wake": "12e41851",
+   "i": 499,
+   "browser": "chrome",
+   "src": "tabs.onCreated",
+   "data": {
+    "active": true,
+    "audible": false,
+    "autoDiscardable": true,
+    "discarded": false,
+    "frozen": false,
+    "groupId": -1,
+    "height": 633,
+    "highlighted": true,
+    "id": 1422017127,
+    "incognito": false,
+    "index": 1,
+    "lastAccessed": 1790322262268.843,
+    "mutedInfo": {
+     "muted": false
+    },
+    "openerTabId": 1422017104,
+    "pendingUrl": "about:blank",
+    "pinned": false,
+    "selected": true,
+    "splitViewId": -1,
+    "status": "loading",
+    "title": "",
+    "url": "",
+    "width": 1280,
+    "windowId": 1422017103
+   },
+   "seq": 500
+  },
+  {
+   "t": 1790322262270,
+   "wake": "12e41851",
+   "i": 500,
+   "browser": "chrome",
+   "src": "tabs.onActivated",
+   "data": {
+    "tabId": 1422017127,
+    "windowId": 1422017103
+   },
+   "seq": 501
+  },
+  {
+   "t": 1790322262271,
+   "wake": "12e41851",
+   "i": 501,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017127,
+    "changeInfo": {
+     "status": "loading",
+     "url": "about:blank"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017127,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322262268.843,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "about:blank",
+     "url": "about:blank",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 502
+  },
+  {
+   "t": 1790322262272,
+   "wake": "12e41851",
+   "i": 502,
+   "browser": "chrome",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": -1,
+    "tabId": 1422017127,
+    "timeStamp": 1790322262264.24,
+    "url": "about:blank"
+   },
+   "seq": 503
+  },
+  {
+   "t": 1790322262272,
+   "wake": "12e41851",
+   "i": 503,
+   "browser": "chrome",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "documentId": "87DD68872B7604E41277CD426D682E54",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 18,
+    "tabId": 1422017127,
+    "timeStamp": 1790322262272.468,
+    "transitionQualifiers": [],
+    "transitionType": "start_page",
+    "url": "about:blank"
+   },
+   "seq": 504
+  },
+  {
+   "t": 1790322262273,
+   "wake": "12e41851",
+   "i": 504,
+   "browser": "chrome",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "documentId": "87DD68872B7604E41277CD426D682E54",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 18,
+    "tabId": 1422017127,
+    "timeStamp": 1790322262273.342,
+    "url": "about:blank"
+   },
+   "seq": 505
+  },
+  {
+   "t": 1790322262273,
+   "wake": "12e41851",
+   "i": 505,
+   "browser": "chrome",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "documentId": "87DD68872B7604E41277CD426D682E54",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 18,
+    "tabId": 1422017127,
+    "timeStamp": 1790322262273.661,
+    "url": "about:blank"
+   },
+   "seq": 506
+  },
+  {
+   "t": 1790322262274,
+   "wake": "12e41851",
+   "i": 506,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017127,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017127,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322262273.47,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "complete",
+     "title": "about:blank",
+     "url": "about:blank",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 507
+  },
+  {
+   "t": 1790322262278,
+   "wake": "12e41851",
+   "i": 507,
+   "browser": "chrome",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": -1,
+    "tabId": 1422017127,
+    "timeStamp": 1790322262278.553,
+    "url": "http://localhost:8765/a"
+   },
+   "seq": 508
+  },
+  {
+   "t": 1790322262283,
+   "wake": "12e41851",
+   "i": 508,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017127,
+    "changeInfo": {
+     "status": "loading",
+     "url": "http://localhost:8765/a"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017127,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322262273.47,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "localhost:8765/a",
+     "url": "http://localhost:8765/a",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 509
+  },
+  {
+   "t": 1790322262284,
+   "wake": "12e41851",
+   "i": 509,
+   "browser": "chrome",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "documentId": "9E4B17606BBD13FB379CA058372BB5FC",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 18,
+    "tabId": 1422017127,
+    "timeStamp": 1790322262284.648,
+    "transitionQualifiers": [],
+    "transitionType": "typed",
+    "url": "http://localhost:8765/a"
+   },
+   "seq": 510
+  },
+  {
+   "t": 1790322262287,
+   "wake": "12e41851",
+   "i": 510,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017127,
+    "changeInfo": {
+     "title": "Page A"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017127,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322262273.47,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "Page A",
+     "url": "http://localhost:8765/a",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 511
+  },
+  {
+   "t": 1790322262288,
+   "wake": "12e41851",
+   "i": 511,
+   "browser": "chrome",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "documentId": "9E4B17606BBD13FB379CA058372BB5FC",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 18,
+    "tabId": 1422017127,
+    "timeStamp": 1790322262288.147,
+    "url": "http://localhost:8765/a"
+   },
+   "seq": 512
+  },
+  {
+   "t": 1790322262290,
+   "wake": "12e41851",
+   "i": 512,
+   "browser": "chrome",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "documentId": "9E4B17606BBD13FB379CA058372BB5FC",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 18,
+    "tabId": 1422017127,
+    "timeStamp": 1790322262290.759,
+    "url": "http://localhost:8765/a"
+   },
+   "seq": 513
+  },
+  {
+   "t": 1790322262291,
+   "wake": "12e41851",
+   "i": 513,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017127,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017127,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322262273.47,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "complete",
+     "title": "Page A",
+     "url": "http://localhost:8765/a",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 514
+  },
+  {
+   "t": 1790322262840,
+   "wake": "12e41851",
+   "i": 514,
+   "browser": "chrome",
+   "src": "content.click",
+   "data": {
+    "type": "click",
+    "href": "http://localhost:8765/b",
+    "text": "to B",
+    "target": "",
+    "rel": "",
+    "button": 0,
+    "ctrl": false,
+    "meta": false,
+    "shift": false,
+    "alt": false,
+    "trusted": true,
+    "pageUrl": "http://localhost:8765/a",
+    "t": 1790322262839,
+    "from": {
+     "tabId": 1422017127,
+     "frameId": 0,
+     "url": "http://localhost:8765/a"
+    }
+   },
+   "seq": 515
+  },
+  {
+   "t": 1790322262842,
+   "wake": "12e41851",
+   "i": 515,
+   "browser": "chrome",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": -1,
+    "tabId": 1422017127,
+    "timeStamp": 1790322262842.312,
+    "url": "http://localhost:8765/b"
+   },
+   "seq": 516
+  },
+  {
+   "t": 1790322262848,
+   "wake": "12e41851",
+   "i": 516,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017127,
+    "changeInfo": {
+     "status": "loading",
+     "url": "http://localhost:8765/b"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017127,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322262273.47,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "localhost:8765/b",
+     "url": "http://localhost:8765/b",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 517
+  },
+  {
+   "t": 1790322262849,
+   "wake": "12e41851",
+   "i": 517,
+   "browser": "chrome",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "documentId": "C7B5DD20278174BD39994CFA14DE63E9",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 18,
+    "tabId": 1422017127,
+    "timeStamp": 1790322262849.876,
+    "transitionQualifiers": [],
+    "transitionType": "link",
+    "url": "http://localhost:8765/b"
+   },
+   "seq": 518
+  },
+  {
+   "t": 1790322262850,
+   "wake": "12e41851",
+   "i": 518,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017127,
+    "changeInfo": {
+     "title": "Page B"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017127,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322262273.47,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "Page B",
+     "url": "http://localhost:8765/b",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 519
+  },
+  {
+   "t": 1790322262851,
+   "wake": "12e41851",
+   "i": 519,
+   "browser": "chrome",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "documentId": "C7B5DD20278174BD39994CFA14DE63E9",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 18,
+    "tabId": 1422017127,
+    "timeStamp": 1790322262850.951,
+    "url": "http://localhost:8765/b"
+   },
+   "seq": 520
+  },
+  {
+   "t": 1790322262851,
+   "wake": "12e41851",
+   "i": 520,
+   "browser": "chrome",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "documentId": "C7B5DD20278174BD39994CFA14DE63E9",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 18,
+    "tabId": 1422017127,
+    "timeStamp": 1790322262851.213,
+    "url": "http://localhost:8765/b"
+   },
+   "seq": 521
+  },
+  {
+   "t": 1790322262851,
+   "wake": "12e41851",
+   "i": 521,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017127,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017127,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322262273.47,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "complete",
+     "title": "Page B",
+     "url": "http://localhost:8765/b",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 522
+  },
+  {
+   "t": 1790322263360,
+   "wake": "12e41851",
+   "i": 522,
+   "browser": "chrome",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": -1,
+    "tabId": 1422017127,
+    "timeStamp": 1790322263359.769,
+    "url": "http://localhost:8765/b"
+   },
+   "seq": 523
+  },
+  {
+   "t": 1790322263374,
+   "wake": "12e41851",
+   "i": 523,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017127,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017127,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322262273.47,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "Page B",
+     "url": "http://localhost:8765/b",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 524
+  },
+  {
+   "t": 1790322263376,
+   "wake": "12e41851",
+   "i": 524,
+   "browser": "chrome",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "documentId": "F5D73FA120D5E26CD93802ABDDE9FFED",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 18,
+    "tabId": 1422017127,
+    "timeStamp": 1790322263375.947,
+    "transitionQualifiers": [],
+    "transitionType": "reload",
+    "url": "http://localhost:8765/b"
+   },
+   "seq": 525
+  },
+  {
+   "t": 1790322263379,
+   "wake": "12e41851",
+   "i": 525,
+   "browser": "chrome",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "documentId": "F5D73FA120D5E26CD93802ABDDE9FFED",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 18,
+    "tabId": 1422017127,
+    "timeStamp": 1790322263378.897,
+    "url": "http://localhost:8765/b"
+   },
+   "seq": 526
+  },
+  {
+   "t": 1790322263379,
+   "wake": "12e41851",
+   "i": 526,
+   "browser": "chrome",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "documentId": "F5D73FA120D5E26CD93802ABDDE9FFED",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 18,
+    "tabId": 1422017127,
+    "timeStamp": 1790322263379.374,
+    "url": "http://localhost:8765/b"
+   },
+   "seq": 527
+  },
+  {
+   "t": 1790322263379,
+   "wake": "12e41851",
+   "i": 527,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017127,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017127,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322262273.47,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "complete",
+     "title": "Page B",
+     "url": "http://localhost:8765/b",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 528
+  }
+ ]
+}

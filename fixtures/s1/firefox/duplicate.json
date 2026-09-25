@@ -1,0 +1,2166 @@
+{
+ "scenario": "duplicate",
+ "browser": "firefox",
+ "driver": "geckodriver-firefox",
+ "status": "ok",
+ "source": "firefox-auto-20260925074608.json",
+ "recordedAt": "2026-09-25T07:45:57.325Z",
+ "records": [
+  {
+   "t": 1790322357337,
+   "wake": "756880a5",
+   "i": 1262,
+   "browser": "firefox",
+   "src": "tabs.onCreated",
+   "data": {
+    "id": 24,
+    "index": 2,
+    "windowId": 1,
+    "highlighted": true,
+    "active": true,
+    "attention": false,
+    "pinned": false,
+    "status": "complete",
+    "hidden": false,
+    "discarded": false,
+    "incognito": false,
+    "width": 1366,
+    "height": 682,
+    "lastAccessed": 1790322357337,
+    "audible": false,
+    "autoDiscardable": true,
+    "mutedInfo": {
+     "muted": false
+    },
+    "isArticle": null,
+    "isInReaderMode": false,
+    "sharingState": {
+     "camera": false,
+     "microphone": false,
+     "screen": null
+    },
+    "successorTabId": -1,
+    "groupId": -1,
+    "splitViewId": -1,
+    "cookieStoreId": "firefox-default",
+    "url": "about:blank",
+    "title": "New Tab"
+   },
+   "seq": 1263
+  },
+  {
+   "t": 1790322357338,
+   "wake": "756880a5",
+   "i": 1263,
+   "browser": "firefox",
+   "src": "tabs.onActivated",
+   "data": {
+    "tabId": 24,
+    "previousTabId": 1,
+    "windowId": 1
+   },
+   "seq": 1264
+  },
+  {
+   "t": 1790322357344,
+   "wake": "756880a5",
+   "i": 1265,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790322357343,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 24,
+    "windowId": 1
+   },
+   "seq": 1266
+  },
+  {
+   "t": 1790322357344,
+   "wake": "756880a5",
+   "i": 1266,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": false,
+     "active": false,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357342,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "about:blank",
+     "title": "New Tab"
+    }
+   },
+   "seq": 1267
+  },
+  {
+   "t": 1790322357344,
+   "wake": "756880a5",
+   "i": 1267,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790322357343,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "d650f7c3-f71f-adab-1183-9ff72c53efd0",
+    "tabId": 24,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": []
+   },
+   "seq": 1268
+  },
+  {
+   "t": 1790322357344,
+   "wake": "756880a5",
+   "i": 1268,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790322357344,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "d650f7c3-f71f-adab-1183-9ff72c53efd0",
+    "tabId": 24,
+    "windowId": 1
+   },
+   "seq": 1269
+  },
+  {
+   "t": 1790322357345,
+   "wake": "756880a5",
+   "i": 1269,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 24,
+    "phase": "created",
+    "value": null,
+    "fresh": false
+   },
+   "seq": 1270
+  },
+  {
+   "t": 1790322357345,
+   "wake": "756880a5",
+   "i": 1270,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790322357344,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "d650f7c3-f71f-adab-1183-9ff72c53efd0",
+    "tabId": 24,
+    "windowId": 1
+   },
+   "seq": 1271
+  },
+  {
+   "t": 1790322357345,
+   "wake": "756880a5",
+   "i": 1271,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": false,
+     "active": false,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357342,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "about:blank",
+     "title": "New Tab"
+    }
+   },
+   "seq": 1272
+  },
+  {
+   "t": 1790322357345,
+   "wake": "756880a5",
+   "i": 1272,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 24,
+    "phase": "committed",
+    "value": null,
+    "fresh": false
+   },
+   "seq": 1273
+  },
+  {
+   "t": 1790322357346,
+   "wake": "756880a5",
+   "i": 1273,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 24,
+    "phase": "completed",
+    "value": "bed90254-4d51-46d6-a8e3-2ec6275a9729",
+    "fresh": true
+   },
+   "seq": 1274
+  },
+  {
+   "t": 1790322357352,
+   "wake": "756880a5",
+   "i": 1274,
+   "browser": "firefox",
+   "src": "tabs.onActivated",
+   "data": {
+    "tabId": 24,
+    "previousTabId": 1,
+    "windowId": 1
+   },
+   "seq": 1275
+  },
+  {
+   "t": 1790322357362,
+   "wake": "756880a5",
+   "i": 1275,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790322357361,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 24,
+    "windowId": 1
+   },
+   "seq": 1276
+  },
+  {
+   "t": 1790322357363,
+   "wake": "756880a5",
+   "i": 1276,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357362,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "about:blank",
+     "title": "New Tab"
+    }
+   },
+   "seq": 1277
+  },
+  {
+   "t": 1790322357371,
+   "wake": "756880a5",
+   "i": 1277,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790322357370,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 24,
+    "windowId": 1
+   },
+   "seq": 1278
+  },
+  {
+   "t": 1790322357373,
+   "wake": "756880a5",
+   "i": 1278,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790322357372,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "58b195e8-a575-9af8-7f9d-2b5d0acf3fc5",
+    "tabId": 24,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": []
+   },
+   "seq": 1279
+  },
+  {
+   "t": 1790322357374,
+   "wake": "756880a5",
+   "i": 1279,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "title": "localhost:8765/a"
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357373,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "localhost:8765/a"
+    }
+   },
+   "seq": 1280
+  },
+  {
+   "t": 1790322357376,
+   "wake": "756880a5",
+   "i": 1280,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "status": "loading",
+     "url": "http://localhost:8765/a"
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357375,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "localhost:8765/a"
+    }
+   },
+   "seq": 1281
+  },
+  {
+   "t": 1790322357376,
+   "wake": "756880a5",
+   "i": 1281,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 24,
+    "phase": "committed",
+    "value": "bed90254-4d51-46d6-a8e3-2ec6275a9729",
+    "fresh": false
+   },
+   "seq": 1282
+  },
+  {
+   "t": 1790322357376,
+   "wake": "756880a5",
+   "i": 1282,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "isArticle": false
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357376,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "localhost:8765/a"
+    }
+   },
+   "seq": 1283
+  },
+  {
+   "t": 1790322357377,
+   "wake": "756880a5",
+   "i": 1283,
+   "browser": "firefox",
+   "src": "webNavigation.onErrorOccurred",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790322357376,
+    "error": "Error code 2152398850",
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "58b195e8-a575-9af8-7f9d-2b5d0acf3fc5",
+    "tabId": 24,
+    "windowId": 1
+   },
+   "seq": 1284
+  },
+  {
+   "t": 1790322357395,
+   "wake": "756880a5",
+   "i": 1284,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "title": "Page A"
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357394,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "Page A"
+    }
+   },
+   "seq": 1285
+  },
+  {
+   "t": 1790322357402,
+   "wake": "756880a5",
+   "i": 1285,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790322357402,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "58b195e8-a575-9af8-7f9d-2b5d0acf3fc5",
+    "tabId": 24,
+    "windowId": 1
+   },
+   "seq": 1286
+  },
+  {
+   "t": 1790322357404,
+   "wake": "756880a5",
+   "i": 1286,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790322357404,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "58b195e8-a575-9af8-7f9d-2b5d0acf3fc5",
+    "tabId": 24,
+    "windowId": 1
+   },
+   "seq": 1287
+  },
+  {
+   "t": 1790322357405,
+   "wake": "756880a5",
+   "i": 1287,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357405,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "Page A"
+    }
+   },
+   "seq": 1288
+  },
+  {
+   "t": 1790322357405,
+   "wake": "756880a5",
+   "i": 1288,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 24,
+    "phase": "completed",
+    "value": "bed90254-4d51-46d6-a8e3-2ec6275a9729",
+    "fresh": false
+   },
+   "seq": 1289
+  },
+  {
+   "t": 1790322357942,
+   "wake": "756880a5",
+   "i": 1289,
+   "browser": "firefox",
+   "src": "content.click",
+   "data": {
+    "type": "click",
+    "href": "http://localhost:8765/b",
+    "text": "to B",
+    "target": "",
+    "rel": "",
+    "button": 0,
+    "ctrl": false,
+    "meta": false,
+    "shift": false,
+    "alt": false,
+    "trusted": true,
+    "pageUrl": "http://localhost:8765/a",
+    "t": 1790322357941,
+    "from": {
+     "tabId": 24,
+     "frameId": 0,
+     "url": "http://localhost:8765/a"
+    }
+   },
+   "seq": 1290
+  },
+  {
+   "t": 1790322357943,
+   "wake": "756880a5",
+   "i": 1290,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "http://localhost:8765/b",
+    "timeStamp": 1790322357943,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 24,
+    "windowId": 1
+   },
+   "seq": 1291
+  },
+  {
+   "t": 1790322357943,
+   "wake": "756880a5",
+   "i": 1291,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357943,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "Page A"
+    }
+   },
+   "seq": 1292
+  },
+  {
+   "t": 1790322357949,
+   "wake": "756880a5",
+   "i": 1292,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "isArticle": false
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357948,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "Page A"
+    }
+   },
+   "seq": 1293
+  },
+  {
+   "t": 1790322357950,
+   "wake": "756880a5",
+   "i": 1293,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "http://localhost:8765/b",
+    "timeStamp": 1790322357949,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bed73869-7d6b-3c70-9615-bd5cbe8fb47f",
+    "tabId": 24,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": []
+   },
+   "seq": 1294
+  },
+  {
+   "t": 1790322357950,
+   "wake": "756880a5",
+   "i": 1294,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "title": "localhost:8765/b"
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357950,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/b",
+     "title": "localhost:8765/b"
+    }
+   },
+   "seq": 1295
+  },
+  {
+   "t": 1790322357953,
+   "wake": "756880a5",
+   "i": 1295,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "status": "loading",
+     "url": "http://localhost:8765/b"
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357952,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/b",
+     "title": "localhost:8765/b"
+    }
+   },
+   "seq": 1296
+  },
+  {
+   "t": 1790322357954,
+   "wake": "756880a5",
+   "i": 1296,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 24,
+    "phase": "committed",
+    "value": "bed90254-4d51-46d6-a8e3-2ec6275a9729",
+    "fresh": false
+   },
+   "seq": 1297
+  },
+  {
+   "t": 1790322357955,
+   "wake": "756880a5",
+   "i": 1297,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "title": "Page B"
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357954,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/b",
+     "title": "Page B"
+    }
+   },
+   "seq": 1298
+  },
+  {
+   "t": 1790322357955,
+   "wake": "756880a5",
+   "i": 1298,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "http://localhost:8765/b",
+    "timeStamp": 1790322357954,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bed73869-7d6b-3c70-9615-bd5cbe8fb47f",
+    "tabId": 24,
+    "windowId": 1
+   },
+   "seq": 1299
+  },
+  {
+   "t": 1790322357957,
+   "wake": "756880a5",
+   "i": 1299,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "http://localhost:8765/b",
+    "timeStamp": 1790322357956,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bed73869-7d6b-3c70-9615-bd5cbe8fb47f",
+    "tabId": 24,
+    "windowId": 1
+   },
+   "seq": 1300
+  },
+  {
+   "t": 1790322357958,
+   "wake": "756880a5",
+   "i": 1300,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 24,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "id": 24,
+     "index": 2,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322357957,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/b",
+     "title": "Page B"
+    }
+   },
+   "seq": 1301
+  },
+  {
+   "t": 1790322357960,
+   "wake": "756880a5",
+   "i": 1301,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 24,
+    "phase": "completed",
+    "value": "bed90254-4d51-46d6-a8e3-2ec6275a9729",
+    "fresh": false
+   },
+   "seq": 1302
+  },
+  {
+   "t": 1790322358590,
+   "wake": "756880a5",
+   "i": 1303,
+   "browser": "firefox",
+   "src": "tabs.onActivated",
+   "data": {
+    "tabId": 24,
+    "previousTabId": 1,
+    "windowId": 1
+   },
+   "seq": 1304
+  },
+  {
+   "t": 1790322358610,
+   "wake": "756880a5",
+   "i": 1305,
+   "browser": "firefox",
+   "src": "tabs.onCreated",
+   "data": {
+    "id": 25,
+    "index": 3,
+    "windowId": 1,
+    "highlighted": false,
+    "active": false,
+    "attention": false,
+    "pinned": false,
+    "status": "loading",
+    "hidden": false,
+    "discarded": false,
+    "incognito": false,
+    "width": 1366,
+    "height": 682,
+    "lastAccessed": 1790322358606,
+    "audible": false,
+    "autoDiscardable": true,
+    "mutedInfo": {
+     "muted": false
+    },
+    "isArticle": null,
+    "isInReaderMode": false,
+    "sharingState": {
+     "camera": false,
+     "microphone": false,
+     "screen": null
+    },
+    "successorTabId": -1,
+    "groupId": -1,
+    "splitViewId": -1,
+    "cookieStoreId": "firefox-default",
+    "url": "about:blank",
+    "title": "New Tab"
+   },
+   "seq": 1306
+  },
+  {
+   "t": 1790322358613,
+   "wake": "756880a5",
+   "i": 1306,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 25,
+    "phase": "created",
+    "value": null,
+    "fresh": false
+   },
+   "seq": 1307
+  },
+  {
+   "t": 1790322358617,
+   "wake": "756880a5",
+   "i": 1307,
+   "browser": "firefox",
+   "src": "tabs.onActivated",
+   "data": {
+    "tabId": 25,
+    "previousTabId": 1,
+    "windowId": 1
+   },
+   "seq": 1308
+  },
+  {
+   "t": 1790322358617,
+   "wake": "756880a5",
+   "i": 1308,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "title": "Page B"
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322358616,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "about:blank",
+     "title": "Page B"
+    }
+   },
+   "seq": 1309
+  },
+  {
+   "t": 1790322358617,
+   "wake": "756880a5",
+   "i": 1309,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "http://localhost:8765/b",
+    "timeStamp": 1790322358617,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "ad5be3b0-58f1-db60-f27e-96198992f3db",
+    "tabId": 25,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": []
+   },
+   "seq": 1310
+  },
+  {
+   "t": 1790322358618,
+   "wake": "756880a5",
+   "i": 1310,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "title": "localhost:8765/b"
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322358617,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/b",
+     "title": "localhost:8765/b"
+    }
+   },
+   "seq": 1311
+  },
+  {
+   "t": 1790322358618,
+   "wake": "756880a5",
+   "i": 1311,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "title": "Page B"
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322358618,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/b",
+     "title": "Page B"
+    }
+   },
+   "seq": 1312
+  },
+  {
+   "t": 1790322358619,
+   "wake": "756880a5",
+   "i": 1312,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "http://localhost:8765/b",
+    "timeStamp": 1790322358618,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 25,
+    "windowId": 1
+   },
+   "seq": 1313
+  },
+  {
+   "t": 1790322358619,
+   "wake": "756880a5",
+   "i": 1313,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322358619,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/b",
+     "title": "Page B"
+    }
+   },
+   "seq": 1314
+  },
+  {
+   "t": 1790322358619,
+   "wake": "756880a5",
+   "i": 1314,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 25,
+    "phase": "committed",
+    "value": "bed90254-4d51-46d6-a8e3-2ec6275a9729",
+    "fresh": false
+   },
+   "seq": 1315
+  },
+  {
+   "t": 1790322358628,
+   "wake": "756880a5",
+   "i": 1315,
+   "browser": "firefox",
+   "src": "tabs.onActivated",
+   "data": {
+    "tabId": 24,
+    "previousTabId": 25,
+    "windowId": 1
+   },
+   "seq": 1316
+  },
+  {
+   "t": 1790322358639,
+   "wake": "756880a5",
+   "i": 1316,
+   "browser": "firefox",
+   "src": "tabs.onActivated",
+   "data": {
+    "tabId": 25,
+    "previousTabId": 24,
+    "windowId": 1
+   },
+   "seq": 1317
+  },
+  {
+   "t": 1790322358641,
+   "wake": "756880a5",
+   "i": 1317,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "http://localhost:8765/b",
+    "timeStamp": 1790322358641,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "c81f28b6-65bf-e9fc-38fe-d413fb6b98ff",
+    "tabId": 25,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": [
+     "forward_back"
+    ]
+   },
+   "seq": 1318
+  },
+  {
+   "t": 1790322358641,
+   "wake": "756880a5",
+   "i": 1318,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "title": "localhost:8765/b"
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322358641,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/b",
+     "title": "localhost:8765/b"
+    }
+   },
+   "seq": 1319
+  },
+  {
+   "t": 1790322358643,
+   "wake": "756880a5",
+   "i": 1319,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "status": "loading",
+     "url": "http://localhost:8765/b"
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322358642,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/b",
+     "title": "localhost:8765/b"
+    }
+   },
+   "seq": 1320
+  },
+  {
+   "t": 1790322358645,
+   "wake": "756880a5",
+   "i": 1320,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 25,
+    "phase": "committed",
+    "value": "bed90254-4d51-46d6-a8e3-2ec6275a9729",
+    "fresh": false
+   },
+   "seq": 1321
+  },
+  {
+   "t": 1790322358655,
+   "wake": "756880a5",
+   "i": 1321,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "title": "Page B"
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322358654,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/b",
+     "title": "Page B"
+    }
+   },
+   "seq": 1322
+  },
+  {
+   "t": 1790322358661,
+   "wake": "756880a5",
+   "i": 1322,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "http://localhost:8765/b",
+    "timeStamp": 1790322358660,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "c81f28b6-65bf-e9fc-38fe-d413fb6b98ff",
+    "tabId": 25,
+    "windowId": 1
+   },
+   "seq": 1323
+  },
+  {
+   "t": 1790322358663,
+   "wake": "756880a5",
+   "i": 1323,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "http://localhost:8765/b",
+    "timeStamp": 1790322358662,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "c81f28b6-65bf-e9fc-38fe-d413fb6b98ff",
+    "tabId": 25,
+    "windowId": 1
+   },
+   "seq": 1324
+  },
+  {
+   "t": 1790322358663,
+   "wake": "756880a5",
+   "i": 1324,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322358662,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/b",
+     "title": "Page B"
+    }
+   },
+   "seq": 1325
+  },
+  {
+   "t": 1790322358664,
+   "wake": "756880a5",
+   "i": 1325,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 25,
+    "phase": "completed",
+    "value": "bed90254-4d51-46d6-a8e3-2ec6275a9729",
+    "fresh": false
+   },
+   "seq": 1326
+  },
+  {
+   "t": 1790322360672,
+   "wake": "756880a5",
+   "i": 1326,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790322360671,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 25,
+    "windowId": 1
+   },
+   "seq": 1327
+  },
+  {
+   "t": 1790322360673,
+   "wake": "756880a5",
+   "i": 1327,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322360672,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": null,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/b",
+     "title": "Page B"
+    }
+   },
+   "seq": 1328
+  },
+  {
+   "t": 1790322360680,
+   "wake": "756880a5",
+   "i": 1328,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "isArticle": false
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322360678,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "about:blank",
+     "title": "Page B"
+    }
+   },
+   "seq": 1329
+  },
+  {
+   "t": 1790322360680,
+   "wake": "756880a5",
+   "i": 1329,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790322360679,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 25,
+    "windowId": 1
+   },
+   "seq": 1330
+  },
+  {
+   "t": 1790322360681,
+   "wake": "756880a5",
+   "i": 1330,
+   "browser": "firefox",
+   "src": "webNavigation.onErrorOccurred",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790322360680,
+    "error": "Error code 2152398850",
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "c81f28b6-65bf-e9fc-38fe-d413fb6b98ff",
+    "tabId": 25,
+    "windowId": 1
+   },
+   "seq": 1331
+  },
+  {
+   "t": 1790322360682,
+   "wake": "756880a5",
+   "i": 1331,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790322360681,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "8c58b767-7f07-5f8f-d776-3a95c36faf98",
+    "tabId": 25,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": [
+     "forward_back"
+    ]
+   },
+   "seq": 1332
+  },
+  {
+   "t": 1790322360683,
+   "wake": "756880a5",
+   "i": 1332,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "title": "localhost:8765/a"
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322360682,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "localhost:8765/a"
+    }
+   },
+   "seq": 1333
+  },
+  {
+   "t": 1790322360685,
+   "wake": "756880a5",
+   "i": 1333,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "status": "loading",
+     "url": "http://localhost:8765/a"
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322360684,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "localhost:8765/a"
+    }
+   },
+   "seq": 1334
+  },
+  {
+   "t": 1790322360685,
+   "wake": "756880a5",
+   "i": 1334,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 25,
+    "phase": "committed",
+    "value": "bed90254-4d51-46d6-a8e3-2ec6275a9729",
+    "fresh": false
+   },
+   "seq": 1335
+  },
+  {
+   "t": 1790322360686,
+   "wake": "756880a5",
+   "i": 1335,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "title": "Page A"
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322360685,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "Page A"
+    }
+   },
+   "seq": 1336
+  },
+  {
+   "t": 1790322360686,
+   "wake": "756880a5",
+   "i": 1336,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790322360686,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "8c58b767-7f07-5f8f-d776-3a95c36faf98",
+    "tabId": 25,
+    "windowId": 1
+   },
+   "seq": 1337
+  },
+  {
+   "t": 1790322360688,
+   "wake": "756880a5",
+   "i": 1337,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790322360687,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "8c58b767-7f07-5f8f-d776-3a95c36faf98",
+    "tabId": 25,
+    "windowId": 1
+   },
+   "seq": 1338
+  },
+  {
+   "t": 1790322360689,
+   "wake": "756880a5",
+   "i": 1338,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 25,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "id": 25,
+     "index": 3,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1366,
+     "height": 682,
+     "lastAccessed": 1790322360688,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false,
+      "screen": null
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "Page A"
+    }
+   },
+   "seq": 1339
+  },
+  {
+   "t": 1790322360692,
+   "wake": "756880a5",
+   "i": 1339,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 25,
+    "phase": "completed",
+    "value": "bed90254-4d51-46d6-a8e3-2ec6275a9729",
+    "fresh": false
+   },
+   "seq": 1340
+  }
+ ]
+}

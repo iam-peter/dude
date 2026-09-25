@@ -1,0 +1,1073 @@
+{
+ "scenario": "form",
+ "browser": "chromium",
+ "driver": "playwright-chromium",
+ "status": "ok",
+ "source": "chromium-auto-20260925074450.json",
+ "recordedAt": "2026-09-25T07:44:24.709Z",
+ "records": [
+  {
+   "t": 1790322264729,
+   "wake": "12e41851",
+   "i": 533,
+   "browser": "chrome",
+   "src": "tabs.onCreated",
+   "data": {
+    "active": true,
+    "audible": false,
+    "autoDiscardable": true,
+    "discarded": false,
+    "frozen": false,
+    "groupId": -1,
+    "height": 633,
+    "highlighted": true,
+    "id": 1422017129,
+    "incognito": false,
+    "index": 1,
+    "lastAccessed": 1790322264727.915,
+    "mutedInfo": {
+     "muted": false
+    },
+    "openerTabId": 1422017104,
+    "pendingUrl": "about:blank",
+    "pinned": false,
+    "selected": true,
+    "splitViewId": -1,
+    "status": "loading",
+    "title": "",
+    "url": "",
+    "width": 1280,
+    "windowId": 1422017103
+   },
+   "seq": 534
+  },
+  {
+   "t": 1790322264729,
+   "wake": "12e41851",
+   "i": 534,
+   "browser": "chrome",
+   "src": "tabs.onActivated",
+   "data": {
+    "tabId": 1422017129,
+    "windowId": 1422017103
+   },
+   "seq": 535
+  },
+  {
+   "t": 1790322264730,
+   "wake": "12e41851",
+   "i": 535,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "status": "loading",
+     "url": "about:blank"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264727.915,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "about:blank",
+     "url": "about:blank",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 536
+  },
+  {
+   "t": 1790322264732,
+   "wake": "12e41851",
+   "i": 536,
+   "browser": "chrome",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": -1,
+    "tabId": 1422017129,
+    "timeStamp": 1790322264720.744,
+    "url": "about:blank"
+   },
+   "seq": 537
+  },
+  {
+   "t": 1790322264732,
+   "wake": "12e41851",
+   "i": 537,
+   "browser": "chrome",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "documentId": "4381D8E932983C52867EA88681D562FC",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322264732.07,
+    "transitionQualifiers": [],
+    "transitionType": "start_page",
+    "url": "about:blank"
+   },
+   "seq": 538
+  },
+  {
+   "t": 1790322264733,
+   "wake": "12e41851",
+   "i": 538,
+   "browser": "chrome",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "documentId": "4381D8E932983C52867EA88681D562FC",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322264733.025,
+    "url": "about:blank"
+   },
+   "seq": 539
+  },
+  {
+   "t": 1790322264733,
+   "wake": "12e41851",
+   "i": 539,
+   "browser": "chrome",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "documentId": "4381D8E932983C52867EA88681D562FC",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322264733.406,
+    "url": "about:blank"
+   },
+   "seq": 540
+  },
+  {
+   "t": 1790322264733,
+   "wake": "12e41851",
+   "i": 540,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264733.159,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "complete",
+     "title": "about:blank",
+     "url": "about:blank",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 541
+  },
+  {
+   "t": 1790322264739,
+   "wake": "12e41851",
+   "i": 541,
+   "browser": "chrome",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": -1,
+    "tabId": 1422017129,
+    "timeStamp": 1790322264739.04,
+    "url": "http://localhost:8765/form"
+   },
+   "seq": 542
+  },
+  {
+   "t": 1790322264744,
+   "wake": "12e41851",
+   "i": 542,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "status": "loading",
+     "url": "http://localhost:8765/form"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264733.159,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "localhost:8765/form",
+     "url": "http://localhost:8765/form",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 543
+  },
+  {
+   "t": 1790322264745,
+   "wake": "12e41851",
+   "i": 543,
+   "browser": "chrome",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "documentId": "A57E227C69C2158DB7C35014BE811C4A",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322264745.489,
+    "transitionQualifiers": [],
+    "transitionType": "typed",
+    "url": "http://localhost:8765/form"
+   },
+   "seq": 544
+  },
+  {
+   "t": 1790322264747,
+   "wake": "12e41851",
+   "i": 544,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "title": "Forms"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264733.159,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "Forms",
+     "url": "http://localhost:8765/form",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 545
+  },
+  {
+   "t": 1790322264748,
+   "wake": "12e41851",
+   "i": 545,
+   "browser": "chrome",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "documentId": "A57E227C69C2158DB7C35014BE811C4A",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322264748.846,
+    "url": "http://localhost:8765/form"
+   },
+   "seq": 546
+  },
+  {
+   "t": 1790322264751,
+   "wake": "12e41851",
+   "i": 546,
+   "browser": "chrome",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "documentId": "A57E227C69C2158DB7C35014BE811C4A",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322264751.101,
+    "url": "http://localhost:8765/form"
+   },
+   "seq": 547
+  },
+  {
+   "t": 1790322264751,
+   "wake": "12e41851",
+   "i": 547,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264733.159,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "complete",
+     "title": "Forms",
+     "url": "http://localhost:8765/form",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 548
+  },
+  {
+   "t": 1790322265318,
+   "wake": "12e41851",
+   "i": 548,
+   "browser": "chrome",
+   "src": "content.submit",
+   "data": {
+    "action": "http://localhost:8765/post-result",
+    "method": "post",
+    "pageUrl": "http://localhost:8765/form",
+    "t": 1790322265315,
+    "from": {
+     "tabId": 1422017129,
+     "frameId": 0,
+     "url": "http://localhost:8765/form"
+    }
+   },
+   "seq": 549
+  },
+  {
+   "t": 1790322265323,
+   "wake": "12e41851",
+   "i": 549,
+   "browser": "chrome",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": -1,
+    "tabId": 1422017129,
+    "timeStamp": 1790322265322.915,
+    "url": "http://localhost:8765/post-result"
+   },
+   "seq": 550
+  },
+  {
+   "t": 1790322265331,
+   "wake": "12e41851",
+   "i": 550,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "status": "loading",
+     "url": "http://localhost:8765/post-result"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264733.159,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "localhost:8765/post-result",
+     "url": "http://localhost:8765/post-result",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 551
+  },
+  {
+   "t": 1790322265334,
+   "wake": "12e41851",
+   "i": 551,
+   "browser": "chrome",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "documentId": "5D3D0F4CFC1144A3C6C1BFF77D01D30E",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322265333.858,
+    "transitionQualifiers": [],
+    "transitionType": "form_submit",
+    "url": "http://localhost:8765/post-result"
+   },
+   "seq": 552
+  },
+  {
+   "t": 1790322265335,
+   "wake": "12e41851",
+   "i": 552,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "title": "POST result"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264733.159,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "POST result",
+     "url": "http://localhost:8765/post-result",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 553
+  },
+  {
+   "t": 1790322265335,
+   "wake": "12e41851",
+   "i": 553,
+   "browser": "chrome",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "documentId": "5D3D0F4CFC1144A3C6C1BFF77D01D30E",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322265335.349,
+    "url": "http://localhost:8765/post-result"
+   },
+   "seq": 554
+  },
+  {
+   "t": 1790322265336,
+   "wake": "12e41851",
+   "i": 554,
+   "browser": "chrome",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "documentId": "5D3D0F4CFC1144A3C6C1BFF77D01D30E",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322265335.895,
+    "url": "http://localhost:8765/post-result"
+   },
+   "seq": 555
+  },
+  {
+   "t": 1790322265336,
+   "wake": "12e41851",
+   "i": 555,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264733.159,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "complete",
+     "title": "POST result",
+     "url": "http://localhost:8765/post-result",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 556
+  },
+  {
+   "t": 1790322265893,
+   "wake": "12e41851",
+   "i": 556,
+   "browser": "chrome",
+   "src": "content.click",
+   "data": {
+    "type": "click",
+    "href": "http://localhost:8765/form",
+    "text": "forms",
+    "target": "",
+    "rel": "",
+    "button": 0,
+    "ctrl": false,
+    "meta": false,
+    "shift": false,
+    "alt": false,
+    "trusted": true,
+    "pageUrl": "http://localhost:8765/post-result",
+    "t": 1790322265892,
+    "from": {
+     "tabId": 1422017129,
+     "frameId": 0,
+     "url": "http://localhost:8765/post-result"
+    }
+   },
+   "seq": 557
+  },
+  {
+   "t": 1790322265896,
+   "wake": "12e41851",
+   "i": 557,
+   "browser": "chrome",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": -1,
+    "tabId": 1422017129,
+    "timeStamp": 1790322265896.161,
+    "url": "http://localhost:8765/form"
+   },
+   "seq": 558
+  },
+  {
+   "t": 1790322265904,
+   "wake": "12e41851",
+   "i": 558,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "status": "loading",
+     "url": "http://localhost:8765/form"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264733.159,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "localhost:8765/form",
+     "url": "http://localhost:8765/form",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 559
+  },
+  {
+   "t": 1790322265907,
+   "wake": "12e41851",
+   "i": 559,
+   "browser": "chrome",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "documentId": "D35265A2E803650CC0BC5065BFBF3BBE",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322265907.147,
+    "transitionQualifiers": [],
+    "transitionType": "link",
+    "url": "http://localhost:8765/form"
+   },
+   "seq": 560
+  },
+  {
+   "t": 1790322265910,
+   "wake": "12e41851",
+   "i": 560,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "title": "Forms"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264733.159,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "Forms",
+     "url": "http://localhost:8765/form",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 561
+  },
+  {
+   "t": 1790322265910,
+   "wake": "12e41851",
+   "i": 561,
+   "browser": "chrome",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "documentId": "D35265A2E803650CC0BC5065BFBF3BBE",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322265910.544,
+    "url": "http://localhost:8765/form"
+   },
+   "seq": 562
+  },
+  {
+   "t": 1790322265910,
+   "wake": "12e41851",
+   "i": 562,
+   "browser": "chrome",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "documentId": "D35265A2E803650CC0BC5065BFBF3BBE",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322265910.863,
+    "url": "http://localhost:8765/form"
+   },
+   "seq": 563
+  },
+  {
+   "t": 1790322265911,
+   "wake": "12e41851",
+   "i": 563,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264733.159,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "complete",
+     "title": "Forms",
+     "url": "http://localhost:8765/form",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 564
+  },
+  {
+   "t": 1790322266481,
+   "wake": "12e41851",
+   "i": 564,
+   "browser": "chrome",
+   "src": "content.submit",
+   "data": {
+    "action": "http://localhost:8765/search",
+    "method": "get",
+    "pageUrl": "http://localhost:8765/form",
+    "t": 1790322266480,
+    "from": {
+     "tabId": 1422017129,
+     "frameId": 0,
+     "url": "http://localhost:8765/form"
+    }
+   },
+   "seq": 565
+  },
+  {
+   "t": 1790322266490,
+   "wake": "12e41851",
+   "i": 565,
+   "browser": "chrome",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": -1,
+    "tabId": 1422017129,
+    "timeStamp": 1790322266490.359,
+    "url": "http://localhost:8765/search?q=dude"
+   },
+   "seq": 566
+  },
+  {
+   "t": 1790322266499,
+   "wake": "12e41851",
+   "i": 566,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "status": "loading",
+     "url": "http://localhost:8765/search?q=dude"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264733.159,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "localhost:8765/search?q=dude",
+     "url": "http://localhost:8765/search?q=dude",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 567
+  },
+  {
+   "t": 1790322266501,
+   "wake": "12e41851",
+   "i": 567,
+   "browser": "chrome",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "documentId": "322A8DD1DD9987907607CCE61AC5DBED",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322266501.67,
+    "transitionQualifiers": [],
+    "transitionType": "form_submit",
+    "url": "http://localhost:8765/search?q=dude"
+   },
+   "seq": 568
+  },
+  {
+   "t": 1790322266502,
+   "wake": "12e41851",
+   "i": 568,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "title": "Search: dude"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264733.159,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "loading",
+     "title": "Search: dude",
+     "url": "http://localhost:8765/search?q=dude",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 569
+  },
+  {
+   "t": 1790322266503,
+   "wake": "12e41851",
+   "i": 569,
+   "browser": "chrome",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "documentId": "322A8DD1DD9987907607CCE61AC5DBED",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322266503.373,
+    "url": "http://localhost:8765/search?q=dude"
+   },
+   "seq": 570
+  },
+  {
+   "t": 1790322266503,
+   "wake": "12e41851",
+   "i": 570,
+   "browser": "chrome",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "documentId": "322A8DD1DD9987907607CCE61AC5DBED",
+    "documentLifecycle": "active",
+    "frameId": 0,
+    "frameType": "outermost_frame",
+    "parentFrameId": -1,
+    "processId": 19,
+    "tabId": 1422017129,
+    "timeStamp": 1790322266503.682,
+    "url": "http://localhost:8765/search?q=dude"
+   },
+   "seq": 571
+  },
+  {
+   "t": 1790322266504,
+   "wake": "12e41851",
+   "i": 571,
+   "browser": "chrome",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1422017129,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "active": true,
+     "audible": false,
+     "autoDiscardable": true,
+     "discarded": false,
+     "frozen": false,
+     "groupId": -1,
+     "height": 633,
+     "highlighted": true,
+     "id": 1422017129,
+     "incognito": false,
+     "index": 1,
+     "lastAccessed": 1790322264733.159,
+     "mutedInfo": {
+      "muted": false
+     },
+     "openerTabId": 1422017104,
+     "pinned": false,
+     "selected": true,
+     "splitViewId": -1,
+     "status": "complete",
+     "title": "Search: dude",
+     "url": "http://localhost:8765/search?q=dude",
+     "width": 1280,
+     "windowId": 1422017103
+    }
+   },
+   "seq": 572
+  }
+ ]
+}

@@ -1,0 +1,4746 @@
+{
+ "scenario": "address-bar-search",
+ "browser": "firefox",
+ "ua": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:156.0) Gecko/20100101 Firefox/156.0",
+ "driver": "manual",
+ "status": "manual",
+ "source": "s1-firefox-manual-2026-09-25073724.json",
+ "recordedAt": "2026-09-25T07:25:29.126Z",
+ "records": [
+  {
+   "t": 1790321130440,
+   "wake": "30d4cef9",
+   "i": 41,
+   "browser": "firefox",
+   "src": "windows.onFocusChanged",
+   "data": {
+    "windowId": -1
+   },
+   "seq": 168
+  },
+  {
+   "t": 1790321130448,
+   "wake": "30d4cef9",
+   "i": 42,
+   "browser": "firefox",
+   "src": "windows.onFocusChanged",
+   "data": {
+    "windowId": 1
+   },
+   "seq": 169
+  },
+  {
+   "t": 1790321130599,
+   "wake": "30d4cef9",
+   "i": 43,
+   "browser": "firefox",
+   "src": "content.click",
+   "data": {
+    "type": "click",
+    "href": "http://localhost:8765/a",
+    "text": "to A",
+    "target": "",
+    "rel": "",
+    "button": 0,
+    "ctrl": false,
+    "meta": false,
+    "shift": false,
+    "alt": false,
+    "trusted": true,
+    "pageUrl": "http://localhost:8765/",
+    "t": 1790321130595,
+    "from": {
+     "tabId": 1,
+     "frameId": 0,
+     "url": "http://localhost:8765/"
+    }
+   },
+   "seq": 170
+  },
+  {
+   "t": 1790321130600,
+   "wake": "30d4cef9",
+   "i": 44,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790321130599,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 171
+  },
+  {
+   "t": 1790321130602,
+   "wake": "30d4cef9",
+   "i": 45,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321130601,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/",
+     "title": "dude S1 test site"
+    }
+   },
+   "seq": 172
+  },
+  {
+   "t": 1790321130609,
+   "wake": "30d4cef9",
+   "i": 46,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "isArticle": false
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321130608,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "about:blank",
+     "title": "dude S1 test site"
+    }
+   },
+   "seq": 173
+  },
+  {
+   "t": 1790321130610,
+   "wake": "30d4cef9",
+   "i": 47,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790321130610,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 174
+  },
+  {
+   "t": 1790321130611,
+   "wake": "30d4cef9",
+   "i": 48,
+   "browser": "firefox",
+   "src": "webNavigation.onErrorOccurred",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790321130611,
+    "error": "Error code 2152398850",
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "4b7a5135-1280-d220-0edd-3a9558edec31",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 175
+  },
+  {
+   "t": 1790321130617,
+   "wake": "30d4cef9",
+   "i": 49,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790321130615,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "63c44dd8-bda4-f866-e439-23bc70ab2054",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": []
+   },
+   "seq": 176
+  },
+  {
+   "t": 1790321130617,
+   "wake": "30d4cef9",
+   "i": 50,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "localhost:8765/a"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321130617,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "localhost:8765/a"
+    }
+   },
+   "seq": 177
+  },
+  {
+   "t": 1790321130621,
+   "wake": "30d4cef9",
+   "i": 51,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading",
+     "url": "http://localhost:8765/a"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321130620,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "localhost:8765/a"
+    }
+   },
+   "seq": 178
+  },
+  {
+   "t": 1790321130622,
+   "wake": "30d4cef9",
+   "i": 52,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "Page A"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321130621,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "Page A"
+    }
+   },
+   "seq": 179
+  },
+  {
+   "t": 1790321130622,
+   "wake": "30d4cef9",
+   "i": 53,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "committed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 180
+  },
+  {
+   "t": 1790321130622,
+   "wake": "30d4cef9",
+   "i": 54,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790321130622,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "63c44dd8-bda4-f866-e439-23bc70ab2054",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 181
+  },
+  {
+   "t": 1790321130624,
+   "wake": "30d4cef9",
+   "i": 55,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "http://localhost:8765/a",
+    "timeStamp": 1790321130623,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "63c44dd8-bda4-f866-e439-23bc70ab2054",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 182
+  },
+  {
+   "t": 1790321130625,
+   "wake": "30d4cef9",
+   "i": 56,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321130625,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "Page A"
+    }
+   },
+   "seq": 183
+  },
+  {
+   "t": 1790321130627,
+   "wake": "30d4cef9",
+   "i": 57,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "completed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 184
+  },
+  {
+   "t": 1790321135801,
+   "wake": "30d4cef9",
+   "i": 58,
+   "browser": "firefox",
+   "src": "windows.onFocusChanged",
+   "data": {
+    "windowId": -1
+   },
+   "seq": 185
+  },
+  {
+   "t": 1790321135809,
+   "wake": "30d4cef9",
+   "i": 59,
+   "browser": "firefox",
+   "src": "windows.onFocusChanged",
+   "data": {
+    "windowId": 43
+   },
+   "seq": 186
+  },
+  {
+   "t": 1790321141194,
+   "wake": "30d4cef9",
+   "i": 60,
+   "browser": "firefox",
+   "src": "windows.onFocusChanged",
+   "data": {
+    "windowId": -1
+   },
+   "seq": 187
+  },
+  {
+   "t": 1790321141203,
+   "wake": "30d4cef9",
+   "i": 61,
+   "browser": "firefox",
+   "src": "windows.onFocusChanged",
+   "data": {
+    "windowId": 1
+   },
+   "seq": 188
+  },
+  {
+   "t": 1790321142302,
+   "wake": "30d4cef9",
+   "i": 62,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test",
+    "timeStamp": 1790321142302,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 189
+  },
+  {
+   "t": 1790321142303,
+   "wake": "30d4cef9",
+   "i": 63,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321142302,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "http://localhost:8765/a",
+     "title": "Page A"
+    }
+   },
+   "seq": 190
+  },
+  {
+   "t": 1790321142361,
+   "wake": "30d4cef9",
+   "i": 64,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "isArticle": false
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321142360,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "about:blank",
+     "title": "Page A"
+    }
+   },
+   "seq": 191
+  },
+  {
+   "t": 1790321142362,
+   "wake": "30d4cef9",
+   "i": 65,
+   "browser": "firefox",
+   "src": "webNavigation.onErrorOccurred",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test",
+    "timeStamp": 1790321142361,
+    "error": "Error code 2152398850",
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "63c44dd8-bda4-f866-e439-23bc70ab2054",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 192
+  },
+  {
+   "t": 1790321142362,
+   "wake": "30d4cef9",
+   "i": 66,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test",
+    "timeStamp": 1790321142362,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 193
+  },
+  {
+   "t": 1790321142367,
+   "wake": "30d4cef9",
+   "i": 67,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test",
+    "timeStamp": 1790321142365,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bf5b3f8d-f9dc-e527-f167-bbb2c4476ba3",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "generated",
+    "transitionQualifiers": [
+     "from_address_bar"
+    ]
+   },
+   "seq": 194
+  },
+  {
+   "t": 1790321142367,
+   "wake": "30d4cef9",
+   "i": 68,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321142366,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test",
+     "title": "google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test"
+    }
+   },
+   "seq": 195
+  },
+  {
+   "t": 1790321142373,
+   "wake": "30d4cef9",
+   "i": 69,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321142372,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test",
+     "title": "google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test"
+    }
+   },
+   "seq": 196
+  },
+  {
+   "t": 1790321142373,
+   "wake": "30d4cef9",
+   "i": 70,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "committed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 197
+  },
+  {
+   "t": 1790321142389,
+   "wake": "30d4cef9",
+   "i": 71,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "Google Search"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321142388,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test",
+     "title": "Google Search"
+    }
+   },
+   "seq": 198
+  },
+  {
+   "t": 1790321142645,
+   "wake": "30d4cef9",
+   "i": 72,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321142644,
+    "frameId": 23622320129,
+    "parentFrameId": 0,
+    "parentDocumentId": "bf5b3f8d-f9dc-e527-f167-bbb2c4476ba3",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 199
+  },
+  {
+   "t": 1790321142645,
+   "wake": "30d4cef9",
+   "i": 73,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321142644,
+    "frameId": 23622320129,
+    "parentFrameId": 0,
+    "documentId": "6754a303-760b-2d86-61a1-a1c82f523db0",
+    "parentDocumentId": "bf5b3f8d-f9dc-e527-f167-bbb2c4476ba3",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "auto_subframe",
+    "transitionQualifiers": []
+   },
+   "seq": 200
+  },
+  {
+   "t": 1790321142645,
+   "wake": "30d4cef9",
+   "i": 74,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321142644,
+    "frameId": 23622320129,
+    "parentFrameId": 0,
+    "documentId": "6754a303-760b-2d86-61a1-a1c82f523db0",
+    "parentDocumentId": "bf5b3f8d-f9dc-e527-f167-bbb2c4476ba3",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 201
+  },
+  {
+   "t": 1790321142645,
+   "wake": "30d4cef9",
+   "i": 75,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321142644,
+    "frameId": 23622320129,
+    "parentFrameId": 0,
+    "documentId": "6754a303-760b-2d86-61a1-a1c82f523db0",
+    "parentDocumentId": "bf5b3f8d-f9dc-e527-f167-bbb2c4476ba3",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 202
+  },
+  {
+   "t": 1790321142668,
+   "wake": "30d4cef9",
+   "i": 76,
+   "browser": "firefox",
+   "src": "webNavigation.onErrorOccurred",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test",
+    "timeStamp": 1790321142667,
+    "error": "Error code 2152398850",
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bf5b3f8d-f9dc-e527-f167-bbb2c4476ba3",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 203
+  },
+  {
+   "t": 1790321142670,
+   "wake": "30d4cef9",
+   "i": 77,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321142669,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test",
+     "title": "Google Search"
+    }
+   },
+   "seq": 204
+  },
+  {
+   "t": 1790321142670,
+   "wake": "30d4cef9",
+   "i": 78,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+    "timeStamp": 1790321142669,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 205
+  },
+  {
+   "t": 1790321142670,
+   "wake": "30d4cef9",
+   "i": 79,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321142669,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test",
+     "title": "Google Search"
+    }
+   },
+   "seq": 206
+  },
+  {
+   "t": 1790321142671,
+   "wake": "30d4cef9",
+   "i": 80,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test",
+    "timeStamp": 1790321142670,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bf5b3f8d-f9dc-e527-f167-bbb2c4476ba3",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 207
+  },
+  {
+   "t": 1790321142674,
+   "wake": "30d4cef9",
+   "i": 81,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "favIconUrl": "data:image/x-icon;base64,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"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321142673,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test",
+     "title": "Google Search",
+     "favIconUrl": "data:image/x-icon;base64,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"
+    }
+   },
+   "seq": 208
+  },
+  {
+   "t": 1790321142939,
+   "wake": "30d4cef9",
+   "i": 82,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "isArticle": false
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321142937,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test",
+     "title": "Google Search",
+     "favIconUrl": "data:image/x-icon;base64,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"
+    }
+   },
+   "seq": 209
+  },
+  {
+   "t": 1790321142941,
+   "wake": "30d4cef9",
+   "i": 83,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+    "timeStamp": 1790321142940,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": []
+   },
+   "seq": 210
+  },
+  {
+   "t": 1790321142944,
+   "wake": "30d4cef9",
+   "i": 84,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321142944,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "favIconUrl": "data:image/x-icon;base64,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"
+    }
+   },
+   "seq": 211
+  },
+  {
+   "t": 1790321142949,
+   "wake": "30d4cef9",
+   "i": 85,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321142948,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE"
+    }
+   },
+   "seq": 212
+  },
+  {
+   "t": 1790321142949,
+   "wake": "30d4cef9",
+   "i": 86,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "committed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 213
+  },
+  {
+   "t": 1790321142952,
+   "wake": "30d4cef9",
+   "i": 87,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "dude spike test - Google Suche"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321142951,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "dude spike test - Google Suche"
+    }
+   },
+   "seq": 214
+  },
+  {
+   "t": 1790321142952,
+   "wake": "30d4cef9",
+   "i": 88,
+   "browser": "firefox",
+   "src": "webNavigation.onHistoryStateUpdated",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+    "timeStamp": 1790321142951,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": []
+   },
+   "seq": 215
+  },
+  {
+   "t": 1790321142955,
+   "wake": "30d4cef9",
+   "i": 89,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321142954,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "dude spike test - Google Suche"
+    }
+   },
+   "seq": 216
+  },
+  {
+   "t": 1790321143257,
+   "wake": "30d4cef9",
+   "i": 90,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+    "timeStamp": 1790321143256,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 217
+  },
+  {
+   "t": 1790321143453,
+   "wake": "30d4cef9",
+   "i": 91,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+    "timeStamp": 1790321143452,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 218
+  },
+  {
+   "t": 1790321143453,
+   "wake": "30d4cef9",
+   "i": 92,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "favIconUrl": null
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321143452,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "dude spike test - Google Suche"
+    }
+   },
+   "seq": 219
+  },
+  {
+   "t": 1790321143453,
+   "wake": "30d4cef9",
+   "i": 93,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321143453,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "dude spike test - Google Suche"
+    }
+   },
+   "seq": 220
+  },
+  {
+   "t": 1790321143454,
+   "wake": "30d4cef9",
+   "i": 94,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "completed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 221
+  },
+  {
+   "t": 1790321143704,
+   "wake": "30d4cef9",
+   "i": 95,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "favIconUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFNElEQVRYR8WXW2wUVRjHf2d2dku7W7bQaqEIAhKQYm1JfJBLUR9MDEqAPqCJl0AClqhBjA/4oEFMRGM0kpAI6oPGBC8xSi0Go4mhQJFIFIoWQYhCa7S0QO/b2+7MZ87M7uzs9pqI4deczOnZ7zvff875zmUUE0REKoA1wL3APd4PmRwG6oAapVSD1zoGyquNgoisB7YC5V7jxDgN7FJKfei1jMCoAkRkNqCdR3vbiaJHZb1S6pLX4mNEASKih1oHj3qN/42upIgaryXJMAHJIf/Aa/DzQz0cq4dfGqCtFUQ3Gm43xdOQ8nJYVolacnfKI5sN2VOSISD55vu9hhSNJ+HtndDaCnHT9RLlFhUAAs5TjACin9OmY2x9ClW2yOvCx1r/SHgCknOuMzdz2D9/HWq+gN6Q+/9QKB1cuystyC2CQgJBxAg6pmrVAxgbH3f90ujpqEjlhF+AXj6ZCffxC3D0a+jOhaFAsowhIDUKKQFzZmG8+hKE85IdehxWSunl7AoYcd6/2wI/74e+IFyNQL8JAyb05oBtgKVdTTB0YNOpi6GFGI6AMYKncPIhJUAPfXqdt9VC3WPQnA+TbGjNh5YwGALmXKjaBEsqIRxx7WMxOP4j9r7P4Gon3DZ3vOCa00qpCpXc4U55zZoj8+HyZYgFIRZyBfQG4c4qWLctHTibWAz56iBq9YPjBU+xWAt4GdjuNXUcgN/XQZ8BA7oE4FoI8qvgkb2e2XVihxaQmXwXn4SufZAAepT7jE2BlY0Qul77ksdhLcDZTjzOlsJgkxs4VQqfhoVveCZ+fmr2qpmIzvB017peElVMK/AWnsMwAdKQ62Sycpaa2xHzvoHJlZ6Nn8WvedVMst5Ls7kSqivHFTDJ2dmU3uFsG1EKVaqH/1bPxs+oAvzoEEqxebmML8A+FUKpoCPA+6n0DCo0y61nMSEBSaqXu6PgZ7iAk6YT3CaABVgI5rxvCeav8Gz8aAGCnZwrjXL+0qTrExPQOA8ZaqJX7zkqQLttkVu8haKZb3k2fvYe1e7+LtyAtb9Ci971JyAgYxkmLm3AuvYRAxgMCgwCV40CysovYAYKUmZj0jMAK98RerWzgyvi/UfhrsyZdJZhxkYU76yh7UIVHQI2ijaBZjtI4dQ1rF7wacpsTHYdj/HuUYVlWISsEEoMRAmN25InahpnIxq2FZ9qmE3zQBM5KNoFLskk2iWXhTc9wcNzXyFi5nu22ew58zfbj/RiWjnYyiY8FCUnHmbNHQF2rnRPSR+LnbHJPoy6u+s49Nt9dIqiSwwuSph2O48OCTMUKmfj7GruL1pG1AynXKht+YPd585T39JPqH8mZiKXYCLPERCwghzalM+MqD85k4eRro10HNddfI5D/+yhS4I0SZRuCdMjYVqtYgYJESeHuB0hEphMZ9xC4lEYnA4SQPXPJJAIE0qECQ5OpbqskB0rhuVP+jjWZCejZt/5ar5sraVFCrHEpMOeQo8UkUBhSQ42QRK2nihBrDD2wHRQNgyWYPaXYBkJKiK3cGxtqddnkswLiWa0K9nu88/yyeXv6bPz6HNGoYiEmFiYjgBb9IYVcARIIoxYEUcAiTCrSubw3tIyoiF9b/QY+UqmGe1SeqLzJM+ffZM/+7vplyiCgeiLKArb1rcgvWRyECsXiU8lIjN48fYlPLNgvteHj5EvpSlGyocUB6+c4MCVBuo7zvHXwDXHXcRwpmByoICl0QpWFS/ioZvLiAZzPD8fY1/LU9zQDxOfiBv3aebnhn2cZvN/fZ7/C+T0M/VuWOGOAAAAAElFTkSuQmCC"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321143703,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "dude spike test - Google Suche",
+     "favIconUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFNElEQVRYR8WXW2wUVRjHf2d2dku7W7bQaqEIAhKQYm1JfJBLUR9MDEqAPqCJl0AClqhBjA/4oEFMRGM0kpAI6oPGBC8xSi0Go4mhQJFIFIoWQYhCa7S0QO/b2+7MZ87M7uzs9pqI4deczOnZ7zvff875zmUUE0REKoA1wL3APd4PmRwG6oAapVSD1zoGyquNgoisB7YC5V7jxDgN7FJKfei1jMCoAkRkNqCdR3vbiaJHZb1S6pLX4mNEASKih1oHj3qN/42upIgaryXJMAHJIf/Aa/DzQz0cq4dfGqCtFUQ3Gm43xdOQ8nJYVolacnfKI5sN2VOSISD55vu9hhSNJ+HtndDaCnHT9RLlFhUAAs5TjACin9OmY2x9ClW2yOvCx1r/SHgCknOuMzdz2D9/HWq+gN6Q+/9QKB1cuystyC2CQgJBxAg6pmrVAxgbH3f90ujpqEjlhF+AXj6ZCffxC3D0a+jOhaFAsowhIDUKKQFzZmG8+hKE85IdehxWSunl7AoYcd6/2wI/74e+IFyNQL8JAyb05oBtgKVdTTB0YNOpi6GFGI6AMYKncPIhJUAPfXqdt9VC3WPQnA+TbGjNh5YwGALmXKjaBEsqIRxx7WMxOP4j9r7P4Gon3DZ3vOCa00qpCpXc4U55zZoj8+HyZYgFIRZyBfQG4c4qWLctHTibWAz56iBq9YPjBU+xWAt4GdjuNXUcgN/XQZ8BA7oE4FoI8qvgkb2e2XVihxaQmXwXn4SufZAAepT7jE2BlY0Qul77ksdhLcDZTjzOlsJgkxs4VQqfhoVveCZ+fmr2qpmIzvB017peElVMK/AWnsMwAdKQ62Sycpaa2xHzvoHJlZ6Nn8WvedVMst5Ls7kSqivHFTDJ2dmU3uFsG1EKVaqH/1bPxs+oAvzoEEqxebmML8A+FUKpoCPA+6n0DCo0y61nMSEBSaqXu6PgZ7iAk6YT3CaABVgI5rxvCeav8Gz8aAGCnZwrjXL+0qTrExPQOA8ZaqJX7zkqQLttkVu8haKZb3k2fvYe1e7+LtyAtb9Ci971JyAgYxkmLm3AuvYRAxgMCgwCV40CysovYAYKUmZj0jMAK98RerWzgyvi/UfhrsyZdJZhxkYU76yh7UIVHQI2ijaBZjtI4dQ1rF7wacpsTHYdj/HuUYVlWISsEEoMRAmN25InahpnIxq2FZ9qmE3zQBM5KNoFLskk2iWXhTc9wcNzXyFi5nu22ew58zfbj/RiWjnYyiY8FCUnHmbNHQF2rnRPSR+LnbHJPoy6u+s49Nt9dIqiSwwuSph2O48OCTMUKmfj7GruL1pG1AynXKht+YPd585T39JPqH8mZiKXYCLPERCwghzalM+MqD85k4eRro10HNddfI5D/+yhS4I0SZRuCdMjYVqtYgYJESeHuB0hEphMZ9xC4lEYnA4SQPXPJJAIE0qECQ5OpbqskB0rhuVP+jjWZCejZt/5ar5sraVFCrHEpMOeQo8UkUBhSQ42QRK2nihBrDD2wHRQNgyWYPaXYBkJKiK3cGxtqddnkswLiWa0K9nu88/yyeXv6bPz6HNGoYiEmFiYjgBb9IYVcARIIoxYEUcAiTCrSubw3tIyoiF9b/QY+UqmGe1SeqLzJM+ffZM/+7vplyiCgeiLKArb1rcgvWRyECsXiU8lIjN48fYlPLNgvteHj5EvpSlGyocUB6+c4MCVBuo7zvHXwDXHXcRwpmByoICl0QpWFS/ioZvLiAZzPD8fY1/LU9zQDxOfiBv3aebnhn2cZvN/fZ7/C+T0M/VuWOGOAAAAAElFTkSuQmCC"
+    }
+   },
+   "seq": 222
+  },
+  {
+   "t": 1790321150487,
+   "wake": "30d4cef9",
+   "i": 96,
+   "browser": "firefox",
+   "src": "webNavigation.onHistoryStateUpdated",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+    "timeStamp": 1790321150487,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": []
+   },
+   "seq": 223
+  },
+  {
+   "t": 1790321150491,
+   "wake": "30d4cef9",
+   "i": 97,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "complete",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321150490,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "dude spike test - Google Suche",
+     "favIconUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFNElEQVRYR8WXW2wUVRjHf2d2dku7W7bQaqEIAhKQYm1JfJBLUR9MDEqAPqCJl0AClqhBjA/4oEFMRGM0kpAI6oPGBC8xSi0Go4mhQJFIFIoWQYhCa7S0QO/b2+7MZ87M7uzs9pqI4deczOnZ7zvff875zmUUE0REKoA1wL3APd4PmRwG6oAapVSD1zoGyquNgoisB7YC5V7jxDgN7FJKfei1jMCoAkRkNqCdR3vbiaJHZb1S6pLX4mNEASKih1oHj3qN/42upIgaryXJMAHJIf/Aa/DzQz0cq4dfGqCtFUQ3Gm43xdOQ8nJYVolacnfKI5sN2VOSISD55vu9hhSNJ+HtndDaCnHT9RLlFhUAAs5TjACin9OmY2x9ClW2yOvCx1r/SHgCknOuMzdz2D9/HWq+gN6Q+/9QKB1cuystyC2CQgJBxAg6pmrVAxgbH3f90ujpqEjlhF+AXj6ZCffxC3D0a+jOhaFAsowhIDUKKQFzZmG8+hKE85IdehxWSunl7AoYcd6/2wI/74e+IFyNQL8JAyb05oBtgKVdTTB0YNOpi6GFGI6AMYKncPIhJUAPfXqdt9VC3WPQnA+TbGjNh5YwGALmXKjaBEsqIRxx7WMxOP4j9r7P4Gon3DZ3vOCa00qpCpXc4U55zZoj8+HyZYgFIRZyBfQG4c4qWLctHTibWAz56iBq9YPjBU+xWAt4GdjuNXUcgN/XQZ8BA7oE4FoI8qvgkb2e2XVihxaQmXwXn4SufZAAepT7jE2BlY0Qul77ksdhLcDZTjzOlsJgkxs4VQqfhoVveCZ+fmr2qpmIzvB017peElVMK/AWnsMwAdKQ62Sycpaa2xHzvoHJlZ6Nn8WvedVMst5Ls7kSqivHFTDJ2dmU3uFsG1EKVaqH/1bPxs+oAvzoEEqxebmML8A+FUKpoCPA+6n0DCo0y61nMSEBSaqXu6PgZ7iAk6YT3CaABVgI5rxvCeav8Gz8aAGCnZwrjXL+0qTrExPQOA8ZaqJX7zkqQLttkVu8haKZb3k2fvYe1e7+LtyAtb9Ci971JyAgYxkmLm3AuvYRAxgMCgwCV40CysovYAYKUmZj0jMAK98RerWzgyvi/UfhrsyZdJZhxkYU76yh7UIVHQI2ijaBZjtI4dQ1rF7wacpsTHYdj/HuUYVlWISsEEoMRAmN25InahpnIxq2FZ9qmE3zQBM5KNoFLskk2iWXhTc9wcNzXyFi5nu22ew58zfbj/RiWjnYyiY8FCUnHmbNHQF2rnRPSR+LnbHJPoy6u+s49Nt9dIqiSwwuSph2O48OCTMUKmfj7GruL1pG1AynXKht+YPd585T39JPqH8mZiKXYCLPERCwghzalM+MqD85k4eRro10HNddfI5D/+yhS4I0SZRuCdMjYVqtYgYJESeHuB0hEphMZ9xC4lEYnA4SQPXPJJAIE0qECQ5OpbqskB0rhuVP+jjWZCejZt/5ar5sraVFCrHEpMOeQo8UkUBhSQ42QRK2nihBrDD2wHRQNgyWYPaXYBkJKiK3cGxtqddnkswLiWa0K9nu88/yyeXv6bPz6HNGoYiEmFiYjgBb9IYVcARIIoxYEUcAiTCrSubw3tIyoiF9b/QY+UqmGe1SeqLzJM+ffZM/+7vplyiCgeiLKArb1rcgvWRyECsXiU8lIjN48fYlPLNgvteHj5EvpSlGyocUB6+c4MCVBuo7zvHXwDXHXcRwpmByoICl0QpWFS/ioZvLiAZzPD8fY1/LU9zQDxOfiBv3aebnhn2cZvN/fZ7/C+T0M/VuWOGOAAAAAElFTkSuQmCC"
+    }
+   },
+   "seq": 224
+  },
+  {
+   "t": 1790321150939,
+   "wake": "30d4cef9",
+   "i": 98,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321150939,
+    "frameId": 23622320130,
+    "parentFrameId": 0,
+    "parentDocumentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 225
+  },
+  {
+   "t": 1790321150940,
+   "wake": "30d4cef9",
+   "i": 99,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321150939,
+    "frameId": 23622320130,
+    "parentFrameId": 0,
+    "documentId": "3fdaa647-e7b7-29c3-7933-25d8884522a7",
+    "parentDocumentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "auto_subframe",
+    "transitionQualifiers": []
+   },
+   "seq": 226
+  },
+  {
+   "t": 1790321150940,
+   "wake": "30d4cef9",
+   "i": 100,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321150940,
+    "frameId": 23622320130,
+    "parentFrameId": 0,
+    "documentId": "3fdaa647-e7b7-29c3-7933-25d8884522a7",
+    "parentDocumentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 227
+  },
+  {
+   "t": 1790321150940,
+   "wake": "30d4cef9",
+   "i": 101,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321150940,
+    "frameId": 23622320130,
+    "parentFrameId": 0,
+    "documentId": "3fdaa647-e7b7-29c3-7933-25d8884522a7",
+    "parentDocumentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 228
+  },
+  {
+   "t": 1790321151128,
+   "wake": "30d4cef9",
+   "i": 102,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://ep2.adtrafficquality.google/sodar/sodar2/255/runner.html",
+    "timeStamp": 1790321151127,
+    "frameId": 23622320131,
+    "parentFrameId": 0,
+    "parentDocumentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 229
+  },
+  {
+   "t": 1790321151147,
+   "wake": "30d4cef9",
+   "i": 103,
+   "browser": "firefox",
+   "src": "webNavigation.onErrorOccurred",
+   "data": {
+    "url": "https://ep2.adtrafficquality.google/sodar/sodar2/255/runner.html",
+    "timeStamp": 1790321151146,
+    "error": "Error code 2152398850",
+    "frameId": 23622320131,
+    "parentFrameId": 0,
+    "documentId": "1aa801fd-a53a-3066-901d-fe7f8f360938",
+    "parentDocumentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 230
+  },
+  {
+   "t": 1790321151153,
+   "wake": "30d4cef9",
+   "i": 104,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://ep2.adtrafficquality.google/sodar/sodar2/255/runner.html",
+    "timeStamp": 1790321151152,
+    "frameId": 23622320131,
+    "parentFrameId": 0,
+    "parentDocumentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 231
+  },
+  {
+   "t": 1790321151158,
+   "wake": "30d4cef9",
+   "i": 105,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "https://ep2.adtrafficquality.google/sodar/sodar2/255/runner.html",
+    "timeStamp": 1790321151157,
+    "frameId": 23622320131,
+    "parentFrameId": 0,
+    "documentId": "9ccf4c20-14e9-9008-cde1-329cc5a1f2a3",
+    "parentDocumentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "auto_subframe",
+    "transitionQualifiers": []
+   },
+   "seq": 232
+  },
+  {
+   "t": 1790321151167,
+   "wake": "30d4cef9",
+   "i": 106,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "https://ep2.adtrafficquality.google/sodar/sodar2/255/runner.html",
+    "timeStamp": 1790321151166,
+    "frameId": 23622320131,
+    "parentFrameId": 0,
+    "documentId": "9ccf4c20-14e9-9008-cde1-329cc5a1f2a3",
+    "parentDocumentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 233
+  },
+  {
+   "t": 1790321151167,
+   "wake": "30d4cef9",
+   "i": 107,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "https://ep2.adtrafficquality.google/sodar/sodar2/255/runner.html",
+    "timeStamp": 1790321151166,
+    "frameId": 23622320131,
+    "parentFrameId": 0,
+    "documentId": "9ccf4c20-14e9-9008-cde1-329cc5a1f2a3",
+    "parentDocumentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 234
+  },
+  {
+   "t": 1790321151330,
+   "wake": "30d4cef9",
+   "i": 108,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321151329,
+    "frameId": 25769803777,
+    "parentFrameId": 23622320131,
+    "parentDocumentId": "9ccf4c20-14e9-9008-cde1-329cc5a1f2a3",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 235
+  },
+  {
+   "t": 1790321151330,
+   "wake": "30d4cef9",
+   "i": 109,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321151330,
+    "frameId": 25769803777,
+    "parentFrameId": 23622320131,
+    "documentId": "f118af30-d1e5-6bb1-a215-0c0d4408ea2a",
+    "parentDocumentId": "9ccf4c20-14e9-9008-cde1-329cc5a1f2a3",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "auto_subframe",
+    "transitionQualifiers": []
+   },
+   "seq": 236
+  },
+  {
+   "t": 1790321151330,
+   "wake": "30d4cef9",
+   "i": 110,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321151330,
+    "frameId": 25769803777,
+    "parentFrameId": 23622320131,
+    "documentId": "f118af30-d1e5-6bb1-a215-0c0d4408ea2a",
+    "parentDocumentId": "9ccf4c20-14e9-9008-cde1-329cc5a1f2a3",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 237
+  },
+  {
+   "t": 1790321151330,
+   "wake": "30d4cef9",
+   "i": 111,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321151330,
+    "frameId": 25769803777,
+    "parentFrameId": 23622320131,
+    "documentId": "f118af30-d1e5-6bb1-a215-0c0d4408ea2a",
+    "parentDocumentId": "9ccf4c20-14e9-9008-cde1-329cc5a1f2a3",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 238
+  },
+  {
+   "t": 1790321152683,
+   "wake": "30d4cef9",
+   "i": 112,
+   "browser": "firefox",
+   "src": "content.click",
+   "data": {
+    "type": "click",
+    "href": "https://www.google.com/goto?url=CAESYgHrOzAV1KC2D4SQRkPig-Uxh_IDgePYrkW9h_PuO_Fh4S7cVlLf94je7sYJHXXKNvHnMXRxEfIkjBUgU-k6NjQcT-vCG8yso0gkb5SwyevT2qtbHzyup6etP4YRqYrBb23r",
+    "text": "Dude Tested\n\nYouTube\nhttps://www.youtube.com › videos",
+    "target": "",
+    "rel": "",
+    "button": 0,
+    "ctrl": false,
+    "meta": false,
+    "shift": false,
+    "alt": false,
+    "trusted": true,
+    "pageUrl": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+    "t": 1790321152680,
+    "from": {
+     "tabId": 1,
+     "frameId": 0,
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE"
+    }
+   },
+   "seq": 239
+  },
+  {
+   "t": 1790321152686,
+   "wake": "30d4cef9",
+   "i": 113,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://www.google.com/goto?url=CAESYgHrOzAV1KC2D4SQRkPig-Uxh_IDgePYrkW9h_PuO_Fh4S7cVlLf94je7sYJHXXKNvHnMXRxEfIkjBUgU-k6NjQcT-vCG8yso0gkb5SwyevT2qtbHzyup6etP4YRqYrBb23r",
+    "timeStamp": 1790321152686,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 240
+  },
+  {
+   "t": 1790321152688,
+   "wake": "30d4cef9",
+   "i": 114,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321152687,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "dude spike test - Google Suche",
+     "favIconUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFNElEQVRYR8WXW2wUVRjHf2d2dku7W7bQaqEIAhKQYm1JfJBLUR9MDEqAPqCJl0AClqhBjA/4oEFMRGM0kpAI6oPGBC8xSi0Go4mhQJFIFIoWQYhCa7S0QO/b2+7MZ87M7uzs9pqI4deczOnZ7zvff875zmUUE0REKoA1wL3APd4PmRwG6oAapVSD1zoGyquNgoisB7YC5V7jxDgN7FJKfei1jMCoAkRkNqCdR3vbiaJHZb1S6pLX4mNEASKih1oHj3qN/42upIgaryXJMAHJIf/Aa/DzQz0cq4dfGqCtFUQ3Gm43xdOQ8nJYVolacnfKI5sN2VOSISD55vu9hhSNJ+HtndDaCnHT9RLlFhUAAs5TjACin9OmY2x9ClW2yOvCx1r/SHgCknOuMzdz2D9/HWq+gN6Q+/9QKB1cuystyC2CQgJBxAg6pmrVAxgbH3f90ujpqEjlhF+AXj6ZCffxC3D0a+jOhaFAsowhIDUKKQFzZmG8+hKE85IdehxWSunl7AoYcd6/2wI/74e+IFyNQL8JAyb05oBtgKVdTTB0YNOpi6GFGI6AMYKncPIhJUAPfXqdt9VC3WPQnA+TbGjNh5YwGALmXKjaBEsqIRxx7WMxOP4j9r7P4Gon3DZ3vOCa00qpCpXc4U55zZoj8+HyZYgFIRZyBfQG4c4qWLctHTibWAz56iBq9YPjBU+xWAt4GdjuNXUcgN/XQZ8BA7oE4FoI8qvgkb2e2XVihxaQmXwXn4SufZAAepT7jE2BlY0Qul77ksdhLcDZTjzOlsJgkxs4VQqfhoVveCZ+fmr2qpmIzvB017peElVMK/AWnsMwAdKQ62Sycpaa2xHzvoHJlZ6Nn8WvedVMst5Ls7kSqivHFTDJ2dmU3uFsG1EKVaqH/1bPxs+oAvzoEEqxebmML8A+FUKpoCPA+6n0DCo0y61nMSEBSaqXu6PgZ7iAk6YT3CaABVgI5rxvCeav8Gz8aAGCnZwrjXL+0qTrExPQOA8ZaqJX7zkqQLttkVu8haKZb3k2fvYe1e7+LtyAtb9Ci971JyAgYxkmLm3AuvYRAxgMCgwCV40CysovYAYKUmZj0jMAK98RerWzgyvi/UfhrsyZdJZhxkYU76yh7UIVHQI2ijaBZjtI4dQ1rF7wacpsTHYdj/HuUYVlWISsEEoMRAmN25InahpnIxq2FZ9qmE3zQBM5KNoFLskk2iWXhTc9wcNzXyFi5nu22ew58zfbj/RiWjnYyiY8FCUnHmbNHQF2rnRPSR+LnbHJPoy6u+s49Nt9dIqiSwwuSph2O48OCTMUKmfj7GruL1pG1AynXKht+YPd585T39JPqH8mZiKXYCLPERCwghzalM+MqD85k4eRro10HNddfI5D/+yhS4I0SZRuCdMjYVqtYgYJESeHuB0hEphMZ9xC4lEYnA4SQPXPJJAIE0qECQ5OpbqskB0rhuVP+jjWZCejZt/5ar5sraVFCrHEpMOeQo8UkUBhSQ42QRK2nihBrDD2wHRQNgyWYPaXYBkJKiK3cGxtqddnkswLiWa0K9nu88/yyeXv6bPz6HNGoYiEmFiYjgBb9IYVcARIIoxYEUcAiTCrSubw3tIyoiF9b/QY+UqmGe1SeqLzJM+ffZM/+7vplyiCgeiLKArb1rcgvWRyECsXiU8lIjN48fYlPLNgvteHj5EvpSlGyocUB6+c4MCVBuo7zvHXwDXHXcRwpmByoICl0QpWFS/ioZvLiAZzPD8fY1/LU9zQDxOfiBv3aebnhn2cZvN/fZ7/C+T0M/VuWOGOAAAAAElFTkSuQmCC"
+    }
+   },
+   "seq": 241
+  },
+  {
+   "t": 1790321152993,
+   "wake": "30d4cef9",
+   "i": 115,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "isArticle": false
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321152993,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "about:blank",
+     "title": "dude spike test - Google Suche",
+     "favIconUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFNElEQVRYR8WXW2wUVRjHf2d2dku7W7bQaqEIAhKQYm1JfJBLUR9MDEqAPqCJl0AClqhBjA/4oEFMRGM0kpAI6oPGBC8xSi0Go4mhQJFIFIoWQYhCa7S0QO/b2+7MZ87M7uzs9pqI4deczOnZ7zvff875zmUUE0REKoA1wL3APd4PmRwG6oAapVSD1zoGyquNgoisB7YC5V7jxDgN7FJKfei1jMCoAkRkNqCdR3vbiaJHZb1S6pLX4mNEASKih1oHj3qN/42upIgaryXJMAHJIf/Aa/DzQz0cq4dfGqCtFUQ3Gm43xdOQ8nJYVolacnfKI5sN2VOSISD55vu9hhSNJ+HtndDaCnHT9RLlFhUAAs5TjACin9OmY2x9ClW2yOvCx1r/SHgCknOuMzdz2D9/HWq+gN6Q+/9QKB1cuystyC2CQgJBxAg6pmrVAxgbH3f90ujpqEjlhF+AXj6ZCffxC3D0a+jOhaFAsowhIDUKKQFzZmG8+hKE85IdehxWSunl7AoYcd6/2wI/74e+IFyNQL8JAyb05oBtgKVdTTB0YNOpi6GFGI6AMYKncPIhJUAPfXqdt9VC3WPQnA+TbGjNh5YwGALmXKjaBEsqIRxx7WMxOP4j9r7P4Gon3DZ3vOCa00qpCpXc4U55zZoj8+HyZYgFIRZyBfQG4c4qWLctHTibWAz56iBq9YPjBU+xWAt4GdjuNXUcgN/XQZ8BA7oE4FoI8qvgkb2e2XVihxaQmXwXn4SufZAAepT7jE2BlY0Qul77ksdhLcDZTjzOlsJgkxs4VQqfhoVveCZ+fmr2qpmIzvB017peElVMK/AWnsMwAdKQ62Sycpaa2xHzvoHJlZ6Nn8WvedVMst5Ls7kSqivHFTDJ2dmU3uFsG1EKVaqH/1bPxs+oAvzoEEqxebmML8A+FUKpoCPA+6n0DCo0y61nMSEBSaqXu6PgZ7iAk6YT3CaABVgI5rxvCeav8Gz8aAGCnZwrjXL+0qTrExPQOA8ZaqJX7zkqQLttkVu8haKZb3k2fvYe1e7+LtyAtb9Ci971JyAgYxkmLm3AuvYRAxgMCgwCV40CysovYAYKUmZj0jMAK98RerWzgyvi/UfhrsyZdJZhxkYU76yh7UIVHQI2ijaBZjtI4dQ1rF7wacpsTHYdj/HuUYVlWISsEEoMRAmN25InahpnIxq2FZ9qmE3zQBM5KNoFLskk2iWXhTc9wcNzXyFi5nu22ew58zfbj/RiWjnYyiY8FCUnHmbNHQF2rnRPSR+LnbHJPoy6u+s49Nt9dIqiSwwuSph2O48OCTMUKmfj7GruL1pG1AynXKht+YPd585T39JPqH8mZiKXYCLPERCwghzalM+MqD85k4eRro10HNddfI5D/+yhS4I0SZRuCdMjYVqtYgYJESeHuB0hEphMZ9xC4lEYnA4SQPXPJJAIE0qECQ5OpbqskB0rhuVP+jjWZCejZt/5ar5sraVFCrHEpMOeQo8UkUBhSQ42QRK2nihBrDD2wHRQNgyWYPaXYBkJKiK3cGxtqddnkswLiWa0K9nu88/yyeXv6bPz6HNGoYiEmFiYjgBb9IYVcARIIoxYEUcAiTCrSubw3tIyoiF9b/QY+UqmGe1SeqLzJM+ffZM/+7vplyiCgeiLKArb1rcgvWRyECsXiU8lIjN48fYlPLNgvteHj5EvpSlGyocUB6+c4MCVBuo7zvHXwDXHXcRwpmByoICl0QpWFS/ioZvLiAZzPD8fY1/LU9zQDxOfiBv3aebnhn2cZvN/fZ7/C+T0M/VuWOGOAAAAAElFTkSuQmCC"
+    }
+   },
+   "seq": 242
+  },
+  {
+   "t": 1790321152994,
+   "wake": "30d4cef9",
+   "i": 116,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+    "timeStamp": 1790321152993,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 243
+  },
+  {
+   "t": 1790321152994,
+   "wake": "30d4cef9",
+   "i": 117,
+   "browser": "firefox",
+   "src": "webNavigation.onErrorOccurred",
+   "data": {
+    "url": "https://www.google.com/goto?url=CAESYgHrOzAV1KC2D4SQRkPig-Uxh_IDgePYrkW9h_PuO_Fh4S7cVlLf94je7sYJHXXKNvHnMXRxEfIkjBUgU-k6NjQcT-vCG8yso0gkb5SwyevT2qtbHzyup6etP4YRqYrBb23r",
+    "timeStamp": 1790321152994,
+    "error": "Error code 2152398850",
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 244
+  },
+  {
+   "t": 1790321152997,
+   "wake": "30d4cef9",
+   "i": 118,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+    "timeStamp": 1790321152996,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "9bbb2474-3b31-2b5f-f02b-0182929dacdd",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": [
+     "server_redirect"
+    ]
+   },
+   "seq": 245
+  },
+  {
+   "t": 1790321152998,
+   "wake": "30d4cef9",
+   "i": 119,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321152998,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "favIconUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFNElEQVRYR8WXW2wUVRjHf2d2dku7W7bQaqEIAhKQYm1JfJBLUR9MDEqAPqCJl0AClqhBjA/4oEFMRGM0kpAI6oPGBC8xSi0Go4mhQJFIFIoWQYhCa7S0QO/b2+7MZ87M7uzs9pqI4deczOnZ7zvff875zmUUE0REKoA1wL3APd4PmRwG6oAapVSD1zoGyquNgoisB7YC5V7jxDgN7FJKfei1jMCoAkRkNqCdR3vbiaJHZb1S6pLX4mNEASKih1oHj3qN/42upIgaryXJMAHJIf/Aa/DzQz0cq4dfGqCtFUQ3Gm43xdOQ8nJYVolacnfKI5sN2VOSISD55vu9hhSNJ+HtndDaCnHT9RLlFhUAAs5TjACin9OmY2x9ClW2yOvCx1r/SHgCknOuMzdz2D9/HWq+gN6Q+/9QKB1cuystyC2CQgJBxAg6pmrVAxgbH3f90ujpqEjlhF+AXj6ZCffxC3D0a+jOhaFAsowhIDUKKQFzZmG8+hKE85IdehxWSunl7AoYcd6/2wI/74e+IFyNQL8JAyb05oBtgKVdTTB0YNOpi6GFGI6AMYKncPIhJUAPfXqdt9VC3WPQnA+TbGjNh5YwGALmXKjaBEsqIRxx7WMxOP4j9r7P4Gon3DZ3vOCa00qpCpXc4U55zZoj8+HyZYgFIRZyBfQG4c4qWLctHTibWAz56iBq9YPjBU+xWAt4GdjuNXUcgN/XQZ8BA7oE4FoI8qvgkb2e2XVihxaQmXwXn4SufZAAepT7jE2BlY0Qul77ksdhLcDZTjzOlsJgkxs4VQqfhoVveCZ+fmr2qpmIzvB017peElVMK/AWnsMwAdKQ62Sycpaa2xHzvoHJlZ6Nn8WvedVMst5Ls7kSqivHFTDJ2dmU3uFsG1EKVaqH/1bPxs+oAvzoEEqxebmML8A+FUKpoCPA+6n0DCo0y61nMSEBSaqXu6PgZ7iAk6YT3CaABVgI5rxvCeav8Gz8aAGCnZwrjXL+0qTrExPQOA8ZaqJX7zkqQLttkVu8haKZb3k2fvYe1e7+LtyAtb9Ci971JyAgYxkmLm3AuvYRAxgMCgwCV40CysovYAYKUmZj0jMAK98RerWzgyvi/UfhrsyZdJZhxkYU76yh7UIVHQI2ijaBZjtI4dQ1rF7wacpsTHYdj/HuUYVlWISsEEoMRAmN25InahpnIxq2FZ9qmE3zQBM5KNoFLskk2iWXhTc9wcNzXyFi5nu22ew58zfbj/RiWjnYyiY8FCUnHmbNHQF2rnRPSR+LnbHJPoy6u+s49Nt9dIqiSwwuSph2O48OCTMUKmfj7GruL1pG1AynXKht+YPd585T39JPqH8mZiKXYCLPERCwghzalM+MqD85k4eRro10HNddfI5D/+yhS4I0SZRuCdMjYVqtYgYJESeHuB0hEphMZ9xC4lEYnA4SQPXPJJAIE0qECQ5OpbqskB0rhuVP+jjWZCejZt/5ar5sraVFCrHEpMOeQo8UkUBhSQ42QRK2nihBrDD2wHRQNgyWYPaXYBkJKiK3cGxtqddnkswLiWa0K9nu88/yyeXv6bPz6HNGoYiEmFiYjgBb9IYVcARIIoxYEUcAiTCrSubw3tIyoiF9b/QY+UqmGe1SeqLzJM+ffZM/+7vplyiCgeiLKArb1rcgvWRyECsXiU8lIjN48fYlPLNgvteHj5EvpSlGyocUB6+c4MCVBuo7zvHXwDXHXcRwpmByoICl0QpWFS/ioZvLiAZzPD8fY1/LU9zQDxOfiBv3aebnhn2cZvN/fZ7/C+T0M/VuWOGOAAAAAElFTkSuQmCC"
+    }
+   },
+   "seq": 246
+  },
+  {
+   "t": 1790321153004,
+   "wake": "30d4cef9",
+   "i": 120,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321153003,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1"
+    }
+   },
+   "seq": 247
+  },
+  {
+   "t": 1790321153006,
+   "wake": "30d4cef9",
+   "i": 121,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "committed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 248
+  },
+  {
+   "t": 1790321153042,
+   "wake": "30d4cef9",
+   "i": 122,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "Before you continue to YouTube"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321153041,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "Before you continue to YouTube"
+    }
+   },
+   "seq": 249
+  },
+  {
+   "t": 1790321153129,
+   "wake": "30d4cef9",
+   "i": 123,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+    "timeStamp": 1790321153128,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "9bbb2474-3b31-2b5f-f02b-0182929dacdd",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 250
+  },
+  {
+   "t": 1790321153412,
+   "wake": "30d4cef9",
+   "i": 124,
+   "browser": "firefox",
+   "src": "webNavigation.onHistoryStateUpdated",
+   "data": {
+    "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+    "timeStamp": 1790321153411,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "9bbb2474-3b31-2b5f-f02b-0182929dacdd",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": []
+   },
+   "seq": 251
+  },
+  {
+   "t": 1790321153414,
+   "wake": "30d4cef9",
+   "i": 125,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321153413,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "Before you continue to YouTube"
+    }
+   },
+   "seq": 252
+  },
+  {
+   "t": 1790321153457,
+   "wake": "30d4cef9",
+   "i": 126,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+    "timeStamp": 1790321153455,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "9bbb2474-3b31-2b5f-f02b-0182929dacdd",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 253
+  },
+  {
+   "t": 1790321153457,
+   "wake": "30d4cef9",
+   "i": 127,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "favIconUrl": null
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321153456,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "Before you continue to YouTube"
+    }
+   },
+   "seq": 254
+  },
+  {
+   "t": 1790321153458,
+   "wake": "30d4cef9",
+   "i": 128,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321153457,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "Before you continue to YouTube"
+    }
+   },
+   "seq": 255
+  },
+  {
+   "t": 1790321153458,
+   "wake": "30d4cef9",
+   "i": 129,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "completed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 256
+  },
+  {
+   "t": 1790321153524,
+   "wake": "30d4cef9",
+   "i": 130,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "favIconUrl": "data:image/x-icon;base64,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"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321153522,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "Before you continue to YouTube",
+     "favIconUrl": "data:image/x-icon;base64,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"
+    }
+   },
+   "seq": 257
+  },
+  {
+   "t": 1790321155378,
+   "wake": "30d4cef9",
+   "i": 131,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://consent.youtube.com/save",
+    "timeStamp": 1790321155377,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 258
+  },
+  {
+   "t": 1790321155379,
+   "wake": "30d4cef9",
+   "i": 132,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321155378,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "Before you continue to YouTube",
+     "favIconUrl": "data:image/x-icon;base64,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"
+    }
+   },
+   "seq": 259
+  },
+  {
+   "t": 1790321155944,
+   "wake": "30d4cef9",
+   "i": 133,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1",
+    "timeStamp": 1790321155944,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 260
+  },
+  {
+   "t": 1790321155948,
+   "wake": "30d4cef9",
+   "i": 134,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1",
+    "timeStamp": 1790321155947,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "form_submit",
+    "transitionQualifiers": [
+     "server_redirect"
+    ]
+   },
+   "seq": 261
+  },
+  {
+   "t": 1790321155949,
+   "wake": "30d4cef9",
+   "i": 135,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "youtube.com/@DudeTested/videos?cbrd=1"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321155948,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1",
+     "title": "youtube.com/@DudeTested/videos?cbrd=1",
+     "favIconUrl": "data:image/x-icon;base64,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"
+    }
+   },
+   "seq": 262
+  },
+  {
+   "t": 1790321155954,
+   "wake": "30d4cef9",
+   "i": 136,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321155952,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1",
+     "title": "youtube.com/@DudeTested/videos?cbrd=1"
+    }
+   },
+   "seq": 263
+  },
+  {
+   "t": 1790321155960,
+   "wake": "30d4cef9",
+   "i": 137,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "committed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 264
+  },
+  {
+   "t": 1790321156332,
+   "wake": "30d4cef9",
+   "i": 138,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3D%252Fsignin_passive%26feature%3Dpassive&hl=en",
+    "timeStamp": 1790321156331,
+    "frameId": 27917287425,
+    "parentFrameId": 0,
+    "parentDocumentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 265
+  },
+  {
+   "t": 1790321156479,
+   "wake": "30d4cef9",
+   "i": 139,
+   "browser": "firefox",
+   "src": "webNavigation.onErrorOccurred",
+   "data": {
+    "url": "https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3D%252Fsignin_passive%26feature%3Dpassive&hl=en",
+    "timeStamp": 1790321156478,
+    "error": "Error code 2152398850",
+    "frameId": 27917287425,
+    "parentFrameId": 0,
+    "documentId": "4ab760c0-da1c-ce0e-1198-75c5e20ed575",
+    "parentDocumentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 266
+  },
+  {
+   "t": 1790321156481,
+   "wake": "30d4cef9",
+   "i": 140,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3D%252Fsignin_passive%26feature%3Dpassive&hl=en",
+    "timeStamp": 1790321156480,
+    "frameId": 27917287425,
+    "parentFrameId": 0,
+    "parentDocumentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 267
+  },
+  {
+   "t": 1790321156483,
+   "wake": "30d4cef9",
+   "i": 141,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3D%252Fsignin_passive%26feature%3Dpassive&hl=en",
+    "timeStamp": 1790321156483,
+    "frameId": 27917287425,
+    "parentFrameId": 0,
+    "documentId": "d5a44c40-eb80-7535-edbd-4c12ac36722b",
+    "parentDocumentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "auto_subframe",
+    "transitionQualifiers": []
+   },
+   "seq": 268
+  },
+  {
+   "t": 1790321156484,
+   "wake": "30d4cef9",
+   "i": 142,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3D%252Fsignin_passive%26feature%3Dpassive&hl=en",
+    "timeStamp": 1790321156483,
+    "frameId": 27917287425,
+    "parentFrameId": 0,
+    "documentId": "d5a44c40-eb80-7535-edbd-4c12ac36722b",
+    "parentDocumentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 269
+  },
+  {
+   "t": 1790321156561,
+   "wake": "30d4cef9",
+   "i": 143,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3D%252Fsignin_passive%26feature%3Dpassive&hl=en",
+    "timeStamp": 1790321156560,
+    "frameId": 27917287425,
+    "parentFrameId": 0,
+    "documentId": "d5a44c40-eb80-7535-edbd-4c12ac36722b",
+    "parentDocumentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 270
+  },
+  {
+   "t": 1790321156714,
+   "wake": "30d4cef9",
+   "i": 144,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321156713,
+    "frameId": 27917287426,
+    "parentFrameId": 0,
+    "parentDocumentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 271
+  },
+  {
+   "t": 1790321156714,
+   "wake": "30d4cef9",
+   "i": 145,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321156714,
+    "frameId": 27917287426,
+    "parentFrameId": 0,
+    "documentId": "b9ba0fa3-1d8a-063a-8b05-eb8673b0b0e6",
+    "parentDocumentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "auto_subframe",
+    "transitionQualifiers": []
+   },
+   "seq": 272
+  },
+  {
+   "t": 1790321156714,
+   "wake": "30d4cef9",
+   "i": 146,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321156714,
+    "frameId": 27917287426,
+    "parentFrameId": 0,
+    "documentId": "b9ba0fa3-1d8a-063a-8b05-eb8673b0b0e6",
+    "parentDocumentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 273
+  },
+  {
+   "t": 1790321156714,
+   "wake": "30d4cef9",
+   "i": 147,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321156714,
+    "frameId": 27917287426,
+    "parentFrameId": 0,
+    "documentId": "b9ba0fa3-1d8a-063a-8b05-eb8673b0b0e6",
+    "parentDocumentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 274
+  },
+  {
+   "t": 1790321156716,
+   "wake": "30d4cef9",
+   "i": 148,
+   "browser": "firefox",
+   "src": "webNavigation.onErrorOccurred",
+   "data": {
+    "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1",
+    "timeStamp": 1790321156716,
+    "error": "Error code 2152398850",
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 275
+  },
+  {
+   "t": 1790321156717,
+   "wake": "30d4cef9",
+   "i": 149,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "favIconUrl": null
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321156716,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1",
+     "title": "youtube.com/@DudeTested/videos?cbrd=1"
+    }
+   },
+   "seq": 276
+  },
+  {
+   "t": 1790321156717,
+   "wake": "30d4cef9",
+   "i": 150,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321156717,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1",
+     "title": "youtube.com/@DudeTested/videos?cbrd=1"
+    }
+   },
+   "seq": 277
+  },
+  {
+   "t": 1790321156717,
+   "wake": "30d4cef9",
+   "i": 151,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1&themeRefresh=1",
+    "timeStamp": 1790321156717,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 278
+  },
+  {
+   "t": 1790321156718,
+   "wake": "30d4cef9",
+   "i": 152,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321156717,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1",
+     "title": "youtube.com/@DudeTested/videos?cbrd=1"
+    }
+   },
+   "seq": 279
+  },
+  {
+   "t": 1790321156719,
+   "wake": "30d4cef9",
+   "i": 153,
+   "browser": "firefox",
+   "src": "webNavigation.onHistoryStateUpdated",
+   "data": {
+    "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1",
+    "timeStamp": 1790321156718,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": []
+   },
+   "seq": 280
+  },
+  {
+   "t": 1790321156720,
+   "wake": "30d4cef9",
+   "i": 154,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321156720,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1",
+     "title": "youtube.com/@DudeTested/videos?cbrd=1"
+    }
+   },
+   "seq": 281
+  },
+  {
+   "t": 1790321156743,
+   "wake": "30d4cef9",
+   "i": 155,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1",
+    "timeStamp": 1790321156743,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "799a400d-3b34-03a8-77bc-1dca362e1829",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 282
+  },
+  {
+   "t": 1790321156971,
+   "wake": "30d4cef9",
+   "i": 156,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "isArticle": false
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321156970,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1",
+     "title": "youtube.com/@DudeTested/videos?cbrd=1"
+    }
+   },
+   "seq": 283
+  },
+  {
+   "t": 1790321156972,
+   "wake": "30d4cef9",
+   "i": 157,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1&themeRefresh=1",
+    "timeStamp": 1790321156971,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": []
+   },
+   "seq": 284
+  },
+  {
+   "t": 1790321156973,
+   "wake": "30d4cef9",
+   "i": 158,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "youtube.com/@DudeTested/videos?cbrd=1&themeRefresh=1"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321156972,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1&themeRefresh=1",
+     "title": "youtube.com/@DudeTested/videos?cbrd=1&themeRefresh=1"
+    }
+   },
+   "seq": 285
+  },
+  {
+   "t": 1790321156978,
+   "wake": "30d4cef9",
+   "i": 159,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1&themeRefresh=1"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321156977,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1&themeRefresh=1",
+     "title": "youtube.com/@DudeTested/videos?cbrd=1&themeRefresh=1"
+    }
+   },
+   "seq": 286
+  },
+  {
+   "t": 1790321156982,
+   "wake": "30d4cef9",
+   "i": 160,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "committed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 287
+  },
+  {
+   "t": 1790321157094,
+   "wake": "30d4cef9",
+   "i": 161,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3D%252Fsignin_passive%26feature%3Dpassive&hl=en",
+    "timeStamp": 1790321157093,
+    "frameId": 27917287427,
+    "parentFrameId": 0,
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 288
+  },
+  {
+   "t": 1790321157146,
+   "wake": "30d4cef9",
+   "i": 162,
+   "browser": "firefox",
+   "src": "webNavigation.onErrorOccurred",
+   "data": {
+    "url": "https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3D%252Fsignin_passive%26feature%3Dpassive&hl=en",
+    "timeStamp": 1790321157145,
+    "error": "Error code 2152398850",
+    "frameId": 27917287427,
+    "parentFrameId": 0,
+    "documentId": "84e11c77-937b-fe74-5d2f-13d22e5a5d32",
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 289
+  },
+  {
+   "t": 1790321157147,
+   "wake": "30d4cef9",
+   "i": 163,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3D%252Fsignin_passive%26feature%3Dpassive&hl=en",
+    "timeStamp": 1790321157146,
+    "frameId": 27917287427,
+    "parentFrameId": 0,
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 290
+  },
+  {
+   "t": 1790321157148,
+   "wake": "30d4cef9",
+   "i": 164,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3D%252Fsignin_passive%26feature%3Dpassive&hl=en",
+    "timeStamp": 1790321157147,
+    "frameId": 27917287427,
+    "parentFrameId": 0,
+    "documentId": "0d83e9d0-36f2-cfe3-249b-db68a34fb249",
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "auto_subframe",
+    "transitionQualifiers": []
+   },
+   "seq": 291
+  },
+  {
+   "t": 1790321157149,
+   "wake": "30d4cef9",
+   "i": 165,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3D%252Fsignin_passive%26feature%3Dpassive&hl=en",
+    "timeStamp": 1790321157148,
+    "frameId": 27917287427,
+    "parentFrameId": 0,
+    "documentId": "0d83e9d0-36f2-cfe3-249b-db68a34fb249",
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 292
+  },
+  {
+   "t": 1790321157149,
+   "wake": "30d4cef9",
+   "i": 166,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "https://accounts.google.com/ServiceLogin?service=youtube&uilel=3&passive=true&continue=https%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26app%3Ddesktop%26hl%3Den%26next%3D%252Fsignin_passive%26feature%3Dpassive&hl=en",
+    "timeStamp": 1790321157149,
+    "frameId": 27917287427,
+    "parentFrameId": 0,
+    "documentId": "0d83e9d0-36f2-cfe3-249b-db68a34fb249",
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 293
+  },
+  {
+   "t": 1790321157582,
+   "wake": "30d4cef9",
+   "i": 167,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321157581,
+    "frameId": 27917287428,
+    "parentFrameId": 0,
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 294
+  },
+  {
+   "t": 1790321157582,
+   "wake": "30d4cef9",
+   "i": 168,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321157582,
+    "frameId": 27917287428,
+    "parentFrameId": 0,
+    "documentId": "8f0c6644-60d8-d998-bd28-2fefb3e9f050",
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "auto_subframe",
+    "transitionQualifiers": []
+   },
+   "seq": 295
+  },
+  {
+   "t": 1790321157582,
+   "wake": "30d4cef9",
+   "i": 169,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321157582,
+    "frameId": 27917287428,
+    "parentFrameId": 0,
+    "documentId": "8f0c6644-60d8-d998-bd28-2fefb3e9f050",
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 296
+  },
+  {
+   "t": 1790321157583,
+   "wake": "30d4cef9",
+   "i": 170,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321157582,
+    "frameId": 27917287428,
+    "parentFrameId": 0,
+    "documentId": "8f0c6644-60d8-d998-bd28-2fefb3e9f050",
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 297
+  },
+  {
+   "t": 1790321157609,
+   "wake": "30d4cef9",
+   "i": 171,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "Dude Tested - YouTube"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321157608,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1&themeRefresh=1",
+     "title": "Dude Tested - YouTube"
+    }
+   },
+   "seq": 298
+  },
+  {
+   "t": 1790321157609,
+   "wake": "30d4cef9",
+   "i": 172,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1&themeRefresh=1",
+    "timeStamp": 1790321157608,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 299
+  },
+  {
+   "t": 1790321157619,
+   "wake": "30d4cef9",
+   "i": 173,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321157618,
+    "frameId": 27917287429,
+    "parentFrameId": 0,
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 300
+  },
+  {
+   "t": 1790321157620,
+   "wake": "30d4cef9",
+   "i": 174,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321157619,
+    "frameId": 27917287429,
+    "parentFrameId": 0,
+    "documentId": "8e3ac479-3b55-53f4-6bbb-578594d04ca5",
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "auto_subframe",
+    "transitionQualifiers": []
+   },
+   "seq": 301
+  },
+  {
+   "t": 1790321157620,
+   "wake": "30d4cef9",
+   "i": 175,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321157619,
+    "frameId": 27917287429,
+    "parentFrameId": 0,
+    "documentId": "8e3ac479-3b55-53f4-6bbb-578594d04ca5",
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 302
+  },
+  {
+   "t": 1790321157622,
+   "wake": "30d4cef9",
+   "i": 176,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "about:blank",
+    "timeStamp": 1790321157621,
+    "frameId": 27917287429,
+    "parentFrameId": 0,
+    "documentId": "8e3ac479-3b55-53f4-6bbb-578594d04ca5",
+    "parentDocumentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 303
+  },
+  {
+   "t": 1790321157626,
+   "wake": "30d4cef9",
+   "i": 177,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1&themeRefresh=1",
+    "timeStamp": 1790321157625,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 304
+  },
+  {
+   "t": 1790321157629,
+   "wake": "30d4cef9",
+   "i": 178,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321157626,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos?cbrd=1&themeRefresh=1",
+     "title": "Dude Tested - YouTube"
+    }
+   },
+   "seq": 305
+  },
+  {
+   "t": 1790321157629,
+   "wake": "30d4cef9",
+   "i": 179,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "completed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 306
+  },
+  {
+   "t": 1790321157671,
+   "wake": "30d4cef9",
+   "i": 180,
+   "browser": "firefox",
+   "src": "webNavigation.onHistoryStateUpdated",
+   "data": {
+    "url": "https://www.youtube.com/@DudeTested/videos",
+    "timeStamp": 1790321157671,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "2a1c01c9-de41-8868-abbf-e957f9d8a490",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": []
+   },
+   "seq": 307
+  },
+  {
+   "t": 1790321157673,
+   "wake": "30d4cef9",
+   "i": 181,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "complete",
+     "url": "https://www.youtube.com/@DudeTested/videos"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321157672,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos",
+     "title": "Dude Tested - YouTube"
+    }
+   },
+   "seq": 308
+  },
+  {
+   "t": 1790321157933,
+   "wake": "30d4cef9",
+   "i": 182,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "favIconUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAACQCAYAAADnRuK4AAAJ0UlEQVR4Xu3de4xcZRnH8e8zu7RQSmmMtoUUCdoqRQFhtiwtiBD4Q9TEEG0ELwl/iH+oiBIuAUustSUIoUApQUExKC0twQQoyiXGtDalrZ2pWILcoUWgZUuMW1ps9zKveWbmnO5tdi5nu1vO/D7JsOd9zl6YM7+eOe+cc97XEEnA4iWRBihAkogCJIkoQJKIAiSJKECSiAIkiShAkogCJIkoQJKIAiSJKECSiAIkiShAkogCJIkoQJKIAiSJKECSiAIkiShAkogCJIkcUgEKZCcAR5ceNgmYAJmJEMYBk6BwOJg/JpVqYSLg6/zn/OkcBbRAaAXzde5ICIeVl/35+u/vy/9OJm7VxXog7ImbWAHC7riJ7Qf+V254vQB0Q9hbKtkeCD3ldV2ltn1QXu6EXv+6t/Tw3+u11k5jQ/Q7x9xBC1DgwvHQMR0y0yEcC+FjYFNLX/koMPlAWIqBmVx64aUG3cB/gc4DD/P2e6VH2Am2C2wHFN6CKW8ZT3iYR1ziAAXaJ0HPmcBpwIlgMyHMBKbE3ySHgg6wV4CXIbwEmTxk/m5s6rPHrF9DAQrMPg74BhQuBk5v9PfImAvAFrBVYCuNzf+u9/+orhc+MGcGdM0H+zaElniFpID1QngAxi0yNrxa6xOqKUCBeS3w+lXAwvJBq6SXH7gvhIm/NNb4Af6wqgYoMHsahD9CmBsXpRlsAi4y8juGe7LDBqj0ltX9NIQT4qI0kzdh3PnDvaVVDFDgrGNh3zPA8XFRmtF2YE6lPdGQAQpkDwNbD2F2XJRmtgmOOnuoY6IKAWpbAOFncUEEm2/kFg/cEIMCFDjjVCjk9KmwDNAF4z4z8HhoiAC1PQLhq3FB5ID7jfylcWtggALZk4GtcUGkH/+wsXWGsXFbXIkWXKDtVghXxgWRwa4z8jdFjThAgQUZWP0WcExUExnCFiOfjRp9AjT7c1D4R9QWqWzCFGPdLl/qE6C2H0K4M2qLVGbzjNzDxaWoFMguB74ZtUUqs9uMXPFYuW+AngdOitoildlaI3duccn/U7r8dJdfd6trfKQGttvIFa8tLwfozFnQ/a/yWpEajJ9qPNNRDtAZX4He1dEqkersbCO3vhyg2VdA4fZolUgNLjXy95cD1LYUwuXRGpHqMouMzTdEAfoThC9Fq0Sqs1VG7uIoQM9B+Gy0SqQGG438nHKAsu/qRkCp0zYjf4IFzm2F97uiLr1IjfYb+cMtkPWz7+/E5bR68EZY8gBs1sddI+eIj1ig7TQIW+JaWm1bDR+fBr9bDdcvg3f/k9ZnOooOO8kDdCGEP4/iXx0bHqDjy5c67d4LC++FpSuhe9CNBlKzlvP9LczPwPuZ+HTrG6DIS9vhx7fCk377m9TP5vke6AcQlsW1tBoqQJHH18FPlsCrdQ9O0eQy3/MA/RTCotRvieEC5Lq64bYVsPi38L4PEibV2bX+FnYL4CNvpFu1AEXe2QXX3gnLn4Dgw+fIMG7yAN0LfDcupVWtAYps2AqX3wL5F+KSDGS/8rewhyF8La6lVb0Bcr4Huu8xuP4u6FC3fzB70APUHHeiNhKgiHf7F/walj2kbn8/9qgHaA2EL8S1tEoSoMiL20rd/qc2xKXmZn/xY6B1wNmp3xAjEaDIY3+DK5fAa34fZjOztR6gZ4FTU78ZRjJAzrv9S5bD4vtgT7N2++1ZD5B3M06MN0xajXSAIt7tv2YprHiyCbv99rwHyEdaSP8wdgcrQJFnvNt/M2x5MS41ge0eIL/H2aceSLeDHSDn3f7fPALz726Wbn+HB8jnWBg4AUn6jEaAIp17YME9sGwV9PTG5RTq9AD5DDLpvxpxNAMUeeGNUrf/6Y1xKWUKHqDmOOEzFgGKPLq21O1//e24lBYK0GjZ33Wg27/3kJnuKzEFaLR5t//qO+DBp1LR7VeAxsrNv4drl47VXx8xCtBo0x7oQ2osD6KdjoE+5MYyQOnuhbX5zMPpH5lsLAKU+s+BrMePgfRJ9Ehrrk+i23ZCmBo/+bQajT1Q850L2+F7IJ2NHwlNfDa+OYb3PVh7oOa+Deg53wPpisRG6IpEt8Uvql8L4ZzyZkmvkdwD6ZrostI10X8FzotKqTUSAdJdGQM9rfvCaqH7wioo3heWfQiYF9fSqpE9kO5MrWa5B+ge4LK4lFb1Bkj3xtfibn8LuxnC1XEprWoN0I73SrfpaHSOGtiNHqDrIQyaDzx1qgVI4wM1wK6xwOzvQ+GuuJZWwwVII5Q16jLfA10CYUVcSquhAqQxEhOyr/se6ItQeCKupVXfAGmU1hFi51ngjFOh109npJsHSONEj7RZvgeaBoUdcSmtNFL9wTDZAvNa4PVu3x/FZZGqbJ+RO0Kz9UiD7A0j94koQFuBk6NVIjXoN1/Y48CXozUi1fWbsTB7B/CjaJVIdf3mTNWszVK3vrM2a954qVe/eePPnAXdmspP6pA5xti8sxygC8dDh49Vm4lWi1Rmu41ccVjEYoBcIOt7oFlRW2QY64x88UaMPgFqWwHhkqgtUpndZuSuLC5FJfXEpHZ2iZFbWVyKSoH2LPTkorZIZaUDaF/qEyA/qfrG200x0IIk8ZyRPyVqxAFygeztwBVxQWSw64z8TVFjQIDaT4Gef8YFkX6sF1pnGBt9RJdSJVqINM0MhtKI+438pXFr6AD5p9I9WyG0xkUR6AJOMvKv9d0YgwLkAtn5wC/iggg238gNun+wQoDObYU9PuzL3LgoTcw2wMRzjDU9AzfCkAFygfap0LMe+GRclGbkB8xzjfyQN15UDJALtE+HnjUKUdPaDuMuMDa8WmkLDBsgF5g7BfY/DHw+Lkoz2ARcVGnPE6kaIFe+9ecqYCEwLl4hKWR+nLMYJi4a6phnoJoCFAnMmQHdN0D4Tr0/K4e8APYQtP7c2OgzedekoRAE2mdC77cAH5jhU/EK+RCylyGsgtY/GJteqfcJNBSgvgJnHQvd7RBOh8KnwWZCmAkcGX+THALsfcA/BHwJwss+RC+wqdoxTjWJA1RJIHs0ZKYDxwHTIEwpTS8efS3OFD3wIbXxeW47yw+f62R3adl8Cnd/vAehA1p2QuZN6H7HyPv3jriDFqBGBNonQeFoCOVABT9g9yCOB46AMLFUs0kQyjUmlA7szZ9LFMJonfPvLV/rbS0Qjiotx/xnGtwOfnIx+L/svvyFKk9kbD7mwN7ScvFrd3mey/KLafsg7AMrr/MwmJ8y+AAK5ZpFtU7IdEJrp7F+4N8cMw1uOJESBUgSUYAkEQVIElGAJBEFSBJRgCQRBUgSUYAkEQVIElGAJBEFSBJRgCQRBUgSUYAkEQVIElGAJBEFSBJRgCQRBUgSUYAkkf8D0SFgDqp0fvYAAAAASUVORK5CYII="
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321157932,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos",
+     "title": "Dude Tested - YouTube",
+     "favIconUrl": "data:image/png;base64,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"
+    }
+   },
+   "seq": 309
+  },
+  {
+   "t": 1790321157948,
+   "wake": "30d4cef9",
+   "i": 183,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "favIconUrl": "data:image/x-icon;base64,AAABAAIAAAAAAAEAIADhAQAAJgAAAAAAAAABACAA5QIAAAcCAACJUE5HDQoaCgAAAA1JSERSAAAAIAAAACAIBgAAAHN6evQAAAGoSURBVFhH7ZZNK0RRGMd/z8xCGi+lSKJmZ6PktSyspbwskS/BxsIHsFBIrLGQlYUQNkqWFiQrNswsTF5SZpCXzKMzM/csJjWTl3uk+dW5p57buc//nvPc5/4Fx4jj/AUBf2gHlO4iuOkBmkHDIFWgpSCh9Ew5KcEioGWf147EQRVIAnGQBOhjZr4GuQAOoXJT2H5JrTAXpb0R3teAcOZJv00Egv3CwbEoHcXwdgZaa2/7QxRK60VpHQJd8SdnNoEBI2AadNTGfEXmRGnZAbp8zWuRHbMDJ6ANNpaLqgro7YTFDUiaYv8WpghbY6DVNpSLcA2cr8PRKYxMwf6hvfUFYuYIEkCJDeXCE+Cxugtjs3B+aUP5IwkjwDSO/MkWYHh5hZkVmFiAxJMN58PPCPC4uoPxeVjazLs+/omAbx6B6yJ0/hk6b0ROW/GW65/RpChtw5BctmXpK4FBz5Ccgtb5mpuMITFJHViyKAT7UpbMe+u0Kb3th2QTiPGGlUAZaAgwwzOlgYxJ/QRrSs24B3kATGeKA9egEQgcQWhd2HtOrfCWuqIgoLADH443tFk4ycq/AAAAAElFTkSuQmCCiVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACrElEQVRoQ+2ZTUhUURTHf2csTBrRxDDc18agoFFwZ9HCRe2CaFXrIotoE9HHIlyEAxEltJGiCMplQYJF0sLAmCjSTVKLQkspUfya1PdOXOe9S9rUwjc6c4f5wVuc/2Xmnf879753PwTHEcfzLxnIO6UulG+KswJKcwV4DeDtglg9+HUgNaBxYCtIHLQaMPEmYHNGt2wBym20jKRBf9kQZoHF4JoFmQSdAZnJxDoBsTHQEYgNQ9mQ8Hre/jpgRQWUpj3gXQNpBTWJFRCyBNoDsUvCm3dhYtaAkjgGei94moWMqdgJIfXQJLlsQGlKgNfvQPIhi1DWKAy8DwwkekEPhq2O8FRIHRaluQYWfqweD4WPGRPxbaI0toL/rPATzobsF2XfOSBpNbdoMwZuAyfdyttyU5REN+gRK0WhuhImp224/sgjY+AlaEtObtZ1GTwfLnbC+ISV1w95YQwMgjZYLQp3r8LxQ5kqXLkDnd2w5Nnm3CODxsB30DqrRSE0EDL4CU5fh76UlXLMqBnEk0CVlaKw2kDI4144fwO+jlkpR0wZA2b29+dMcu38y4BhLg3tXZB8AOkFK0dkxhhQG0blfwZCPo/A2SQ8eWWlKGy8gZCefmjrgOEvVloL+TVwpgM+umZgHbqQw4NYpovhNZr4BrrD1iQKq99CG/Mhc3kqwYeimMw5P52+BXrK9lu3MAsa55eULi/qOWAqUAuMm4+aW73HbKuU17i/sWWeutK4F/wBZ7cWAxNHwb/vgIm/N3dDMtvrfjtoKxCzDYWBDzwHLgipt2FKWQeu0hKH+d3g7QStB7YDtSBm6RlcWgVSCVoGUg5aYf8g6wEH5nAjbSOYA8zacsksDUGmgoON4ICDnyDjIKPgD0PlkNBn2laQ1YBLlAzkm1IF8k2pAvnmNzIuF5oWwf/LAAAAAElFTkSuQmCC"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321157947,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos",
+     "title": "Dude Tested - YouTube",
+     "favIconUrl": "data:image/x-icon;base64,AAABAAIAAAAAAAEAIADhAQAAJgAAAAAAAAABACAA5QIAAAcCAACJUE5HDQoaCgAAAA1JSERSAAAAIAAAACAIBgAAAHN6evQAAAGoSURBVFhH7ZZNK0RRGMd/z8xCGi+lSKJmZ6PktSyspbwskS/BxsIHsFBIrLGQlYUQNkqWFiQrNswsTF5SZpCXzKMzM/csJjWTl3uk+dW5p57buc//nvPc5/4Fx4jj/AUBf2gHlO4iuOkBmkHDIFWgpSCh9Ew5KcEioGWf147EQRVIAnGQBOhjZr4GuQAOoXJT2H5JrTAXpb0R3teAcOZJv00Egv3CwbEoHcXwdgZaa2/7QxRK60VpHQJd8SdnNoEBI2AadNTGfEXmRGnZAbp8zWuRHbMDJ6ANNpaLqgro7YTFDUiaYv8WpghbY6DVNpSLcA2cr8PRKYxMwf6hvfUFYuYIEkCJDeXCE+Cxugtjs3B+aUP5IwkjwDSO/MkWYHh5hZkVmFiAxJMN58PPCPC4uoPxeVjazLs+/omAbx6B6yJ0/hk6b0ROW/GW65/RpChtw5BctmXpK4FBz5Ccgtb5mpuMITFJHViyKAT7UpbMe+u0Kb3th2QTiPGGlUAZaAgwwzOlgYxJ/QRrSs24B3kATGeKA9egEQgcQWhd2HtOrfCWuqIgoLADH443tFk4ycq/AAAAAElFTkSuQmCCiVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACrElEQVRoQ+2ZTUhUURTHf2csTBrRxDDc18agoFFwZ9HCRe2CaFXrIotoE9HHIlyEAxEltJGiCMplQYJF0sLAmCjSTVKLQkspUfya1PdOXOe9S9rUwjc6c4f5wVuc/2Xmnf879753PwTHEcfzLxnIO6UulG+KswJKcwV4DeDtglg9+HUgNaBxYCtIHLQaMPEmYHNGt2wBym20jKRBf9kQZoHF4JoFmQSdAZnJxDoBsTHQEYgNQ9mQ8Hre/jpgRQWUpj3gXQNpBTWJFRCyBNoDsUvCm3dhYtaAkjgGei94moWMqdgJIfXQJLlsQGlKgNfvQPIhi1DWKAy8DwwkekEPhq2O8FRIHRaluQYWfqweD4WPGRPxbaI0toL/rPATzobsF2XfOSBpNbdoMwZuAyfdyttyU5REN+gRK0WhuhImp224/sgjY+AlaEtObtZ1GTwfLnbC+ISV1w95YQwMgjZYLQp3r8LxQ5kqXLkDnd2w5Nnm3CODxsB30DqrRSE0EDL4CU5fh76UlXLMqBnEk0CVlaKw2kDI4144fwO+jlkpR0wZA2b29+dMcu38y4BhLg3tXZB8AOkFK0dkxhhQG0blfwZCPo/A2SQ8eWWlKGy8gZCefmjrgOEvVloL+TVwpgM+umZgHbqQw4NYpovhNZr4BrrD1iQKq99CG/Mhc3kqwYeimMw5P52+BXrK9lu3MAsa55eULi/qOWAqUAuMm4+aW73HbKuU17i/sWWeutK4F/wBZ7cWAxNHwb/vgIm/N3dDMtvrfjtoKxCzDYWBDzwHLgipt2FKWQeu0hKH+d3g7QStB7YDtSBm6RlcWgVSCVoGUg5aYf8g6wEH5nAjbSOYA8zacsksDUGmgoON4ICDnyDjIKPgD0PlkNBn2laQ1YBLlAzkm1IF8k2pAvnmNzIuF5oWwf/LAAAAAElFTkSuQmCC"
+    }
+   },
+   "seq": 310
+  },
+  {
+   "t": 1790321158678,
+   "wake": "30d4cef9",
+   "i": 184,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+    "timeStamp": 1790321158676,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 311
+  },
+  {
+   "t": 1790321158678,
+   "wake": "30d4cef9",
+   "i": 185,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321158677,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.youtube.com/@DudeTested/videos",
+     "title": "Dude Tested - YouTube",
+     "favIconUrl": "data:image/x-icon;base64,AAABAAIAAAAAAAEAIADhAQAAJgAAAAAAAAABACAA5QIAAAcCAACJUE5HDQoaCgAAAA1JSERSAAAAIAAAACAIBgAAAHN6evQAAAGoSURBVFhH7ZZNK0RRGMd/z8xCGi+lSKJmZ6PktSyspbwskS/BxsIHsFBIrLGQlYUQNkqWFiQrNswsTF5SZpCXzKMzM/csJjWTl3uk+dW5p57buc//nvPc5/4Fx4jj/AUBf2gHlO4iuOkBmkHDIFWgpSCh9Ew5KcEioGWf147EQRVIAnGQBOhjZr4GuQAOoXJT2H5JrTAXpb0R3teAcOZJv00Egv3CwbEoHcXwdgZaa2/7QxRK60VpHQJd8SdnNoEBI2AadNTGfEXmRGnZAbp8zWuRHbMDJ6ANNpaLqgro7YTFDUiaYv8WpghbY6DVNpSLcA2cr8PRKYxMwf6hvfUFYuYIEkCJDeXCE+Cxugtjs3B+aUP5IwkjwDSO/MkWYHh5hZkVmFiAxJMN58PPCPC4uoPxeVjazLs+/omAbx6B6yJ0/hk6b0ROW/GW65/RpChtw5BctmXpK4FBz5Ccgtb5mpuMITFJHViyKAT7UpbMe+u0Kb3th2QTiPGGlUAZaAgwwzOlgYxJ/QRrSs24B3kATGeKA9egEQgcQWhd2HtOrfCWuqIgoLADH443tFk4ycq/AAAAAElFTkSuQmCCiVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACrElEQVRoQ+2ZTUhUURTHf2csTBrRxDDc18agoFFwZ9HCRe2CaFXrIotoE9HHIlyEAxEltJGiCMplQYJF0sLAmCjSTVKLQkspUfya1PdOXOe9S9rUwjc6c4f5wVuc/2Xmnf879753PwTHEcfzLxnIO6UulG+KswJKcwV4DeDtglg9+HUgNaBxYCtIHLQaMPEmYHNGt2wBym20jKRBf9kQZoHF4JoFmQSdAZnJxDoBsTHQEYgNQ9mQ8Hre/jpgRQWUpj3gXQNpBTWJFRCyBNoDsUvCm3dhYtaAkjgGei94moWMqdgJIfXQJLlsQGlKgNfvQPIhi1DWKAy8DwwkekEPhq2O8FRIHRaluQYWfqweD4WPGRPxbaI0toL/rPATzobsF2XfOSBpNbdoMwZuAyfdyttyU5REN+gRK0WhuhImp224/sgjY+AlaEtObtZ1GTwfLnbC+ISV1w95YQwMgjZYLQp3r8LxQ5kqXLkDnd2w5Nnm3CODxsB30DqrRSE0EDL4CU5fh76UlXLMqBnEk0CVlaKw2kDI4144fwO+jlkpR0wZA2b29+dMcu38y4BhLg3tXZB8AOkFK0dkxhhQG0blfwZCPo/A2SQ8eWWlKGy8gZCefmjrgOEvVloL+TVwpgM+umZgHbqQw4NYpovhNZr4BrrD1iQKq99CG/Mhc3kqwYeimMw5P52+BXrK9lu3MAsa55eULi/qOWAqUAuMm4+aW73HbKuU17i/sWWeutK4F/wBZ7cWAxNHwb/vgIm/N3dDMtvrfjtoKxCzDYWBDzwHLgipt2FKWQeu0hKH+d3g7QStB7YDtSBm6RlcWgVSCVoGUg5aYf8g6wEH5nAjbSOYA8zacsksDUGmgoON4ICDnyDjIKPgD0PlkNBn2laQ1YBLlAzkm1IF8k2pAvnmNzIuF5oWwf/LAAAAAElFTkSuQmCC"
+    }
+   },
+   "seq": 312
+  },
+  {
+   "t": 1790321158775,
+   "wake": "30d4cef9",
+   "i": 186,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+    "timeStamp": 1790321158774,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 313
+  },
+  {
+   "t": 1790321158779,
+   "wake": "30d4cef9",
+   "i": 187,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+    "timeStamp": 1790321158778,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "7268b0bd-b2b5-125a-e300-dedce354014b",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": [
+     "forward_back"
+    ]
+   },
+   "seq": 314
+  },
+  {
+   "t": 1790321158780,
+   "wake": "30d4cef9",
+   "i": 188,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321158779,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "favIconUrl": "data:image/x-icon;base64,AAABAAIAAAAAAAEAIADhAQAAJgAAAAAAAAABACAA5QIAAAcCAACJUE5HDQoaCgAAAA1JSERSAAAAIAAAACAIBgAAAHN6evQAAAGoSURBVFhH7ZZNK0RRGMd/z8xCGi+lSKJmZ6PktSyspbwskS/BxsIHsFBIrLGQlYUQNkqWFiQrNswsTF5SZpCXzKMzM/csJjWTl3uk+dW5p57buc//nvPc5/4Fx4jj/AUBf2gHlO4iuOkBmkHDIFWgpSCh9Ew5KcEioGWf147EQRVIAnGQBOhjZr4GuQAOoXJT2H5JrTAXpb0R3teAcOZJv00Egv3CwbEoHcXwdgZaa2/7QxRK60VpHQJd8SdnNoEBI2AadNTGfEXmRGnZAbp8zWuRHbMDJ6ANNpaLqgro7YTFDUiaYv8WpghbY6DVNpSLcA2cr8PRKYxMwf6hvfUFYuYIEkCJDeXCE+Cxugtjs3B+aUP5IwkjwDSO/MkWYHh5hZkVmFiAxJMN58PPCPC4uoPxeVjazLs+/omAbx6B6yJ0/hk6b0ROW/GW65/RpChtw5BctmXpK4FBz5Ccgtb5mpuMITFJHViyKAT7UpbMe+u0Kb3th2QTiPGGlUAZaAgwwzOlgYxJ/QRrSs24B3kATGeKA9egEQgcQWhd2HtOrfCWuqIgoLADH443tFk4ycq/AAAAAElFTkSuQmCCiVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAACrElEQVRoQ+2ZTUhUURTHf2csTBrRxDDc18agoFFwZ9HCRe2CaFXrIotoE9HHIlyEAxEltJGiCMplQYJF0sLAmCjSTVKLQkspUfya1PdOXOe9S9rUwjc6c4f5wVuc/2Xmnf879753PwTHEcfzLxnIO6UulG+KswJKcwV4DeDtglg9+HUgNaBxYCtIHLQaMPEmYHNGt2wBym20jKRBf9kQZoHF4JoFmQSdAZnJxDoBsTHQEYgNQ9mQ8Hre/jpgRQWUpj3gXQNpBTWJFRCyBNoDsUvCm3dhYtaAkjgGei94moWMqdgJIfXQJLlsQGlKgNfvQPIhi1DWKAy8DwwkekEPhq2O8FRIHRaluQYWfqweD4WPGRPxbaI0toL/rPATzobsF2XfOSBpNbdoMwZuAyfdyttyU5REN+gRK0WhuhImp224/sgjY+AlaEtObtZ1GTwfLnbC+ISV1w95YQwMgjZYLQp3r8LxQ5kqXLkDnd2w5Nnm3CODxsB30DqrRSE0EDL4CU5fh76UlXLMqBnEk0CVlaKw2kDI4144fwO+jlkpR0wZA2b29+dMcu38y4BhLg3tXZB8AOkFK0dkxhhQG0blfwZCPo/A2SQ8eWWlKGy8gZCefmjrgOEvVloL+TVwpgM+umZgHbqQw4NYpovhNZr4BrrD1iQKq99CG/Mhc3kqwYeimMw5P52+BXrK9lu3MAsa55eULi/qOWAqUAuMm4+aW73HbKuU17i/sWWeutK4F/wBZ7cWAxNHwb/vgIm/N3dDMtvrfjtoKxCzDYWBDzwHLgipt2FKWQeu0hKH+d3g7QStB7YDtSBm6RlcWgVSCVoGUg5aYf8g6wEH5nAjbSOYA8zacsksDUGmgoON4ICDnyDjIKPgD0PlkNBn2laQ1YBLlAzkm1IF8k2pAvnmNzIuF5oWwf/LAAAAAElFTkSuQmCC"
+    }
+   },
+   "seq": 315
+  },
+  {
+   "t": 1790321158783,
+   "wake": "30d4cef9",
+   "i": 189,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321158782,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1"
+    }
+   },
+   "seq": 316
+  },
+  {
+   "t": 1790321158785,
+   "wake": "30d4cef9",
+   "i": 190,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "committed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 317
+  },
+  {
+   "t": 1790321158793,
+   "wake": "30d4cef9",
+   "i": 191,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "Before you continue to YouTube"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321158792,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "Before you continue to YouTube"
+    }
+   },
+   "seq": 318
+  },
+  {
+   "t": 1790321158801,
+   "wake": "30d4cef9",
+   "i": 192,
+   "browser": "firefox",
+   "src": "webNavigation.onDOMContentLoaded",
+   "data": {
+    "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+    "timeStamp": 1790321158800,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "7268b0bd-b2b5-125a-e300-dedce354014b",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 319
+  },
+  {
+   "t": 1790321158804,
+   "wake": "30d4cef9",
+   "i": 193,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "favIconUrl": "data:image/x-icon;base64,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"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321158803,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "Before you continue to YouTube",
+     "favIconUrl": "data:image/x-icon;base64,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"
+    }
+   },
+   "seq": 320
+  },
+  {
+   "t": 1790321158868,
+   "wake": "30d4cef9",
+   "i": 194,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+    "timeStamp": 1790321158867,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "7268b0bd-b2b5-125a-e300-dedce354014b",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 321
+  },
+  {
+   "t": 1790321158869,
+   "wake": "30d4cef9",
+   "i": 195,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321158868,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "Before you continue to YouTube",
+     "favIconUrl": "data:image/x-icon;base64,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"
+    }
+   },
+   "seq": 322
+  },
+  {
+   "t": 1790321158869,
+   "wake": "30d4cef9",
+   "i": 196,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "completed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 323
+  },
+  {
+   "t": 1790321159896,
+   "wake": "30d4cef9",
+   "i": 197,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321159895,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://consent.youtube.com/m?continue=https%3A%2F%2Fwww.youtube.com%2F%40DudeTested%2Fvideos%3Fcbrd%3D1&gl=DE&m=0&pc=yt&cm=2&hl=en&src=1",
+     "title": "dude spike test - Google Suche",
+     "favIconUrl": "data:image/x-icon;base64,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"
+    }
+   },
+   "seq": 324
+  },
+  {
+   "t": 1790321159900,
+   "wake": "30d4cef9",
+   "i": 198,
+   "browser": "firefox",
+   "src": "webNavigation.onBeforeNavigate",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+    "timeStamp": 1790321159899,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 325
+  },
+  {
+   "t": 1790321159900,
+   "wake": "30d4cef9",
+   "i": 199,
+   "browser": "firefox",
+   "src": "webNavigation.onCommitted",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+    "timeStamp": 1790321159899,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1,
+    "transitionType": "link",
+    "transitionQualifiers": [
+     "forward_back"
+    ]
+   },
+   "seq": 326
+  },
+  {
+   "t": 1790321159901,
+   "wake": "30d4cef9",
+   "i": 200,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "title": "dude spike test - Google Suche"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321159900,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "dude spike test - Google Suche",
+     "favIconUrl": "data:image/x-icon;base64,AAABAAIAAAAAAAEAIACmAgAAJgAAAAAAAAABACAApwUAAMwCAACJUE5HDQoaCgAAAA1JSERSAAAAEAAAABAIBgAAAB/z/2EAAAJtSURBVDhPfZNPSFVREMa/matPb0YGJVJUJqhBUT4VjFSisoVaUCAhFgW20CIosUVEQYQZ5KIEy3/QokW7yCII+6PZCxcFpoRhlpYaERphTyqf9707J8713auI9FvNGWa+75w55xAWoZTKFpEqItoDICWaHlVKdTFzCxH1R3MO5AZKqWUi0sjMx93cUohIGzNXE9GMXjsCulkp9YSICpRlIfToHkKdHbDHvkDZgpiUjYgrLIJ5sAzk8+n6ABEVaRFHwLbt29pZfkwgeL4akdGRObtF+HK2I/FaoxOLSKthGCdInxlAr3aeOnnUcdUuZulh+HLzAGZYr3sw+/I5EutuwFi3ISrnkEW2bbcyc2WkvxHB2ruQ34SV11sQuyXTq3IQccQWIiLNJCKfiCjNfpMLe+I97OkKmEduekX/Qyk1pAUsIoqNvFgOiAXD/xC0qtgrKrz6x4tddqQbuHIoXgtY8wJdCYAKw8h8AFpd4hUvJZCTaqC+fF7gIxGlT/dsRST0Da+SLuLAthqveCG17bPoHoxgnz8GNSVxWuCDHmILM1e9HazHhYEAfiEBTbsuIStps9eoGfouOH1nBhEBLpfGo2CToYd4S1+jH0CfZYdx7Nk5jATH4eNYlGWUIH9NNpgYvZMDaO+bwszXMmQk+9BcYYLm3nCm+5Ccq5z8+xNnAnUYDo7P2S4iLS4fDburkZxI2r3JMIxT7lM2lVIdRLTTkjDuDz/F47GAsxsoIGXFWuxdn4fyjP0wY5yzdxNRMRGFFn4mU0Qa9E7c3FJoZ2Y+q5v12hNw0TMRkcrod06Npj8rpTqZuY2I3kVzDv8AAU4dGeEFnqEAAAAASUVORK5CYIKJUE5HDQoaCgAAAA1JSERSAAAAIAAAACAIBgAAAHN6evQAAAVuSURBVFhHvZd5bFRVFMa/cx+drsPQspVNsKLQCilSFVkkjY0WFTdwAYwRpCIKERAkNaYgEtCGkNCIibKESChoTDDRSBBiSWwgxaLQoBjEFiphKXuhnU7befeY+3j3dmY6bZlA/P11z3fezPveveduhFuEmbsDmCylfIyIsgFkAPC66esATjJzlRDiZwA/EpHSuoRMqwOYeZiUspCIphFRgkl0AjM3MfMOIcSnRHTCJKLQoQFmTpJSriSiBURkmUQMMHOQmdcJIZYRUZNJhBDVADPfx8zfEVGWEW8DZj5KRFOI6B8jurQzwMyjmfknIuplRBf73Bk079uD1sOHEKytgay/pn4A0d0Ha3AGPNmjEZ83CdaAQeY3Gma+SERPENERI0YacL98f+TL7fNn0bjhMzSXlzkv7BQixI/PRfLcBbDS+xtZ4ZoYF9oTxgAzJzPzr5HdHti7Cw0lxeBA1CHsEEpMgnfxh4jPfdxoCnc4xuiaMAZs214rhHhPxwr/11+hcdPnJo6VhPzJ8L6/zMQaKeUay7KWqrZjQE01Zv4ztNrVl98o/kiHYXTLGArPw+Ng9RvgdLl99gxaKg8gWN024xKefgHehYVOPhI1O4goUw2Fk7Vte4sQYqZ+QBXb1YLp4OaAlhzUC1MWFsKTM8ZoobQcqsCNtasQPyEXKfMWGz0aUsrNlmUVEDP7mPl86CLTWPIu/D9U6NAhLnMEfKtLQF69+EWH/Y2gpGQTdwQz+4koXRmYAaDUJJpqYJdnwV/WD82HejuaSOuJ1I3bIXyp7lN3jGlk2/YmIcRsrchTn0BWL3faLX/1gH/XYKQsWO4U1J1GSrmBpJSVRPSgFu3f88FX9+kQ8vpAeJ75G+jWzWh3CmY+qAxcJqI0LQbLBwEtdToE9X0R1ojtJo4kb3WjaXdF0fPxyM1q+xBnYZJSthBRnBaDZQkASx1CDCmEuOdjE0cSi4HZuR7MGGdepQy0/K8GXpsQh5kTPe0MXCKinlpsNwR9psIaucPEkcTSA3PzPHhpTFgPOEMQXoSHJ4GvlOkQdZ5M9Bn/G+JEbEV48qJEwcbw/WP5lHhMHB5WAwejTMNiyOoip727eSCKb2RjyUPz8VxGnvvErfFNRSs2lLWYWFE6Lwnpvral2ZmGzDwdgClzbjqFwIEsrGvIws7AEEdLS/Bhe/5a9Ezo4T7VOQ0Bxqwvm3ClsW3rvquXwJY5iSZ2eUUZ6O4uxSa7rmIlSmurdOgwPDUD63OL4PN0vhS32kDRtwFU1thGU7yV58HL4eOvluK+ejPaLIR4QyfPNV7EtN2L4A+Gb0bpSb2wNOdNPNo/x2ihnLhWi+JfKnDyjyfV1mX0tGTC1rcTkegJ6/6NlmXN0dvxvcx8jIhMheyuLUdRRYkOwxjSfQDGpj+AQSnpICJcaLqMwxeOoerScTAYVmAokurmg4I3944VUxMwYVibIWZudbfjamPJtu01QoglOlZsO/49So5sNXEskO1FYt07mJWTHTb3FVLKTy3L+kC1jQF1DHemBdEIrSn2/Lsfqyq/gD8Y25HMIgsFma+iYOSzRlOoywsRPUJEzvi2DcrN5FBmPkBEN/dhl/P+S1hftQ17T++H7OpQCiCnz/1YOOp1p3BDYeY691Bao7UwAwpmHsXMeyJNKFRxKhOVdUdRXX8aV5vrnUOyL96Lwd7+GNV7OPIGjsWw1LvNbzTuy/OJKGx6tTOgcHtiJxGNNOJt4Ha7upiYL9dENaBg5kQp5QoiWhQ6O2JBVTszq9O2+p/wOe3SoQGN6g33cjqdiJJMohPUIsPMpUKIYjXVTCIKXRrQMLNaAp+KuJ773HQ9gJqQ6/kuImpwc53yH/Dmcksu4fj8AAAAAElFTkSuQmCC"
+    }
+   },
+   "seq": 327
+  },
+  {
+   "t": 1790321159905,
+   "wake": "30d4cef9",
+   "i": 201,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "loading",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "loading",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321159903,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "dude spike test - Google Suche"
+    }
+   },
+   "seq": 328
+  },
+  {
+   "t": 1790321159905,
+   "wake": "30d4cef9",
+   "i": 202,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "committed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 329
+  },
+  {
+   "t": 1790321159912,
+   "wake": "30d4cef9",
+   "i": 203,
+   "browser": "firefox",
+   "src": "webNavigation.onCompleted",
+   "data": {
+    "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+    "timeStamp": 1790321159910,
+    "frameId": 0,
+    "parentFrameId": -1,
+    "documentId": "bcff4ef3-e218-2571-7c22-00cc4abf6e0a",
+    "tabId": 1,
+    "windowId": 1
+   },
+   "seq": 330
+  },
+  {
+   "t": 1790321159912,
+   "wake": "30d4cef9",
+   "i": 204,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "favIconUrl": null
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321159911,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "dude spike test - Google Suche"
+    }
+   },
+   "seq": 331
+  },
+  {
+   "t": 1790321159913,
+   "wake": "30d4cef9",
+   "i": 205,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "status": "complete"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321159911,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "dude spike test - Google Suche"
+    }
+   },
+   "seq": 332
+  },
+  {
+   "t": 1790321159915,
+   "wake": "30d4cef9",
+   "i": 206,
+   "browser": "firefox",
+   "src": "tabValue",
+   "data": {
+    "tabId": 1,
+    "phase": "completed",
+    "value": "60ec5083-0b30-4ea4-b381-8eddd1f77190",
+    "fresh": false
+   },
+   "seq": 333
+  },
+  {
+   "t": 1790321159920,
+   "wake": "30d4cef9",
+   "i": 207,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "favIconUrl": "data:image/x-icon;base64,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"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321159919,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "dude spike test - Google Suche",
+     "favIconUrl": "data:image/x-icon;base64,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"
+    }
+   },
+   "seq": 334
+  },
+  {
+   "t": 1790321160020,
+   "wake": "30d4cef9",
+   "i": 208,
+   "browser": "firefox",
+   "src": "tabs.onUpdated",
+   "data": {
+    "tabId": 1,
+    "changeInfo": {
+     "favIconUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFNElEQVRYR8WXW2wUVRjHf2d2dku7W7bQaqEIAhKQYm1JfJBLUR9MDEqAPqCJl0AClqhBjA/4oEFMRGM0kpAI6oPGBC8xSi0Go4mhQJFIFIoWQYhCa7S0QO/b2+7MZ87M7uzs9pqI4deczOnZ7zvff875zmUUE0REKoA1wL3APd4PmRwG6oAapVSD1zoGyquNgoisB7YC5V7jxDgN7FJKfei1jMCoAkRkNqCdR3vbiaJHZb1S6pLX4mNEASKih1oHj3qN/42upIgaryXJMAHJIf/Aa/DzQz0cq4dfGqCtFUQ3Gm43xdOQ8nJYVolacnfKI5sN2VOSISD55vu9hhSNJ+HtndDaCnHT9RLlFhUAAs5TjACin9OmY2x9ClW2yOvCx1r/SHgCknOuMzdz2D9/HWq+gN6Q+/9QKB1cuystyC2CQgJBxAg6pmrVAxgbH3f90ujpqEjlhF+AXj6ZCffxC3D0a+jOhaFAsowhIDUKKQFzZmG8+hKE85IdehxWSunl7AoYcd6/2wI/74e+IFyNQL8JAyb05oBtgKVdTTB0YNOpi6GFGI6AMYKncPIhJUAPfXqdt9VC3WPQnA+TbGjNh5YwGALmXKjaBEsqIRxx7WMxOP4j9r7P4Gon3DZ3vOCa00qpCpXc4U55zZoj8+HyZYgFIRZyBfQG4c4qWLctHTibWAz56iBq9YPjBU+xWAt4GdjuNXUcgN/XQZ8BA7oE4FoI8qvgkb2e2XVihxaQmXwXn4SufZAAepT7jE2BlY0Qul77ksdhLcDZTjzOlsJgkxs4VQqfhoVveCZ+fmr2qpmIzvB017peElVMK/AWnsMwAdKQ62Sycpaa2xHzvoHJlZ6Nn8WvedVMst5Ls7kSqivHFTDJ2dmU3uFsG1EKVaqH/1bPxs+oAvzoEEqxebmML8A+FUKpoCPA+6n0DCo0y61nMSEBSaqXu6PgZ7iAk6YT3CaABVgI5rxvCeav8Gz8aAGCnZwrjXL+0qTrExPQOA8ZaqJX7zkqQLttkVu8haKZb3k2fvYe1e7+LtyAtb9Ci971JyAgYxkmLm3AuvYRAxgMCgwCV40CysovYAYKUmZj0jMAK98RerWzgyvi/UfhrsyZdJZhxkYU76yh7UIVHQI2ijaBZjtI4dQ1rF7wacpsTHYdj/HuUYVlWISsEEoMRAmN25InahpnIxq2FZ9qmE3zQBM5KNoFLskk2iWXhTc9wcNzXyFi5nu22ew58zfbj/RiWjnYyiY8FCUnHmbNHQF2rnRPSR+LnbHJPoy6u+s49Nt9dIqiSwwuSph2O48OCTMUKmfj7GruL1pG1AynXKht+YPd585T39JPqH8mZiKXYCLPERCwghzalM+MqD85k4eRro10HNddfI5D/+yhS4I0SZRuCdMjYVqtYgYJESeHuB0hEphMZ9xC4lEYnA4SQPXPJJAIE0qECQ5OpbqskB0rhuVP+jjWZCejZt/5ar5sraVFCrHEpMOeQo8UkUBhSQ42QRK2nihBrDD2wHRQNgyWYPaXYBkJKiK3cGxtqddnkswLiWa0K9nu88/yyeXv6bPz6HNGoYiEmFiYjgBb9IYVcARIIoxYEUcAiTCrSubw3tIyoiF9b/QY+UqmGe1SeqLzJM+ffZM/+7vplyiCgeiLKArb1rcgvWRyECsXiU8lIjN48fYlPLNgvteHj5EvpSlGyocUB6+c4MCVBuo7zvHXwDXHXcRwpmByoICl0QpWFS/ioZvLiAZzPD8fY1/LU9zQDxOfiBv3aebnhn2cZvN/fZ7/C+T0M/VuWOGOAAAAAElFTkSuQmCC"
+    },
+    "tab": {
+     "id": 1,
+     "index": 0,
+     "windowId": 1,
+     "highlighted": true,
+     "active": true,
+     "attention": false,
+     "pinned": false,
+     "status": "complete",
+     "hidden": false,
+     "discarded": false,
+     "incognito": false,
+     "width": 1280,
+     "height": 954,
+     "lastAccessed": 1790321160019,
+     "audible": false,
+     "autoDiscardable": true,
+     "mutedInfo": {
+      "muted": false
+     },
+     "isArticle": false,
+     "isInReaderMode": false,
+     "sharingState": {
+      "camera": false,
+      "microphone": false
+     },
+     "successorTabId": -1,
+     "groupId": -1,
+     "splitViewId": -1,
+     "cookieStoreId": "firefox-default",
+     "url": "https://www.google.com/search?client=ubuntu-sn&channel=fs&q=dude+spike+test&sei=9iG2aur5EsWMxc8PruDjqAE",
+     "title": "dude spike test - Google Suche",
+     "favIconUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFNElEQVRYR8WXW2wUVRjHf2d2dku7W7bQaqEIAhKQYm1JfJBLUR9MDEqAPqCJl0AClqhBjA/4oEFMRGM0kpAI6oPGBC8xSi0Go4mhQJFIFIoWQYhCa7S0QO/b2+7MZ87M7uzs9pqI4deczOnZ7zvff875zmUUE0REKoA1wL3APd4PmRwG6oAapVSD1zoGyquNgoisB7YC5V7jxDgN7FJKfei1jMCoAkRkNqCdR3vbiaJHZb1S6pLX4mNEASKih1oHj3qN/42upIgaryXJMAHJIf/Aa/DzQz0cq4dfGqCtFUQ3Gm43xdOQ8nJYVolacnfKI5sN2VOSISD55vu9hhSNJ+HtndDaCnHT9RLlFhUAAs5TjACin9OmY2x9ClW2yOvCx1r/SHgCknOuMzdz2D9/HWq+gN6Q+/9QKB1cuystyC2CQgJBxAg6pmrVAxgbH3f90ujpqEjlhF+AXj6ZCffxC3D0a+jOhaFAsowhIDUKKQFzZmG8+hKE85IdehxWSunl7AoYcd6/2wI/74e+IFyNQL8JAyb05oBtgKVdTTB0YNOpi6GFGI6AMYKncPIhJUAPfXqdt9VC3WPQnA+TbGjNh5YwGALmXKjaBEsqIRxx7WMxOP4j9r7P4Gon3DZ3vOCa00qpCpXc4U55zZoj8+HyZYgFIRZyBfQG4c4qWLctHTibWAz56iBq9YPjBU+xWAt4GdjuNXUcgN/XQZ8BA7oE4FoI8qvgkb2e2XVihxaQmXwXn4SufZAAepT7jE2BlY0Qul77ksdhLcDZTjzOlsJgkxs4VQqfhoVveCZ+fmr2qpmIzvB017peElVMK/AWnsMwAdKQ62Sycpaa2xHzvoHJlZ6Nn8WvedVMst5Ls7kSqivHFTDJ2dmU3uFsG1EKVaqH/1bPxs+oAvzoEEqxebmML8A+FUKpoCPA+6n0DCo0y61nMSEBSaqXu6PgZ7iAk6YT3CaABVgI5rxvCeav8Gz8aAGCnZwrjXL+0qTrExPQOA8ZaqJX7zkqQLttkVu8haKZb3k2fvYe1e7+LtyAtb9Ci971JyAgYxkmLm3AuvYRAxgMCgwCV40CysovYAYKUmZj0jMAK98RerWzgyvi/UfhrsyZdJZhxkYU76yh7UIVHQI2ijaBZjtI4dQ1rF7wacpsTHYdj/HuUYVlWISsEEoMRAmN25InahpnIxq2FZ9qmE3zQBM5KNoFLskk2iWXhTc9wcNzXyFi5nu22ew58zfbj/RiWjnYyiY8FCUnHmbNHQF2rnRPSR+LnbHJPoy6u+s49Nt9dIqiSwwuSph2O48OCTMUKmfj7GruL1pG1AynXKht+YPd585T39JPqH8mZiKXYCLPERCwghzalM+MqD85k4eRro10HNddfI5D/+yhS4I0SZRuCdMjYVqtYgYJESeHuB0hEphMZ9xC4lEYnA4SQPXPJJAIE0qECQ5OpbqskB0rhuVP+jjWZCejZt/5ar5sraVFCrHEpMOeQo8UkUBhSQ42QRK2nihBrDD2wHRQNgyWYPaXYBkJKiK3cGxtqddnkswLiWa0K9nu88/yyeXv6bPz6HNGoYiEmFiYjgBb9IYVcARIIoxYEUcAiTCrSubw3tIyoiF9b/QY+UqmGe1SeqLzJM+ffZM/+7vplyiCgeiLKArb1rcgvWRyECsXiU8lIjN48fYlPLNgvteHj5EvpSlGyocUB6+c4MCVBuo7zvHXwDXHXcRwpmByoICl0QpWFS/ioZvLiAZzPD8fY1/LU9zQDxOfiBv3aebnhn2cZvN/fZ7/C+T0M/VuWOGOAAAAAElFTkSuQmCC"
+    }
+   },
+   "seq": 335
+  },
+  {
+   "t": 1790321165704,
+   "wake": "30d4cef9",
+   "i": 209,
+   "browser": "firefox",
+   "src": "windows.onFocusChanged",
+   "data": {
+    "windowId": -1
+   },
+   "seq": 336
+  },
+  {
+   "t": 1790321165710,
+   "wake": "30d4cef9",
+   "i": 210,
+   "browser": "firefox",
+   "src": "windows.onFocusChanged",
+   "data": {
+    "windowId": 43
+   },
+   "seq": 337
+  }
+ ]
+}

@@ -1,0 +1,324 @@
+{
+ "browser": "firefox",
+ "version": "156.0",
+ "at": "2026-09-25T08:39:02.292Z",
+ "tabs": {
+  "red": 2,
+  "blueBackground": 3
+ },
+ "env": {
+  "context": "event page",
+  "captureTab": true,
+  "offscreenCanvas": true,
+  "createImageBitmap": true,
+  "webpEncode": "image/webp"
+ },
+ "visible": [
+  {
+   "ok": true,
+   "ms": 11,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 7,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 6,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  }
+ ],
+ "tabPreviouslyShown": [
+  {
+   "ok": true,
+   "ms": 8,
+   "bytes": 7426,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    0,
+    0
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 7,
+   "bytes": 7426,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    0,
+    0
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 9,
+   "bytes": 7426,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    0,
+    0
+   ],
+   "activeTabId": 1
+  }
+ ],
+ "tabNeverShown": [
+  {
+   "ok": true,
+   "ms": 7,
+   "bytes": 7418,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    0,
+    0,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 6,
+   "bytes": 7418,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    0,
+    0,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 8,
+   "bytes": 7418,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    0,
+    0,
+    255
+   ],
+   "activeTabId": 1
+  }
+ ],
+ "burst": [
+  {
+   "ok": true,
+   "ms": 10,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 10,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 12,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 9,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 10,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 9,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 11,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 8,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  }
+ ],
+ "encode": {
+  "sourceBytes": 502094,
+  "source": [
+   1110,
+   682
+  ],
+  "w320": {
+   "ms": 6,
+   "bytes": 11352,
+   "type": "image/webp",
+   "size": [
+    320,
+    197
+   ]
+  },
+  "w1280": {
+   "ms": 59,
+   "bytes": 106000,
+   "type": "image/webp",
+   "size": [
+    1280,
+    786
+   ]
+  }
+ },
+ "spaced": [
+  {
+   "ok": true,
+   "ms": 8,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 8,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 10,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 9,
+   "bytes": 19006,
+   "w": 1110,
+   "h": 682,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  }
+ ]
+}

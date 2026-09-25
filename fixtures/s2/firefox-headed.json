@@ -1,0 +1,352 @@
+{
+ "browser": "firefox",
+ "version": "156.0",
+ "at": "2026-09-25T08:39:13.170Z",
+ "tabs": {
+  "red": 2,
+  "blueBackground": 3
+ },
+ "env": {
+  "context": "event page",
+  "captureTab": true,
+  "offscreenCanvas": true,
+  "createImageBitmap": true,
+  "webpEncode": "image/webp"
+ },
+ "visible": [
+  {
+   "ok": true,
+   "ms": 13,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 10,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 12,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  }
+ ],
+ "tabPreviouslyShown": [
+  {
+   "ok": true,
+   "ms": 10,
+   "bytes": 8650,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    0,
+    0
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 11,
+   "bytes": 8650,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    0,
+    0
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 12,
+   "bytes": 8650,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    0,
+    0
+   ],
+   "activeTabId": 1
+  }
+ ],
+ "tabNeverShown": [
+  {
+   "ok": true,
+   "ms": 10,
+   "bytes": 8642,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    0,
+    0,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 8,
+   "bytes": 8642,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    0,
+    0,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 9,
+   "bytes": 8642,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    0,
+    0,
+    255
+   ],
+   "activeTabId": 1
+  }
+ ],
+ "burst": [
+  {
+   "ok": true,
+   "ms": 9,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 10,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 8,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 8,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 8,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 8,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 8,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 10,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  }
+ ],
+ "encode": {
+  "sourceBytes": 546462,
+  "source": [
+   881,
+   954
+  ],
+  "w320": {
+   "ms": 9,
+   "bytes": 21264,
+   "type": "image/webp",
+   "size": [
+    320,
+    347
+   ]
+  },
+  "w1280": {
+   "ms": 102,
+   "bytes": 179250,
+   "type": "image/webp",
+   "size": [
+    1280,
+    1386
+   ]
+  }
+ },
+ "spaced": [
+  {
+   "ok": true,
+   "ms": 9,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 8,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 9,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 7,
+   "bytes": 20082,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    255,
+    255,
+    255
+   ],
+   "activeTabId": 1
+  }
+ ],
+ "tabInMinimisedWindow": [
+  {
+   "ok": true,
+   "ms": 10,
+   "bytes": 8642,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    0,
+    0,
+    255
+   ],
+   "activeTabId": 1
+  },
+  {
+   "ok": true,
+   "ms": 6,
+   "bytes": 8642,
+   "w": 881,
+   "h": 954,
+   "avg": [
+    0,
+    0,
+    255
+   ],
+   "activeTabId": 1
+  }
+ ]
+}
