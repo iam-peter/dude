@@ -2,7 +2,7 @@
   "name": "dude",
   "description": "Per-tab navigation graphs with screenshots and playback — an own history next to the browser's",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "license": "MIT",
   "engines": {
