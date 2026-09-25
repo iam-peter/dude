@@ -409,7 +409,7 @@ storage/       Dexie over IndexedDB: events, sessions, visits, edges, blobs, tex
 | **S2** | Spike: Firefox `captureTab` on background tabs; capture cost in both browsers. *Done, see [S2-FINDINGS](S2-FINDINGS.md)* |
 | **M3** | Screenshots and page text, history app (session list, graph view, details panel), toolbar popup. *Built 2026-09-25. Not yet: pause toggles (M6), deleting visits/sessions from the details panel (M6)* |
 | **S3** | Spike: renderer comparison behind `GraphView` (F7) |
-| **M4** | Search, visual browse, omnibox, context menu, open / open with path, semantic back. *Built 2026-09-25. Context menu, omnibox UI and the shortcut are not automatable; they need a manual check* |
+| **M4** | Search, visual browse, omnibox, context menu, open / open with path, semantic back. *Built 2026-09-25. Context menu, omnibox and Alt+Shift+Up confirmed by hand in Firefox* |
 | **M5** | Playback (all three scopes). *Built 2026-09-25* |
 | **M6** | Retention and size cap, export/import, Chrome backfill, exclusion settings UI. *Built 2026-09-25, with pause, real delete and the first-run page. Chrome history import and the permission prompts need a manual check* |
 
