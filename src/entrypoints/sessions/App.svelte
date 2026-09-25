@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { untrack } from 'svelte';
   // Sessions app (SPEC §8.2): all recorded tab sessions by day, search (F8, F9) and the
   // thumbnail wall; for the selected session its graph with screenshots and the details
   // of the selected page.
@@ -37,6 +38,7 @@
   let range = $state<'any' | 'day' | 'week' | 'month'>('any');
   let host = $state('');
   let familyOnly = $state(false);
+  let openOnly = $state(false);
   let panel = $state<'sessions' | 'wall'>(params.get('panel') === 'wall' ? 'wall' : 'sessions');
 
   // Playback (SPEC §10)
@@ -56,7 +58,7 @@
   const selectedVisits = $derived(selectedRow && data ? selectedRow.visitIds.map((id) => data!.visits[id]).filter(Boolean).sort((a, b) => a.firstAt - b.firstAt) : []);
 
   async function loadList() {
-    cards = await request<SessionCard[]>({ cmd: 'dude.sessions', limit: 300 });
+    cards = await request<SessionCard[]>({ cmd: 'dude.sessions', limit: 300, open: openOnly || undefined });
     if (!selectedId && cards.length) select(cards[0].id);
     loadThumbs(cards.flatMap((c) => c.thumbs));
   }
@@ -122,11 +124,17 @@
     }
     return ids;
   });
+  // Search and wall follow the list: only the sessions whose tab is open, and/or the tab family.
+  const scopeIds = $derived.by(() => {
+    const open = openOnly ? new Set(cards.map((c) => c.id)) : undefined;
+    const fam = familyOnly ? family : undefined;
+    return open && fam ? new Set([...fam].filter((id) => open.has(id))) : (open ?? fam);
+  });
   const since = $derived(range === 'any' ? undefined : Date.now() - { day: 864e5, week: 7 * 864e5, month: 30 * 864e5 }[range]);
 
   $effect(() => {
     const query = q;
-    const filters = { since, host, sessionIds: familyOnly ? family : undefined };
+    const filters = { since, host, sessionIds: scopeIds };
     if (!query.trim()) {
       hits = [];
       return;
@@ -142,7 +150,7 @@
     if (!ix || panel !== 'wall') return [];
     const h = host.trim().toLowerCase();
     return [...ix.docs.values()]
-      .filter((d) => d.shotId && !d.inherited && (since === undefined || d.lastAt >= since) && (!h || d.host.toLowerCase().includes(h)) && (!familyOnly || !family || family.has(d.sessionId)))
+      .filter((d) => d.shotId && !d.inherited && (since === undefined || d.lastAt >= since) && (!h || d.host.toLowerCase().includes(h)) && (!scopeIds || scopeIds.has(d.sessionId)))
       .sort((a, b) => b.lastAt - a.lastAt);
   });
   $effect(() => {
@@ -196,8 +204,10 @@
   const cancelPath = () => job && request({ cmd: 'dude.openPath.cancel', job: job.job });
 
   $effect(() => {
-    loadList();
-    loadSession();
+    untrack(() => {
+      loadList();
+      loadSession();
+    });
     let timer: ReturnType<typeof setTimeout> | undefined;
     const onMessage = (m: ChangedMessage | OpenPathProgress) => {
       if (m?.type === 'dude.openPath') {
@@ -212,7 +222,7 @@
       timer = setTimeout(() => {
         loadList();
         if (selectedId && m.sessionIds.includes(selectedId)) loadSession();
-        if (ix) resync().then(() => ix && q && (hits = ix.search(q, { since, host, sessionIds: familyOnly ? family : undefined })));
+        if (ix) resync().then(() => ix && q && (hits = ix.search(q, { since, host, sessionIds: scopeIds })));
       }, 300);
     };
     browser.runtime.onMessage.addListener(onMessage);
@@ -264,6 +274,7 @@
       </select>
       <input type="text" placeholder="domain" bind:value={host} aria-label="Domain" />
       <label title="Only the selected session and the tabs linked to it by 'opened from'"><input type="checkbox" bind:checked={familyOnly} disabled={!selectedId} /> this tab family</label>
+      <label title="Only sessions whose tab is still open"><input type="checkbox" bind:checked={openOnly} onchange={loadList} /> open tabs</label>
     </div>
     <div class="panels" role="tablist">
       <button role="tab" aria-selected={panel === 'sessions'} class:on={panel === 'sessions'} onclick={() => (panel = 'sessions')}>Sessions</button>
@@ -279,17 +290,18 @@
         <button class="card" class:on={c.id === selectedId} onclick={() => select(c.id)}>
           <span class="top">
             <span class="title">{c.title ?? '…'}</span>
+            {#if c.open}<span class="live" title="The tab is still open">open</span>{/if}
             <span class="time">{hm(c.createdAt)}{c.lastAt - c.createdAt > 60_000 ? `–${hm(c.lastAt)}` : ''}</span>
           </span>
           {#if c.spawnedFrom}<span class="from">{c.spawnedFrom.kind === 'duplicate' ? '⧉ duplicate of' : '↳ from'} {c.spawnedFrom.title ?? '…'}</span>{/if}
           <span class="strip">
             {#each c.thumbs as id (id)}{#if thumbs[id]}<img src={thumbs[id]} alt="" />{/if}{/each}
           </span>
-          <span class="meta">{c.visitCount} page{c.visitCount === 1 ? '' : 's'}{c.open ? ' · open' : ''}{c.imported ? ' · imported' : ''}</span>
+          <span class="meta">{c.visitCount} page{c.visitCount === 1 ? '' : 's'}{c.imported ? ' · imported' : ''}</span>
         </button>
       {/each}
     {:else}
-      <p class="empty">Nothing recorded yet. Browse a little and come back.</p>
+      <p class="empty">{openOnly ? 'No open tab has a recorded session.' : 'Nothing recorded yet. Browse a little and come back.'}</p>
     {/each}
     {/if}
   </aside>
@@ -439,6 +451,16 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .live {
+    flex: none;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 16px;
+    padding: 0 6px;
+    border-radius: 8px;
+    color: #1a7f37;
+    background: color-mix(in srgb, #1a7f37 14%, transparent);
   }
   .time,
   .meta,

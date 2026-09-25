@@ -91,11 +91,12 @@ export class Service {
   }
 
   /** Sessions with at least one visit, most recently active first (sessions app list). */
-  sessions(q: { before?: number; limit?: number }): Promise<SessionCard[]> {
+  sessions(q: { before?: number; limit?: number; open?: boolean }): Promise<SessionCard[]> {
     return this.after(() => {
       const cards: SessionCard[] = [];
       for (const s of Object.values(this.st.sessions)) {
         if (!s.visitIds.length) continue;
+        if (q.open && s.closedAt !== undefined) continue; // before the limit, so idle open tabs aren't cut off
         const visits = s.visitIds.map((id) => this.st.visits[id]).filter(Boolean);
         const lastAt = Math.max(...visits.map((v) => v.lastAt));
         if (q.before !== undefined && lastAt >= q.before) continue;

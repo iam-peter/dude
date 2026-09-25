@@ -38,7 +38,7 @@ export interface SessionPayload {
 
 export type Request =
   | { cmd: 'dude.session'; tabId?: number; sessionId?: string }
-  | { cmd: 'dude.sessions'; before?: number; limit?: number }
+  | { cmd: 'dude.sessions'; before?: number; limit?: number; open?: boolean }
   | { cmd: 'dude.open'; url: string; visitId?: string }
   | { cmd: 'dude.openPath'; visitId: string }
   | { cmd: 'dude.openPath.cancel'; job: string }
