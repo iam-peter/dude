@@ -82,6 +82,53 @@ export async function replay(after: number, fn: (seq: number, o: Observation) =>
   return last;
 }
 
+/**
+ * Rewrite the log in place (real delete, SPEC §12): `fn` returns null to delete an
+ * observation, a new one to replace it, or the same object to keep it. Keys stay put.
+ */
+export async function rewriteLog(fn: (o: Observation) => Observation | null): Promise<{ deleted: number; changed: number }> {
+  const t = (await db()).transaction(LOG, 'readwrite');
+  let deleted = 0;
+  let changed = 0;
+  await new Promise<void>((resolve, reject) => {
+    const req = t.objectStore(LOG).openCursor();
+    req.onsuccess = () => {
+      const c = req.result;
+      if (!c) return resolve();
+      const o = c.value as Observation;
+      const r = fn(o);
+      if (r === null) {
+        c.delete();
+        deleted++;
+      } else if (r !== o) {
+        c.update(r);
+        changed++;
+      }
+      c.continue();
+    };
+    req.onerror = () => reject(req.error);
+  });
+  await done(t);
+  return { deleted, changed };
+}
+
+/** Replace the whole log (import, delete everything). */
+export async function replaceLog(obs: Observation[]): Promise<void> {
+  const t = (await db()).transaction([LOG, META], 'readwrite');
+  t.objectStore(LOG).clear();
+  t.objectStore(META).delete('checkpoint');
+  for (const o of obs) t.objectStore(LOG).add(o);
+  await done(t);
+}
+
+export async function clearBlobs(): Promise<void> {
+  const t = (await db()).transaction([SHOTS, TEXTS, META], 'readwrite');
+  t.objectStore(SHOTS).clear();
+  t.objectStore(TEXTS).clear();
+  t.objectStore(META).delete('searchIndex');
+  await done(t);
+}
+
 export async function logSize(): Promise<number> {
   const t = (await db()).transaction(LOG, 'readonly');
   const req = t.objectStore(LOG).count();

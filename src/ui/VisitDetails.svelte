@@ -17,8 +17,9 @@
     onOpen: (v: Visit) => void;
     onOpenPath: (v: Visit) => void;
     onShowSession: (id: string) => void;
+    onDelete: (v: Visit) => void;
   }
-  let { visits, children, onOpen, onOpenPath, onShowSession }: Props = $props();
+  let { visits, children, onOpen, onOpenPath, onShowSession, onDelete }: Props = $props();
 
   const v = $derived(visits.at(-1)!);
   const shots = $derived(visits.flatMap((x) => x.screenshots));
@@ -110,11 +111,12 @@
     {/if}
     <div class="actions">
       <button class="primary" onclick={() => onOpen(v)}>Open in new tab</button>
-      {#if v.parentId}
+      {#if v.parentId && !v.excluded}
         <button onclick={() => onOpenPath(v)} title="Opens a new tab and loads the pages that led here one after another, so the tab's Back button works (GET pages only)">Open with path</button>
       {/if}
       <button onclick={copy}>{copied ? 'Copied' : 'Copy URL'}</button>
       {#if v.text}<button onclick={showText}>{text === null ? 'Show page text' : 'Hide text'}</button>{/if}
+      <button class="bad" onclick={() => onDelete(v)} title="Removes this page from dude's history, with its screenshots and text">Delete this page</button>
     </div>
     {#if text !== null}<pre class="text">{text}</pre>{/if}
   </div>
@@ -232,6 +234,11 @@
     cursor: pointer;
     font: inherit;
     font-size: 12.5px;
+  }
+  .actions button.bad {
+    color: #c0392b;
+    border-color: color-mix(in srgb, #c0392b 50%, transparent);
+    margin-left: auto;
   }
   .actions button.primary {
     background: #2f7de1;

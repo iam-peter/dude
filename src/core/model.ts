@@ -34,9 +34,11 @@ export interface Visit {
   screenshots: { id: string; hash: string; at: number }[];
   /** Latest readable text of the page (C7). */
   text?: { id: string; hash: string; at: number };
+  /** Anonymous placeholder for a deny-listed page (D6). */
+  excluded?: boolean;
   /** Same-URL pushState entries stacked on this visit (S1 #32). */
   samePushes: number;
-  createdBy: 'commit' | 'spa' | 'inherit' | 'wake' | 'unknown-back';
+  createdBy: 'commit' | 'spa' | 'inherit' | 'wake' | 'unknown-back' | 'import';
 }
 
 export interface Move {
@@ -69,6 +71,10 @@ export interface Session {
   cursorId?: string;
   spawnedFrom?: { sessionId: string; visitId?: string; kind: 'link' | 'duplicate' | 'reopen' };
   lifecycle: LifecycleEntry[];
+  /** Built from imported Chrome history (E7), read-only. */
+  imported?: boolean;
+  /** Which browser tab this session was, when — tab ids change on restore and restart. */
+  bindings: { tabId: number; from: number; to?: number }[];
   moves: Move[];
   visitIds: string[];
 }
@@ -86,10 +92,12 @@ export interface TabState {
   hsuPending?: { url: string; t: number; result: 'pushed' | 'ignored'; visitId?: string };
   restoringUntil?: number;
   openerTabId?: number;
+  /** Recording was paused and resumed: the next page is reached by an unknown way. */
+  gap?: boolean;
 }
 
 /** Bump when the shape changes: older checkpoints are then ignored and the log replayed. */
-export const STATE_VERSION = 2;
+export const STATE_VERSION = 3;
 
 export interface State {
   version: typeof STATE_VERSION;
@@ -100,6 +108,9 @@ export interface State {
   byValue: Record<string, string>;
   pendingTargets: Record<number, { sourceTabId: number; t: number }>;
   focus: { windowId: number; unfocusedAt?: number; activeByWindow: Record<number, number> };
+  paused?: boolean;
+  /** Chrome visitId → visit id of imported history (E7). */
+  imported?: Record<string, string>;
   dwellFrom?: { visitId: string; t: number };
 }
 

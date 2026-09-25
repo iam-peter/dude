@@ -16,6 +16,8 @@ export default defineConfig({
       // G4: go to the page this one was reached from, whatever the native Back would do
       'semantic-back': { suggested_key: { default: 'Alt+Shift+Up' }, description: 'Go to the page you came here from (semantic back)' },
     },
+    // E7: Chrome's history, read only when the user starts an import in the settings.
+    ...(browser !== 'firefox' && { optional_permissions: ['history'] }),
     ...(browser === 'firefox' && {
       browser_specific_settings: {
         gecko: {

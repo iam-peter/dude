@@ -6,6 +6,7 @@
 import type { Observation } from './observations';
 import type { EdgeKind, Session, State, TabState, Visit } from './model';
 import { isRecordable, normUrl, pathOrQueryChanged, searchQuery, withoutHash } from './url';
+import { EXCLUDED_URL } from './privacy';
 
 const CLIENT_REDIRECT_MS = 1500; // S1 #5, #6, #22
 const RESTORE_WINDOW_MS = 1500; // S1 #15, #17
@@ -100,6 +101,12 @@ export function apply(st: State, o: Observation): Set<string> {
     case 'tab.reopened':
       onReopened(ctx, o);
       break;
+    case 'recorder.pause':
+      onPause(ctx, o);
+      break;
+    case 'history.import':
+      onHistoryImport(ctx, o);
+      break;
   }
 
   resumeDwell(st, o.t);
@@ -122,6 +129,7 @@ function newSession(ctx: Ctx, tabId: number, windowId: number): Session {
     windowId,
     createdAt: ctx.t,
     lifecycle: [],
+    bindings: [{ tabId, from: ctx.t }],
     moves: [],
     visitIds: [],
   };
@@ -186,6 +194,8 @@ function onTabRemoved(ctx: Ctx, tabId: number) {
 }
 
 function close(ctx: Ctx, s: Session, kind: 'closed' | 'gone-at-wake') {
+  const b = s.bindings.at(-1);
+  if (b && b.to === undefined) b.to = ctx.t;
   s.closedAt = ctx.t;
   s.tabId = undefined;
   s.lifecycle.push({ kind, at: ctx.t, windowId: s.windowId });
@@ -274,6 +284,9 @@ function bind(ctx: Ctx, s: Session, tabId: number, kind: RestoreKind, match: Mat
   tab.seenValue = s.tabValue;
   tab.restoringUntil = ctx.t + RESTORE_WINDOW_MS;
   ctx.st.tabs[tabId] = tab;
+  const last = s.bindings.at(-1);
+  if (last && last.to === undefined) last.to = ctx.t;
+  s.bindings.push({ tabId, from: ctx.t });
   s.tabId = tabId;
   s.lastTabId = tabId;
   s.closedAt = undefined;
@@ -460,7 +473,8 @@ function onCommitted(ctx: Ctx, o: Extract<Observation, { type: 'nav.committed' }
     return;
   }
 
-  const edge: EdgeKind = s.visitIds.length === 0 && s.spawnedFrom ? 'spawn' : JUMP_TRANSITIONS.has(o.transitionType) ? 'jump' : o.transitionType === 'form_submit' ? 'form' : 'link';
+  const edge: EdgeKind = tab.gap ? 'unknown' : s.visitIds.length === 0 && s.spawnedFrom ? 'spawn' : JUMP_TRANSITIONS.has(o.transitionType) ? 'jump' : o.transitionType === 'form_submit' ? 'form' : 'link';
+  tab.gap = undefined;
   const v = addVisit(ctx, s, cursor?.id, { url: o.url, transition: transitionName(o.transitionType), edge, createdBy: 'commit' });
   if (o.qualifiers.includes('server_redirect')) v.redirected = true;
   if (tab.click && acted(tab.click) && t - tab.click.t <= CLICK_MATCH_MS) v.anchorText = tab.click.text || undefined;
@@ -616,6 +630,38 @@ function onFragment(ctx: Ctx, o: Extract<Observation, { type: 'nav.fragment' }>)
   ctx.changed.add(s.id);
 }
 
+/**
+ * Imported Chrome history (E7): a visit whose referrer was imported hangs under it; any
+ * other starts a read-only session of its own. Reloads aren't pages. Importing twice
+ * skips what is already there.
+ */
+function onHistoryImport(ctx: Ctx, o: Extract<Observation, { type: 'history.import' }>) {
+  const { st } = ctx;
+  st.imported ??= {};
+  for (const it of [...o.items].sort((a, b) => a.at - b.at)) {
+    if (st.imported[it.id] || it.transition === 'reload' || !isRecordable(it.url)) continue;
+    const parent = it.ref ? st.visits[st.imported[it.ref]] : undefined;
+    let s = parent ? st.sessions[parent.sessionId] : undefined;
+    if (!s) {
+      s = { id: `s${++st.nextId}`, lastTabId: -1, windowId: -1, createdAt: it.at, closedAt: it.at, imported: true, lifecycle: [], bindings: [], moves: [], visitIds: [] };
+      st.sessions[s.id] = s;
+    }
+    const edge: EdgeKind = !parent ? 'unknown' : JUMP_TRANSITIONS.has(it.transition) ? 'jump' : it.transition === 'form_submit' ? 'form' : 'link';
+    const v = addVisit(ctx, s, parent?.id, { url: it.url, title: it.title, transition: transitionName(it.transition), edge, createdBy: 'import' });
+    v.firstAt = v.lastAt = it.at;
+    s.cursorId = v.id;
+    s.closedAt = Math.max(s.closedAt ?? 0, it.at);
+    st.imported[it.id] = v.id;
+  }
+}
+
+/** Pause (C5): on resume the tab's next page shows as reached by an unknown way. */
+function onPause(ctx: Ctx, o: Extract<Observation, { type: 'recorder.pause' }>) {
+  const tabs = o.tabId === undefined ? Object.values(ctx.st.tabs) : [ensureTab(ctx, o.tabId)];
+  if (o.tabId === undefined) ctx.st.paused = o.paused;
+  if (!o.paused) for (const t of tabs) t.gap = true;
+}
+
 /** Tab opened by dude from a recorded visit (G3): "reopened from" provenance. */
 function onReopened(ctx: Ctx, o: Extract<Observation, { type: 'tab.reopened' }>) {
   const tab = ensureTab(ctx, o.tabId);
@@ -688,6 +734,7 @@ function addVisit(
     redirectChain: [],
     fragments: [],
     searchQuery: searchQuery(p.url),
+    excluded: p.url === EXCLUDED_URL || undefined,
     screenshots: [],
     samePushes: 0,
     createdBy: p.createdBy,

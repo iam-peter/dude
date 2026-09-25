@@ -199,6 +199,7 @@
   <footer>
     <button class="link" onclick={() => (debug ? (debug = null) : refreshDebug())}>{debug ? 'hide' : 'debug'}</button>
     <a href={browser.runtime.getURL('/sessions.html') + (data ? `?session=${data.session.id}` : '')} target="_blank">All sessions</a>
+    <a href={browser.runtime.getURL('/options.html')} target="_blank">Settings</a>
     <a href={browser.runtime.getURL('/s1.html')} target="_blank">S1 recorder</a>
   </footer>
   {#if debug}

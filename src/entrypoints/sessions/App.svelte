@@ -175,6 +175,20 @@
     return scoped(tl, playScope, replaySession, { start: start.getTime(), end: start.getTime() + 864e5 });
   });
 
+  async function deleteVisit(v: Visit) {
+    if (!confirm(`Delete “${v.title ?? v.url}” from dude's history, with its screenshots and text?`)) return;
+    await request({ cmd: 'dude.delete', what: { kind: 'visit', visitId: v.id } });
+    selectedKey = undefined;
+    await Promise.all([loadList(), loadSession()]);
+  }
+  async function deleteSession() {
+    if (!data || !confirm('Delete this whole tab session from dude\'s history, with its screenshots and texts?')) return;
+    await request({ cmd: 'dude.delete', what: { kind: 'session', sessionId: data.session.id } });
+    selectedId = null;
+    data = null;
+    await loadList();
+  }
+
   async function openPath(v: Visit) {
     const r = await request<{ job: string; total: number }>({ cmd: 'dude.openPath', visitId: v.id });
     job = { type: 'dude.openPath', job: r.job, step: 0, total: r.total, done: false };
@@ -239,7 +253,7 @@
 
 <div class="app">
   <aside>
-    <header><h1>dude</h1><span class="sub">tab sessions</span></header>
+    <header><h1>dude</h1><span class="sub">tab sessions</span><a class="settings" href={browser.runtime.getURL('/options.html')}>settings</a></header>
     <input class="search" type="search" placeholder="Search titles, addresses, page text…" bind:value={q} aria-label="Search" />
     <div class="filters">
       <select bind:value={range} aria-label="Time range">
@@ -271,7 +285,7 @@
           <span class="strip">
             {#each c.thumbs as id (id)}{#if thumbs[id]}<img src={thumbs[id]} alt="" />{/if}{/each}
           </span>
-          <span class="meta">{c.visitCount} page{c.visitCount === 1 ? '' : 's'}{c.open ? ' · open' : ''}</span>
+          <span class="meta">{c.visitCount} page{c.visitCount === 1 ? '' : 's'}{c.open ? ' · open' : ''}{c.imported ? ' · imported' : ''}</span>
         </button>
       {/each}
     {:else}
@@ -299,6 +313,8 @@
             · {data.session.closedAt === undefined ? 'tab open' : 'tab closed'}
             {#if data.parent}· <button class="link" onclick={() => select(data!.parent!.id)}>{data.session.spawnedFrom?.kind === 'duplicate' ? 'duplicated from' : 'opened from'} {data.spawnVisit?.title ?? data.parent.title ?? '…'}</button>{/if}
             {#if data.children.length}· {data.children.length} tab{data.children.length === 1 ? '' : 's'} opened from here{/if}
+            {#if data.session.imported}· imported from Chrome's history{/if}
+            · <button class="link bad" onclick={deleteSession}>delete session</button>
           </p>
         </div>
         <div class="head-tools">
@@ -339,6 +355,7 @@
           onOpen={(v) => open(v.url, v.id)}
           onOpenPath={openPath}
           onShowSession={select}
+          onDelete={deleteVisit}
         />
       {/if}
       {/if}
@@ -506,6 +523,14 @@
   }
   .link:hover {
     text-decoration: underline;
+  }
+  .link.bad {
+    color: #c0392b;
+  }
+  .settings {
+    margin-left: auto;
+    font-size: 12px;
+    color: #2f7de1;
   }
   .empty {
     opacity: 0.7;

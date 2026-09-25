@@ -33,7 +33,23 @@ export type Observation =
   | { type: 'nav.intent'; t: number; tabId: number; url: string; reason: 'open-path' | 'semantic-back' }
   // A tab dude opened from a recorded visit (G3). The visit is named by URL and first-visit
   // time, which survive a rebuild; visit ids might not.
-  | { type: 'tab.reopened'; t: number; tabId: number; visitUrl: string; visitFirstAt: number };
+  | { type: 'tab.reopened'; t: number; tabId: number; visitUrl: string; visitFirstAt: number }
+  // Recording paused or resumed (C5): for one tab, or for all when tabId is missing. While
+  // paused the recorder logs no navigation; on resume the next page hangs under an
+  // "unknown" edge, so the gap is visible.
+  | { type: 'recorder.pause'; t: number; tabId?: number; paused: boolean }
+  // Chrome's native history, imported on request (E7): read-only sessions built from
+  // referringVisitId chains.
+  | { type: 'history.import'; t: number; items: ImportedVisit[] };
+
+export interface ImportedVisit {
+  id: string; // Chrome visitId
+  ref?: string; // referringVisitId
+  at: number; // visitTime
+  url: string;
+  title?: string;
+  transition: string;
+}
 
 export interface WakeTab {
   tabId: number;

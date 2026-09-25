@@ -8,6 +8,12 @@
   import { shotUrls } from '@/ui/shots';
 
   let windowId: number | undefined;
+  let tabId: number | undefined;
+  let pause = $state<{ global: boolean; tab: boolean }>({ global: false, tab: false });
+  const setPause = async (paused: boolean, forTab: boolean) => {
+    await request({ cmd: 'dude.pause', paused, tabId: forTab ? tabId : undefined });
+    pause = forTab ? { ...pause, tab: paused } : { ...pause, global: paused };
+  };
   let data = $state<SessionPayload | null>(null);
   let loaded = $state(false);
   let thumbs = $state<Record<string, string>>({});
@@ -25,6 +31,8 @@
       const fixed = new URLSearchParams(location.search).get('tab');
       const [tab] = fixed ? [await browser.tabs.get(Number(fixed))] : await browser.tabs.query({ active: true, currentWindow: true });
       windowId = tab?.windowId;
+      tabId = tab?.id;
+      pause = await request({ cmd: 'dude.pauseState', tabId });
       data = tab?.id !== undefined ? await request<SessionPayload | null>({ cmd: 'dude.session', tabId: tab.id }) : null;
       loaded = true;
       const ids = path.map((v) => v.screenshots.at(-1)?.id).filter((x): x is string => !!x);
@@ -74,6 +82,11 @@
   {#if data?.parent}
     <p class="from">Tab opened from: {data.parent.title ?? '…'}</p>
   {/if}
+  <div class="pause">
+    <label><input type="checkbox" checked={pause.tab} disabled={pause.global} onchange={(e) => setPause(e.currentTarget.checked, true)} /> Pause this tab</label>
+    <label><input type="checkbox" checked={pause.global} onchange={(e) => setPause(e.currentTarget.checked, false)} /> Pause all tabs</label>
+    <a href={browser.runtime.getURL('/options.html')} target="_blank">Settings</a>
+  </div>
   <footer>
     <button class="primary" onclick={showTree}>Show tree</button>
     <button onclick={showSessions}>All sessions</button>
@@ -167,6 +180,17 @@
   .from {
     opacity: 0.7;
     margin: 4px 0;
+  }
+  .pause {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 12px;
+  }
+  .pause a {
+    margin-left: auto;
+    color: #2f7de1;
   }
   footer {
     display: flex;

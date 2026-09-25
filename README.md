@@ -4,7 +4,7 @@ A Firefox/Chrome WebExtension that records every tab as its own navigation tree,
 branches, cross-tab provenance, screenshots and playback: an own history next to the
 browser's. See [docs/SPEC.md](docs/SPEC.md).
 
-Current state: **M5**. Every tab is recorded as its own tree with screenshots and page
+Current state: **M6**, all roadmap milestones built. Every tab is recorded as its own tree with screenshots and page
 text. It's shown live in the Firefox sidebar or the Chrome side panel, and in full in the
 sessions app, which also searches everything recorded. The S1
 spike findings behind the recording rules are in [docs/S1-FINDINGS.md](docs/S1-FINDINGS.md).
@@ -36,6 +36,11 @@ npm run dev:firefox
   opened from it, or the whole day, step by step with screenshots. Space plays and
   pauses, ← and → step. Idle time is shortened to at most 2 s per step; speed runs from
   0.5× to 8×.
+- **Settings** (popup → Settings, or `about:addons`): pause recording, your own excluded
+  sites (recorded only as anonymous placeholders), the screenshot size cap and preview
+  age, export/import as a zip, Chrome history import, and deleting by site, by time
+  range, or everything. Single pages and sessions can be deleted in the sessions app.
+  The popup also pauses single tabs.
 - **Screenshots** are taken about 1 s after a page loads (Firefox also captures
   background tabs), never on banking, payment or password-manager sites, and never while
   a password field is visible. Previews of pages you only glanced at are pruned; thumbnails
@@ -70,7 +75,9 @@ scripts/node22.sh node scripts/m3/screens.mjs /tmp/dude-screens
 
 `scripts/m3/capture-check.mjs chromium|firefox` browses slowly and prints which pages got
 screenshots (▣) and text (¶). `scripts/m4/nav-check.mjs chromium|firefox` checks open with
-path, semantic back and "reopened from".
+path, semantic back and "reopened from". `scripts/m6/check.mjs chromium|firefox` checks
+exclusions, pause and delete (grepping the raw log for leftovers), and in Chromium export →
+delete everything → import through the settings page.
 
 Tests (the projector against every S1 fixture, plus rule tests):
 

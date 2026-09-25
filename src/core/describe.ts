@@ -9,10 +9,12 @@
 // +n same-URL pushes · ▣n screenshots · ¶ page text. Lifecycle: ~ heuristic match (Chrome), ~? with medium confidence.
 
 import type { State, Visit } from './model';
+import { EXCLUDED_URL } from './privacy';
 
 const LOCAL = /^https?:\/\/(localhost|127\.0\.0\.1):8765/;
 
 export function shortUrl(url: string): string {
+  if (url === EXCLUDED_URL) return '(excluded page)';
   if (LOCAL.test(url)) return (url.includes('127.0.0.1') ? '[127]' : '') + url.replace(LOCAL, '');
   return url.replace(/^https?:\/\//, '');
 }

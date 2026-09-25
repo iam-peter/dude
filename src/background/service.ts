@@ -8,7 +8,8 @@ import { apply, visitFor } from '@/core/projector';
 import { describeAll, describeSince } from '@/core/describe';
 import { mediaPlan, type MediaPlan } from '@/core/media';
 import type { SearchDoc } from '@/search';
-import { append, getMeta, logSize, putMeta, replay } from '@/storage/db';
+import { append, clearBlobs, deleteMeta, getMeta, logSize, putMeta, replaceLog, replay, rewriteLog } from '@/storage/db';
+import { deletion, type DeleteWhat } from '@/core/delete';
 import type { SessionCard, SessionPayload, SessionSummary } from './protocol';
 
 const CHECKPOINT_KEY = 'checkpoint';
@@ -108,6 +109,7 @@ export class Service {
           lastAt,
           title: cur?.title ?? cur?.url,
           visitCount: visits.filter((v) => !v.inheritedFrom).length,
+          imported: s.imported,
           thumbs: visits.flatMap((v) => (v.screenshots.length ? [v.screenshots.at(-1)!.id] : [])).slice(0, 6),
           spawnedFrom: s.spawnedFrom ? { sessionId: s.spawnedFrom.sessionId, kind: s.spawnedFrom.kind, title: from?.title ?? from?.url ?? parent?.title } : undefined,
         });
@@ -249,14 +251,59 @@ export class Service {
     return this.after(() => describeSince(this.st, since, { media }));
   }
 
-  /** Throw the projection away and replay the whole log (after a projector fix). */
+  /** Throw the projection away and replay the whole log (after a projector fix, delete, import). */
   rebuild(): Promise<void> {
+    return this.after(() => this.rebuildNow());
+  }
+
+  private async rebuildNow() {
+    const old = Object.keys(this.st.sessions);
+    this.st = createState();
+    this.seq = await replay(0, (_, o) => apply(this.st, o));
+    // Always rewrite: after a delete the last seq may be unchanged, but the old checkpoint
+    // still holds what was deleted.
+    await this.checkpoint(true);
+    for (const id of [...old, ...Object.keys(this.st.sessions)]) this.changed.add(id);
+    this.scheduleBroadcast();
+  }
+
+  /** How many logged observations mention `needle` (privacy checks after exclude/delete). */
+  grepLog(needle: string): Promise<number> {
     return this.after(async () => {
-      this.st = createState();
-      this.seq = await replay(0, (_, o) => apply(this.st, o));
-      await this.checkpoint();
-      for (const id of Object.keys(this.st.sessions)) this.changed.add(id);
-      this.scheduleBroadcast();
+      let n = 0;
+      await replay(0, (_, o) => {
+        if (JSON.stringify(o).includes(needle)) n++;
+      });
+      return n;
+    });
+  }
+
+  /** Delete everything: log, checkpoint, images, texts, search index. */
+  deleteAll(): Promise<void> {
+    return this.after(async () => {
+      await replaceLog([]);
+      await clearBlobs();
+      await this.rebuildNow();
+    });
+  }
+
+  /** Import (E5): the given log replaces the current one (blobs are written by the page). */
+  importLog(obs: Observation[]): Promise<number> {
+    return this.after(async () => {
+      await replaceLog(obs);
+      await deleteMeta('searchIndex');
+      await this.rebuildNow();
+      return obs.length;
+    });
+  }
+
+  /** Real delete (SPEC §12): rewrite the log, rebuild, forget the search index. */
+  delete(what: DeleteWhat): Promise<{ deleted: number; changed: number }> {
+    return this.after(async () => {
+      const res = await rewriteLog(deletion(this.st, what));
+      await this.rebuildNow();
+      await deleteMeta('searchIndex');
+      return res;
     });
   }
 
@@ -279,8 +326,8 @@ export class Service {
     this.checkpointTimer = setTimeout(() => this.after(() => this.checkpoint()), CHECKPOINT_IDLE_MS);
   }
 
-  private async checkpoint() {
-    if (this.seq === this.checkpointSeq) return;
+  private async checkpoint(force = false) {
+    if (!force && this.seq === this.checkpointSeq) return;
     const seq = this.seq;
     await putMeta(CHECKPOINT_KEY, { seq, state: this.st } satisfies Checkpoint);
     this.checkpointSeq = seq;

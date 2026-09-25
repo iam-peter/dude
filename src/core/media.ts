@@ -26,3 +26,35 @@ export function mediaPlan(st: State, now: number, minDwellMs: number, maxAgeMs: 
   }
   return plan;
 }
+
+export interface ShotSize {
+  id: string;
+  t: number;
+  thumb: number;
+  preview: number;
+}
+
+/**
+ * Size cap (E3): drop previews oldest first until the screenshots fit, then whole
+ * screenshots (thumbnails) oldest first. Page text and the log are never dropped here.
+ */
+export function capPlan(shots: ShotSize[], capBytes: number): { dropPreviews: string[]; dropShots: string[]; bytes: number } {
+  let bytes = shots.reduce((n, s) => n + s.thumb + s.preview, 0);
+  const oldest = [...shots].sort((a, b) => a.t - b.t);
+  const dropPreviews: string[] = [];
+  const dropShots: string[] = [];
+  for (const s of oldest) {
+    if (bytes <= capBytes) break;
+    if (s.preview) {
+      dropPreviews.push(s.id);
+      bytes -= s.preview;
+    }
+  }
+  for (const s of oldest) {
+    if (bytes <= capBytes) break;
+    dropShots.push(s.id);
+    bytes -= s.thumb + (dropPreviews.includes(s.id) ? 0 : s.preview);
+  }
+  return { dropPreviews, dropShots, bytes };
+}
+

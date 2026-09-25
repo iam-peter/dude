@@ -69,6 +69,16 @@ try {
     await pause(1200);
     await app.screenshot({ path: path.join(out, `playback-${scope}.png`) });
   }
+  // M6: settings page (with a storage report) and the popup's pause toggles.
+  await ctx.pages()[0].evaluate(() => chrome.runtime.sendMessage({ cmd: 'dude.maintenance' }));
+  const opts = await ctx.newPage();
+  await opts.setViewportSize({ width: 900, height: 1500 });
+  await opts.goto(`chrome-extension://${extId}/options.html#welcome`);
+  await pause(1200);
+  await opts.screenshot({ path: path.join(out, 'options.png'), fullPage: true });
+  await popup.reload();
+  await pause(800);
+  await popup.screenshot({ path: path.join(out, 'popup.png') });
   console.log(fs.readdirSync(out).filter((f) => f.startsWith('popup') || f.startsWith('sessions')).join('\n'));
 } finally {
   await close();

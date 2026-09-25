@@ -203,7 +203,12 @@ which signal fired, so wrong guesses can be diagnosed.
 - Per-site exclusion rules (domain globs) come from a built-in deny list for banking,
   payment and password managers, plus a user-editable list.
 - An excluded visit is stored as an **anonymous placeholder node**: no URL, title,
-  screenshot or text, only its position and time, so the tree keeps its shape.
+  screenshot or text, only its position and time, so the tree keeps its shape. The
+  recorder anonymises before anything is logged (`src/core/privacy.ts`), so an excluded
+  page's address never reaches the log.
+- A pause stops navigation and page content from being logged; tab structure (created,
+  closed, focus) goes on. After a resume the next page hangs under an "unknown" edge, so
+  the gap is visible.
 - Private windows are never recorded.
 
 ## 7. Screenshots and page text
@@ -369,7 +374,11 @@ storage/       Dexie over IndexedDB: events, sessions, visits, edges, blobs, tex
 - **Export/import** (E5): a zip of the event log as JSON plus the screenshot blobs.
   Import rebuilds the projections.
 - **Delete:** a visit, a session, a domain, or a time range. Deleting removes the
-  matching log events too; it is a real delete, not a hide.
+  matching log events too; it is a real delete, not a hide (`src/core/delete.ts`). Page
+  content observations are removed and structural ones kept, with URLs and titles
+  stripped; then the projection is rebuilt, a fresh checkpoint written, the pages'
+  screenshots and texts deleted, and the search index cache dropped. Sessions remember
+  which tab ids they had when (`bindings`), so a restored tab's data goes too.
 - **Backfill** (E7): Chrome only, on request in Settings. Native history is imported as
   read-only `imported` sessions, with trees built from `referringVisitId`. Firefox is
   skipped.
@@ -402,7 +411,7 @@ storage/       Dexie over IndexedDB: events, sessions, visits, edges, blobs, tex
 | **S3** | Spike: renderer comparison behind `GraphView` (F7) |
 | **M4** | Search, visual browse, omnibox, context menu, open / open with path, semantic back. *Built 2026-09-25. Context menu, omnibox UI and the shortcut are not automatable; they need a manual check* |
 | **M5** | Playback (all three scopes). *Built 2026-09-25* |
-| **M6** | Retention and size cap, export/import, Chrome backfill, exclusion settings UI |
+| **M6** | Retention and size cap, export/import, Chrome backfill, exclusion settings UI. *Built 2026-09-25, with pause, real delete and the first-run page. Chrome history import and the permission prompts need a manual check* |
 
 ## 15. Risks
 

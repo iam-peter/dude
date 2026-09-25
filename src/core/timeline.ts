@@ -46,7 +46,7 @@ export function buildTimeline(observations: Iterable<Observation>): Timeline {
       for (const v of s.visitIds) {
         if (known.has(v)) continue;
         known.add(v);
-        steps.push({ t: o.t, kind: 'visit', sessionId: id, visitId: v });
+        steps.push({ t: st.visits[v]?.firstAt ?? o.t, kind: 'visit', sessionId: id, visitId: v });
       }
       if (s.moves.length > prev.moves) {
         for (const m of s.moves.slice(prev.moves)) steps.push({ t: m.at, kind: 'move', sessionId: id, visitId: m.to, dir: m.dir });
@@ -64,6 +64,8 @@ export function buildTimeline(observations: Iterable<Observation>): Timeline {
   // Steps pointing at sessions or visits that a later observation merged away (a restored
   // tab's provisional session, replayed commits) are not part of the story.
   const live = steps.filter((s) => st.sessions[s.sessionId] && (!s.visitId || st.visits[s.visitId]));
+  // Imported history is logged long after it happened: order by when things happened.
+  live.sort((a, b) => a.t - b.t);
   return { steps: live, st };
 }
 

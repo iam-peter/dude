@@ -1,6 +1,8 @@
 // Messages between the background and the extension UIs.
 
 import type { Session, Visit } from '@/core/model';
+import type { DeleteWhat } from '@/core/delete';
+import type { Observation } from '@/core/observations';
 
 export interface SessionSummary {
   id: string;
@@ -19,6 +21,7 @@ export interface SessionCard {
   lastAt: number;
   title?: string;
   visitCount: number;
+  imported?: boolean;
   /** Latest screenshot of the first few visits that have one, in visit order. */
   thumbs: string[];
   spawnedFrom?: { sessionId: string; kind: 'link' | 'duplicate' | 'reopen'; title?: string };
@@ -46,7 +49,16 @@ export type Request =
   | { cmd: 'dude.debug' }
   | { cmd: 'dude.describeSince'; since: number; media?: boolean }
   | { cmd: 'dude.rebuild' }
-  | { cmd: 'dude.maintenance' };
+  | { cmd: 'dude.maintenance' }
+  | { cmd: 'dude.pause'; paused: boolean; tabId?: number }
+  | { cmd: 'dude.pauseState'; tabId?: number }
+  | { cmd: 'dude.delete'; what: DeleteWhat }
+  | { cmd: 'dude.deleteAll' }
+  | { cmd: 'dude.importLog'; observations: Observation[] }
+  | { cmd: 'dude.importHistory'; days: number }
+  | { cmd: 'dude.storageReport' }
+  | { cmd: 'dude.setDenyHosts'; hosts: string[] }
+  | { cmd: 'dude.grepLog'; needle: string };
 
 /** Broadcast from the background whenever sessions changed. */
 export interface ChangedMessage {

@@ -6,6 +6,7 @@ import type { Observation } from '@/core/observations';
 import { apply } from '@/core/projector';
 import { describeAll } from '@/core/describe';
 import { mediaPlan } from '@/core/media';
+import { anonymize } from '@/core/privacy';
 
 const U = (p: string) => `http://localhost:8765${p}`;
 type O = Observation;
@@ -178,6 +179,55 @@ describe('navigations dude starts (§9, G2, G3)', () => {
     const src = [created(0, 1), commit(10, 1, '/a', 'typed'), click(900, 1, '/b'), commit(1000, 1, '/b')];
     const obs = [...src, created(5000, 2), commit(5010, 2, '/b', 'link'), { type: 'tab.reopened', t: 5020, tabId: 2, visitUrl: U('/b'), visitFirstAt: 1000 } as O];
     expect(tree(obs)).toBe(['s1 open', '  /a (jump)', '    /b *', 's4 open  from s1@/b (reopen)', '  /b (spawn) *'].join('\n'));
+  });
+});
+
+describe('exclusions and pause (D6, C5, §6.4)', () => {
+  const bank = (url: string) => url.includes('bank.example');
+  const through = (obs: O[]) => obs.map((o) => anonymize(o, bank)).filter((o): o is O => !!o);
+
+  test('a deny-listed page is an anonymous placeholder that keeps the tree shape', () => {
+    const obs: O[] = [
+      created(0, 1), commit(10, 1, '/a', 'typed'),
+      { type: 'page.click', t: 900, tabId: 1, href: 'https://bank.example/login', text: 'My account', button: 0, newTab: false },
+      { type: 'nav.committed', t: 1000, tabId: 1, url: 'https://bank.example/login', transitionType: 'link', qualifiers: [] },
+      { type: 'tab.updated', t: 1100, tabId: 1, url: 'https://bank.example/login', title: 'Your balance' },
+      { type: 'page.capture', t: 1200, tabId: 1, url: 'https://bank.example/login', shotId: 'x', hash: 'x' },
+      click(1900, 1, '/b'), commit(2000, 1, '/b'),
+    ];
+    const kept = through(obs);
+    expect(JSON.stringify(kept)).not.toContain('bank.example');
+    expect(JSON.stringify(kept)).not.toContain('balance');
+    const st = run(kept);
+    expect(describeAll(st)).toBe('s1 open\n  /a (jump)\n    (excluded page)\n      /b *');
+    expect(st.visits.v3.excluded).toBe(true);
+    expect(st.visits.v3.title).toBeUndefined();
+  });
+
+  test('after a resume the next page hangs under an unknown edge', () => {
+    const obs: O[] = [created(0, 1), commit(10, 1, '/a', 'typed'), { type: 'recorder.pause', t: 100, paused: true }, { type: 'recorder.pause', t: 5000, paused: false }, click(5900, 1, '/x'), commit(6000, 1, '/x')];
+    expect(tree(obs)).toBe('s1 open\n  /a (jump)\n    /x (unknown) *');
+  });
+});
+
+describe('Chrome history import (E7)', () => {
+  const imp = (t: number, items: [string, string | undefined, number, string, string][]): O => ({
+    type: 'history.import',
+    t,
+    items: items.map(([id, ref, at, path, transition]) => ({ id, ref, at, url: U(path), title: path, transition })),
+  });
+
+  test('referrer chains become read-only sessions; reloads are not pages', () => {
+    const st = run([imp(9_000_000, [['1', undefined, 100, '/a', 'typed'], ['2', '1', 200, '/b', 'link'], ['3', '2', 300, '/c', 'link'], ['4', '1', 400, '/d', 'link'], ['5', undefined, 500, '/a', 'reload'], ['6', undefined, 600, '/x', 'typed']])]);
+    expect(describeAll(st)).toBe(['s1 closed', '  /a (unknown)', '    /b', '      /c', '    /d *', 's6 closed', '  /x (unknown) *'].join('\n'));
+    expect(st.sessions.s1.imported).toBe(true);
+    expect(st.visits.v3.firstAt).toBe(200);
+  });
+
+  test('importing again adds only what is new', () => {
+    const first = imp(1, [['1', undefined, 100, '/a', 'typed']]);
+    const again = imp(2, [['1', undefined, 100, '/a', 'typed'], ['2', '1', 200, '/b', 'link']]);
+    expect(tree([first, again])).toBe('s1 closed\n  /a (unknown)\n    /b *');
   });
 });
 

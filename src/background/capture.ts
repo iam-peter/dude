@@ -7,10 +7,10 @@
 // field are never captured. Near-identical captures are skipped (dHash).
 
 import { isRecordable } from '@/core/url';
-import { isSensitive } from '@/core/sensitive';
 import { hamming, SAME_PICTURE, textHash } from '@/core/imagehash';
 import { putShot, putText } from '@/storage/db';
 import { decode, dHash, gzip, preview, thumbnail } from './imaging';
+import type { LiveSettings } from './settings';
 import type { Service } from './service';
 
 const SETTLE_MS = 1000; // D1
@@ -19,29 +19,18 @@ const ACTIVATE_MS = 300;
 const STALE_MS = 10 * 60_000;
 const CHROME_SPACING_MS = 550; // S2 #3
 const MAX_TEXT = 50_000; // C7
-export const DENY_KEY = 'dude.denyHosts'; // user list (D6); edited in settings (M6)
 
 interface CaptureApis {
   captureVisibleTab(windowId?: number, options?: { format?: string }): Promise<string>;
   captureTab?(tabId: number, options?: { format?: string }): Promise<string>;
 }
 
-export function installCapture(service: Service) {
+export function installCapture(service: Service, settings: LiveSettings) {
   const api = browser.tabs as unknown as CaptureApis;
   const canCaptureBackground = typeof api.captureTab === 'function';
   const timers = new Map<number, ReturnType<typeof setTimeout>>();
   let queue: Promise<unknown> = Promise.resolve();
   let lastCaptureAt = 0;
-
-  let denyHosts: string[] = [];
-  const loadDeny = () =>
-    browser.storage.local.get(DENY_KEY).then((r) => {
-      denyHosts = Array.isArray(r[DENY_KEY]) ? (r[DENY_KEY] as string[]) : [];
-    });
-  loadDeny();
-  browser.storage.onChanged.addListener((changes) => {
-    if (DENY_KEY in changes) loadDeny();
-  });
 
   const schedule = (tabId: number, delay: number) => {
     clearTimeout(timers.get(tabId));
@@ -94,7 +83,8 @@ export function installCapture(service: Service) {
   async function capture(tabId: number) {
     const tab = await browser.tabs.get(tabId).catch(() => undefined);
     if (!tab?.url || tab.incognito || tab.discarded || tab.status !== 'complete' || !isRecordable(tab.url)) return;
-    if (isSensitive(tab.url, denyHosts)) return;
+    await settings.ready;
+    if (settings.isExcluded(tab.url) || settings.isPaused(tabId)) return;
     if (!canCaptureBackground) {
       if (!tab.active) return; // Chromium: background tabs get the favicon placeholder (D2)
       const win = await browser.windows.get(tab.windowId!).catch(() => undefined);
@@ -126,7 +116,7 @@ export function installCapture(service: Service) {
     const tabId = sender.tab.id;
     const { url, title } = msg;
     const text = (msg.text ?? '').slice(0, MAX_TEXT);
-    if (!url || !isRecordable(url) || isSensitive(url, denyHosts) || text.length < 50) return undefined;
+    if (!url || !isRecordable(url) || settings.isExcluded(url) || settings.isPaused(tabId) || text.length < 50) return undefined;
     const t = Date.now();
     queue = queue
       .then(async () => {

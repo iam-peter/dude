@@ -1,10 +1,12 @@
 // URL helpers for the projector (SPEC §5.1, §6.2).
 
+import { EXCLUDED_URL } from './privacy';
+
 const TRACKING_PARAMS = /^(utm_[a-z]+|fbclid|gclid|dclid|msclkid|mc_eid|mc_cid|_hsenc|_hsmid|igshid|yclid|ref_src)$/i;
 
-/** Only real web pages become visits; browser and extension pages are skipped. */
+/** Only real web pages become visits (excluded ones as placeholders); browser and extension pages are skipped. */
 export function isRecordable(url: string | undefined): url is string {
-  return !!url && /^(https?|file):/i.test(url);
+  return !!url && (/^(https?|file):/i.test(url) || url === EXCLUDED_URL);
 }
 
 /** "Same page" key: no fragment, no tracking parameters (SPEC §5.1). */

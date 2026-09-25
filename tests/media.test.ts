@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { isSensitive } from '@/core/sensitive';
 import { dHashFromGray, hamming, textHash } from '@/core/imagehash';
+import { capPlan } from '@/core/media';
 
 describe('sensitive pages (D6)', () => {
   test.each([
@@ -42,3 +43,21 @@ describe('dHash', () => {
     expect(textHash('abc')).not.toBe(textHash('abd'));
   });
 });
+
+describe('size cap (E3)', () => {
+  const shots = [
+    { id: 'old', t: 1, thumb: 10, preview: 100 },
+    { id: 'mid', t: 2, thumb: 10, preview: 100 },
+    { id: 'new', t: 3, thumb: 10, preview: 100 },
+  ];
+  test('under the cap: nothing goes', () => {
+    expect(capPlan(shots, 1000)).toMatchObject({ dropPreviews: [], dropShots: [] });
+  });
+  test('previews go oldest first before any thumbnail', () => {
+    expect(capPlan(shots, 150)).toMatchObject({ dropPreviews: ['old', 'mid'], dropShots: [], bytes: 130 });
+  });
+  test('then whole screenshots, oldest first', () => {
+    expect(capPlan(shots, 15)).toMatchObject({ dropPreviews: ['old', 'mid', 'new'], dropShots: ['old', 'mid'], bytes: 10 });
+  });
+});
+

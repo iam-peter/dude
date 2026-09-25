@@ -8,10 +8,44 @@
 // observation says which value it was copied from.
 
 import { fromBrowserEvent, type Observation, type WakeTab } from '@/core/observations';
+import { anonymize } from '@/core/privacy';
 import { tabValues } from '@/platform';
+import type { LiveSettings } from './settings';
 import type { Service } from './service';
 
-export function installRecorder(service: Service) {
+/** What a pause stops (C5): navigation and page content. Tab structure keeps being logged. */
+const PAUSABLE = new Set<Observation['type']>([
+  'nav.committed',
+  'nav.history',
+  'nav.fragment',
+  'nav.completed',
+  'nav.intent',
+  'page.click',
+  'page.submit',
+  'page.history',
+  'page.capture',
+  'page.text',
+  'tab.updated',
+  'tab.reopened',
+]);
+
+/** Everything the recorder logs passes through here: pause first, then exclusions (D6). */
+export function screen(obs: Observation[], settings: LiveSettings): Observation[] {
+  return obs.flatMap((o) => {
+    const tabId = 'tabId' in o ? o.tabId : undefined;
+    if (PAUSABLE.has(o.type) && settings.isPaused(tabId)) return [];
+    const a = anonymize(o, settings.isExcluded);
+    return a ? [a] : [];
+  });
+}
+
+export function installRecorder(service: Service, settings: LiveSettings) {
+  // Every producer waits for the settings, then screens what it produced.
+  const enqueue = (producer: () => Observation[] | Promise<Observation[]>) =>
+    service.enqueue(async () => {
+      await settings.ready;
+      return screen(await producer(), settings);
+    });
   const values = tabValues(); // undefined in Chromium: identity comes from URL heuristics there
 
   const valueByTab = new Map<number, string>();
@@ -43,12 +77,13 @@ export function installRecorder(service: Service) {
   const record = (src: string, data: unknown, tabId?: number) => {
     if (tabId !== undefined && privateTabs.has(tabId)) return;
     const t = now();
-    service.enqueue(() => fromBrowserEvent(src, data, t));
+    enqueue(() => fromBrowserEvent(src, data, t));
   };
 
   // Snapshot on every background start: adopts tabs that predate the recorder and lets the
-  // projector rebind restored tabs after a browser restart (B12, S1 #28).
-  service.enqueue(async (): Promise<Observation[]> => {
+  // projector rebind restored tabs after a browser restart (B12, S1 #28). Also after
+  // "delete everything", so the open tabs are recorded again from a clean start.
+  const snapshot = () => enqueue(async (): Promise<Observation[]> => {
     const t = now();
     const tabs = await browser.tabs.query({});
     const wake: WakeTab[] = [];
@@ -63,6 +98,7 @@ export function installRecorder(service: Service) {
     }
     return [{ type: 'recorder.wake', t, tabs: wake }];
   });
+  snapshot();
 
   browser.tabs.onCreated.addListener((tab) => {
     if (tab.id === undefined) return;
@@ -72,7 +108,7 @@ export function installRecorder(service: Service) {
     }
     const t = now();
     const tabId = tab.id;
-    service.enqueue(async () => {
+    enqueue(async () => {
       const obs = fromBrowserEvent('tabs.onCreated', tab, t) as Extract<Observation, { type: 'tab.created' }>[];
       // A restored tab has its value right away (S1 #17, #25); a duplicate only from its first commit.
       const v = values ? await read(tabId) : undefined;
@@ -87,7 +123,7 @@ export function installRecorder(service: Service) {
   browser.webNavigation.onCommitted.addListener((d) => {
     if (d.frameId !== 0 || privateTabs.has(d.tabId)) return;
     const t = now();
-    service.enqueue(async () => {
+    enqueue(async () => {
       const obs: Observation[] = [];
       if (values && !identified.has(d.tabId)) {
         const id = await resolve(d.tabId);
@@ -120,4 +156,13 @@ export function installRecorder(service: Service) {
     record(`content.${msg.kind}`, { ...msg.data, from: { tabId: sender.tab.id, frameId: sender.frameId } }, sender.tab.id);
     return undefined;
   });
+
+  return {
+    /** Forget which tabs were identified and take a fresh startup snapshot. */
+    restart() {
+      identified.clear();
+      valueByTab.clear();
+      snapshot();
+    },
+  };
 }
