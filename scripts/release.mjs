@@ -1,6 +1,8 @@
 // Build a release of dude (A4: personal use).
 //   npm run release              check, build and zip both browsers; Chrome folder → dist/chrome
 //   npm run release -- --sign    …and sign the Firefox build as an unlisted AMO add-on → dist/firefox
+//   npm run release -- --publish …sign, then publish it as a Firefox update on GitHub and tag it
+//                                  (scripts/lib/publish.mjs); needs a clean, committed tree
 //
 // Signing reads the AMO API credentials from WEB_EXT_API_KEY and WEB_EXT_API_SECRET, or
 // asks for them (secret hidden) when they aren't set. They never go into the repository.
@@ -9,12 +11,35 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ask, askHidden } from './lib/prompt.mjs';
 import { signUnlisted } from './lib/amo.mjs';
+import { checkPublishable, publishUpdate } from './lib/publish.mjs';
 
-const sign = process.argv.includes('--sign');
+const publish = process.argv.includes('--publish');
+const sign = publish || process.argv.includes('--sign');
 const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 const run = (cmd) => execSync(cmd, { env: { ...process.env, DUDE_TEST_HOOKS: '' }, stdio: 'inherit' }); // never a test build
 
-if (sign && !(process.env.WEB_EXT_API_KEY && process.env.WEB_EXT_API_SECRET)) {
+// AMO never accepts a version twice: an xpi signed for this version is reused, not re-signed.
+const signedDir = path.resolve('dist/firefox');
+const signedXpi = () => fs.existsSync(signedDir) && fs.readdirSync(signedDir).find((f) => f.endsWith(`-${pkg.version}.xpi`));
+const alreadySigned = sign && signedXpi();
+// Which commit an xpi was built from, so a reused one can't be older than the code.
+const head = () => execSync('git rev-parse HEAD', { encoding: 'utf8' }).trim();
+const commitFile = () => path.join(signedDir, `${signedXpi()}.commit`);
+if (alreadySigned && (!fs.existsSync(commitFile()) || fs.readFileSync(commitFile(), 'utf8').trim() !== head())) {
+  console.error(`dist/firefox/${alreadySigned} was signed from another commit (or before this check existed): bump the version for a new release`);
+  process.exit(1);
+}
+
+if (publish) {
+  try {
+    checkPublishable(pkg.version);
+  } catch (e) {
+    console.error(`Can't publish ${pkg.version}: ${e.message}`);
+    process.exit(1);
+  }
+}
+
+if (sign && !alreadySigned && !(process.env.WEB_EXT_API_KEY && process.env.WEB_EXT_API_SECRET)) {
   // Asked here rather than passed on the command line, so the key never lands in the shell
   // history. It only lives in this process's environment for the web-ext call.
   if (!process.stdin.isTTY) {
@@ -48,21 +73,30 @@ fs.cpSync('.output/chrome-mv3', chromeDir, { recursive: true });
 const firefoxZip = `.output/${pkg.name}-${pkg.version}-firefox.zip`;
 const sourcesZip = `.output/${pkg.name}-${pkg.version}-sources.zip`;
 
-if (sign) {
+if (alreadySigned) {
+  console.log(`\n== sign for Firefox: ${alreadySigned} is signed already, reusing it`);
+} else if (sign) {
   console.log('\n== sign for Firefox (unlisted)');
-  fs.mkdirSync('dist/firefox', { recursive: true });
+  fs.mkdirSync(signedDir, { recursive: true });
   await signUnlisted({
     sourceDir: path.resolve('.output/firefox-mv3'),
-    artifactsDir: path.resolve('dist/firefox'),
+    artifactsDir: signedDir,
     sourcesZip: path.resolve(sourcesZip),
     apiKey: process.env.WEB_EXT_API_KEY,
     apiSecret: process.env.WEB_EXT_API_SECRET,
   });
+  fs.writeFileSync(commitFile(), head() + '\n');
+}
+
+if (publish) {
+  console.log('\n== publish the Firefox update');
+  const gecko = JSON.parse(fs.readFileSync('.output/firefox-mv3/manifest.json', 'utf8')).browser_specific_settings.gecko;
+  publishUpdate({ xpi: path.join(signedDir, signedXpi()), id: gecko.id, version: pkg.version, minVersion: gecko.strict_min_version });
 }
 
 console.log(`
 == done: dude ${pkg.version}
 Chrome   chrome://extensions → Developer mode → Load unpacked → ${chromeDir}
          (after a new release: the reload button on dude's card)
-Firefox  ${sign ? `about:addons → ⚙ → Install Add-on From File → dist/firefox/*.xpi` : `unsigned: ${firefoxZip} (run with --sign to get an installable .xpi)`}
+Firefox  ${publish ? `published: installed copies update themselves (about:addons → ⚙ → Check for Updates)` : sign ? `about:addons → ⚙ → Install Add-on From File → dist/firefox/${signedXpi()}` : `unsigned: ${firefoxZip} (run with --sign to get an installable .xpi)`}
 `);

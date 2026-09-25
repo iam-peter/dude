@@ -39,6 +39,8 @@ export default defineConfig({
           id: '{53952834-ba6a-4072-9c32-c836b5a38a3c}',
           // 140: data_collection_permissions (below) needs it; MV3 world: MAIN needs 128.
           strict_min_version: '140.0',
+          // Self-hosted updates (scripts/lib/updates.mjs): the `updates` branch on GitHub.
+          update_url: 'https://raw.githubusercontent.com/iam-peter/dude/updates/updates.json',
           // Nothing ever leaves the browser (H2).
           data_collection_permissions: { required: ['none'] },
         },

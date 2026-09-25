@@ -5,6 +5,7 @@
 import { execSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+import { UPDATE_URL } from './lib/updates.mjs';
 
 const MARKERS = [
   's1-control', // automation relay
@@ -36,7 +37,14 @@ for (const [target, cmd] of [['chrome-mv3', 'npx wxt build'], ['firefox-mv3', 'n
     console.log(`FAIL ${target}: s1.html is in the build`);
     problems++;
   }
+  if (target === 'firefox-mv3') {
+    const url = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf8')).browser_specific_settings?.gecko?.update_url;
+    if (url !== UPDATE_URL) {
+      console.log(`FAIL firefox-mv3: update_url is ${url}, publishing goes to ${UPDATE_URL}`);
+      problems++;
+    }
+  }
   console.log(`${problems ? '…' : 'ok  '} ${target}: ${files.length} files checked`);
 }
-console.log(problems ? `\n${problems} problem(s): test hooks in a release build` : '\nrelease builds are free of test hooks');
+console.log(problems ? `\n${problems} problem(s) in the release build` : '\nrelease builds are free of test hooks');
 process.exitCode = problems ? 1 : 0;

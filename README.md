@@ -35,6 +35,23 @@ npm run release
   Install `dist/firefox/*.xpi` via `about:addons` → ⚙ → *Install Add-on From File*. Every
   signed upload needs a new version in `package.json`.
 
+  **Updates:** releases are published on the `updates` branch of
+  <https://github.com/iam-peter/dude>. Its `updates.json` is the manifest's `update_url`,
+  so an installed copy updates itself: Firefox checks about once a day, or right away
+  with `about:addons` → ⚙ → *Check for Updates*. To publish a release, bump the version,
+  commit it, and run:
+
+  ```bash
+  npm run release -- --publish
+  ```
+
+  That signs as above, adds the xpi and its entry in `updates.json` to the `updates`
+  branch and tags the commit `v<version>`. It stops before signing if the tree has
+  uncommitted changes or the tag exists. If the push fails, run it again: the signed xpi
+  is reused as long as it was built from the same commit. For a first install, download
+  `https://raw.githubusercontent.com/iam-peter/dude/updates/dude-<version>.xpi`, then
+  install it from file.
+
 The installed extension keeps its data in your normal browser profile, separate from the
 dev profile in `.profiles/` that `npm run dev:firefox` uses.
 
