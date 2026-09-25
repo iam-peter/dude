@@ -316,7 +316,13 @@ The native back stack of a tab can't be edited, so the extension provides:
 
 ## 10. Playback (C2–C4)
 
-An animated replay inside the extension. It never drives real tabs.
+An animated replay inside the extension. It never drives real tabs. The sessions app
+reads the observation log, replays it through a fresh projector and records what a viewer
+would have seen change after each observation: a page first visited, a back/forward move,
+the cursor moving, focus switching to another tab (`src/core/timeline.ts`). Playback
+renders that replay's own final state, so it shows what the log says, independent of the
+live projection. The layout is computed once for the whole replay; each frame shows only
+the pages visited so far, so pages appear in place.
 
 - **Scope:** a single tab session, a tab family (interleaved), or a day/time range across
   all tabs (C4).
@@ -395,7 +401,7 @@ storage/       Dexie over IndexedDB: events, sessions, visits, edges, blobs, tex
 | **M3** | Screenshots and page text, history app (session list, graph view, details panel), toolbar popup. *Built 2026-09-25. Not yet: pause toggles (M6), deleting visits/sessions from the details panel (M6)* |
 | **S3** | Spike: renderer comparison behind `GraphView` (F7) |
 | **M4** | Search, visual browse, omnibox, context menu, open / open with path, semantic back. *Built 2026-09-25. Context menu, omnibox UI and the shortcut are not automatable; they need a manual check* |
-| **M5** | Playback (all three scopes) |
+| **M5** | Playback (all three scopes). *Built 2026-09-25* |
 | **M6** | Retention and size cap, export/import, Chrome backfill, exclusion settings UI |
 
 ## 15. Risks

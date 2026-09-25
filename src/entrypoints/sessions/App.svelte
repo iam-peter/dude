@@ -13,6 +13,10 @@
   import type { Hit, SearchDoc, SearchIndex } from '@/search';
   import type { Visit } from '@/core/model';
   import type { OpenPathProgress } from '@/background/navigate';
+  import Playback from '@/ui/Playback.svelte';
+  import { buildTimeline, scoped, type Scope, type Timeline } from '@/core/timeline';
+  import type { Observation } from '@/core/observations';
+  import { replay } from '@/storage/db';
 
   const MODES: { id: ViewMode; label: string }[] = [
     { id: 'tree', label: 'Tree' },
@@ -34,6 +38,11 @@
   let host = $state('');
   let familyOnly = $state(false);
   let panel = $state<'sessions' | 'wall'>(params.get('panel') === 'wall' ? 'wall' : 'sessions');
+
+  // Playback (SPEC §10)
+  let playScope = $state<Scope | null>((params.get('play') as Scope | null) ?? null);
+  let tl = $state<Timeline | null>(null);
+  let building = $state(false);
   let ix = $state<SearchIndex | null>(null);
   let indexing = $state<{ done: number; total: number } | null>(null);
   let hits = $state<Hit[]>([]);
@@ -138,6 +147,32 @@
   });
   $effect(() => {
     if (panel === 'wall') ensureIndex();
+  });
+
+  /** Replay the whole log into a timeline (fresh each time playback opens). */
+  async function play(scope: Scope) {
+    playScope = scope;
+    building = true;
+    const obs: Observation[] = [];
+    await replay(0, (_, o) => obs.push(o));
+    tl = buildTimeline(obs);
+    building = false;
+  }
+  $effect(() => {
+    if (playScope && !tl && !building) play(playScope);
+  });
+  // The live session's counterpart in the replay: same creation time and first tab.
+  const replaySession = $derived.by(() => {
+    if (!tl || !data) return undefined;
+    const live = data.session;
+    if (tl.st.sessions[live.id]?.createdAt === live.createdAt) return live.id;
+    return Object.values(tl.st.sessions).find((x) => x.createdAt === live.createdAt && x.lastTabId === live.lastTabId)?.id;
+  });
+  const playing = $derived.by(() => {
+    if (!tl || !playScope || !replaySession) return undefined;
+    const start = new Date(data!.session.createdAt);
+    start.setHours(0, 0, 0, 0);
+    return scoped(tl, playScope, replaySession, { start: start.getTime(), end: start.getTime() + 864e5 });
   });
 
   async function openPath(v: Visit) {
@@ -266,12 +301,34 @@
             {#if data.children.length}· {data.children.length} tab{data.children.length === 1 ? '' : 's'} opened from here{/if}
           </p>
         </div>
-        <div class="modes" role="tablist">
-          {#each MODES as m}
-            <button role="tab" aria-selected={mode === m.id} class:on={mode === m.id} onclick={() => (mode = m.id)}>{m.label}</button>
-          {/each}
+        <div class="head-tools">
+          <label class="play-pick">
+            <select aria-label="What to play back" onchange={(e) => play(e.currentTarget.value as Scope)} value={playScope ?? ''}>
+              <option value="" disabled>▶ Play back…</option>
+              <option value="session">this tab</option>
+              <option value="family">this tab and the tabs opened from it</option>
+              <option value="day">the whole day, all tabs</option>
+            </select>
+          </label>
+          {#if playScope}
+            <button class="close-play" onclick={() => ((playScope = null), (tl = null))}>Close playback</button>
+          {:else}
+            <div class="modes" role="tablist">
+              {#each MODES as m}
+                <button role="tab" aria-selected={mode === m.id} class:on={mode === m.id} onclick={() => (mode = m.id)}>{m.label}</button>
+              {/each}
+            </div>
+          {/if}
         </div>
       </header>
+      {#if playScope}
+        {#if building || !tl}<p class="empty">Replaying the log…</p>
+        {:else if playing}
+          {#key playScope + replaySession}
+            <Playback {tl} steps={playing.steps} lanes={playing.lanes} />
+          {/key}
+        {:else}<p class="empty">This session isn't in the log (it may predate a rebuild).</p>{/if}
+      {:else}
       {#key data.session.id + mode}
         <SessionGraph {view} {mode} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
       {/key}
@@ -283,6 +340,7 @@
           onOpenPath={openPath}
           onShowSession={select}
         />
+      {/if}
       {/if}
     {:else if selectedId}
       <p class="empty">Loading…</p>
@@ -404,6 +462,23 @@
   .head h1 {
     font-size: 17px;
     margin: 0;
+  }
+  .head-tools {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex: none;
+  }
+  .play-pick select,
+  .close-play {
+    font: inherit;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    border: 1px solid color-mix(in srgb, #2f7de1 45%, transparent);
+    background: color-mix(in srgb, #2f7de1 10%, Canvas);
+    color: CanvasText;
+    cursor: pointer;
   }
   .modes {
     display: flex;

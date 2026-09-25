@@ -4,7 +4,7 @@ A Firefox/Chrome WebExtension that records every tab as its own navigation tree,
 branches, cross-tab provenance, screenshots and playback: an own history next to the
 browser's. See [docs/SPEC.md](docs/SPEC.md).
 
-Current state: **M4**. Every tab is recorded as its own tree with screenshots and page
+Current state: **M5**. Every tab is recorded as its own tree with screenshots and page
 text. It's shown live in the Firefox sidebar or the Chrome side panel, and in full in the
 sessions app, which also searches everything recorded. The S1
 spike findings behind the recording rules are in [docs/S1-FINDINGS.md](docs/S1-FINDINGS.md).
@@ -32,6 +32,10 @@ npm run dev:firefox
 - **Semantic back**: Alt+Shift+Up, or the ↑ link in the sidebar, goes to the page you came
   from, even when Back would go somewhere else. Right-click a page → **Show where I came
   from** opens the sidebar with that page highlighted.
+- **Playback** (session header → *Play back…*): replays this tab, this tab with the tabs
+  opened from it, or the whole day, step by step with screenshots. Space plays and
+  pauses, ← and → step. Idle time is shortened to at most 2 s per step; speed runs from
+  0.5× to 8×.
 - **Screenshots** are taken about 1 s after a page loads (Firefox also captures
   background tabs), never on banking, payment or password-manager sites, and never while
   a password field is visible. Previews of pages you only glanced at are pruned; thumbnails

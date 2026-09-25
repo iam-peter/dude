@@ -61,6 +61,14 @@ try {
   await app.goto(`chrome-extension://${extId}/sessions.html?session=${session}&panel=wall`);
   await pause(2000);
   await app.screenshot({ path: path.join(out, 'sessions-wall.png') });
+  // M5: playback, stepped forward with the arrow keys.
+  for (const [scope, n] of [['family', 8], ['day', 20]]) {
+    await app.goto(`chrome-extension://${extId}/sessions.html?session=${session}&play=${scope}`);
+    await pause(2500);
+    for (let i = 0; i < n; i++) await app.keyboard.press('ArrowRight');
+    await pause(1200);
+    await app.screenshot({ path: path.join(out, `playback-${scope}.png`) });
+  }
   console.log(fs.readdirSync(out).filter((f) => f.startsWith('popup') || f.startsWith('sessions')).join('\n'));
 } finally {
   await close();
