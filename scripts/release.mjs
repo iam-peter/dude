@@ -43,7 +43,8 @@ if (sign && !alreadySigned && !(process.env.WEB_EXT_API_KEY && process.env.WEB_E
   // Asked here rather than passed on the command line, so the key never lands in the shell
   // history. It only lives in this process's environment for the web-ext call.
   if (!process.stdin.isTTY) {
-    console.error('Signing needs WEB_EXT_API_KEY and WEB_EXT_API_SECRET (AMO → Tools → Manage API Keys).');
+    // In CI they come from the AMO_JWT_ISSUER / AMO_JWT_SECRET secrets (.github/workflows/release.yml).
+    console.error('Signing needs WEB_EXT_API_KEY and WEB_EXT_API_SECRET (AMO → Tools → Manage API Keys; in CI the AMO_JWT_ISSUER and AMO_JWT_SECRET repository secrets).');
     process.exit(1);
   }
   console.log('AMO API credentials (https://addons.mozilla.org/developers/addon/api/key/), Ctrl+C to cancel:');

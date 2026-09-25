@@ -38,14 +38,20 @@ npm run release
   **Updates:** releases are published on the `updates` branch of
   <https://github.com/iam-peter/dude>. Its `updates.json` is the manifest's `update_url`,
   so an installed copy updates itself: Firefox checks about once a day, or right away
-  with `about:addons` → ⚙ → *Check for Updates*. To publish a release, bump the version,
-  commit it, and run:
+  with `about:addons` → ⚙ → *Check for Updates*.
+
+  **Publishing** runs on GitHub Actions (`.github/workflows/release.yml`): bump the version
+  in `package.json`, commit and push to `main`, and the workflow tests, signs and
+  publishes it. It can also be started by hand from the *Actions* tab. It needs the AMO
+  credentials once as repository secrets (*Settings → Secrets and variables → Actions*):
+  `AMO_JWT_ISSUER` and `AMO_JWT_SECRET`. The same works locally, asking for the
+  credentials:
 
   ```bash
   npm run release -- --publish
   ```
 
-  That signs as above, adds the xpi and its entry in `updates.json` to the `updates`
+  Either way, it signs as above, adds the xpi and its entry in `updates.json` to the `updates`
   branch and tags the commit `v<version>`. It stops before signing if the tree has
   uncommitted changes or the tag exists. If the push fails, run it again: the signed xpi
   is reused as long as it was built from the same commit. For a first install, download

@@ -1,0 +1,69 @@
+# Sign and publish a release when the version in package.json changes on main (or on demand
+# from the Actions tab). The AMO credentials are repository secrets, never part of the code:
+# Settings → Secrets and variables → Actions → AMO_JWT_ISSUER and AMO_JWT_SECRET.
+# Publishing pushes the xpi and updates.json to the `updates` branch and tags the commit
+# (scripts/lib/publish.mjs), with this workflow's own token.
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths: [package.json]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Skip a version that is released already
+        id: version
+        run: |
+          v=$(node -p "require('./package.json').version")
+          if git ls-remote --exit-code --tags origin "v$v" > /dev/null; then
+            echo "v$v is released already, nothing to do"
+            echo "released=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-node@v5
+        if: steps.version.outputs.released != 'true'
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        if: steps.version.outputs.released != 'true'
+        run: npm ci
+
+      - name: Test
+        if: steps.version.outputs.released != 'true'
+        run: |
+          npm test
+          npm run check
+
+      - name: Sign and publish
+        if: steps.version.outputs.released != 'true'
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.AMO_JWT_ISSUER }}
+          WEB_EXT_API_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          npm run release -- --publish
+
+      - name: Keep the Chrome zip
+        if: steps.version.outputs.released != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dude-chrome
+          path: .output/*-chrome.zip
