@@ -2,12 +2,13 @@
 // observation before applying it (the background can be killed at any time, SPEC §11),
 // checkpoints now and then, and tells open UIs what changed.
 
-import { createState, type State } from '@/core/model';
+import { createState, STATE_VERSION, type State } from '@/core/model';
 import type { Observation } from '@/core/observations';
-import { apply } from '@/core/projector';
+import { apply, visitFor } from '@/core/projector';
 import { describeAll, describeSince } from '@/core/describe';
+import { mediaPlan, type MediaPlan } from '@/core/media';
 import { append, getMeta, logSize, putMeta, replay } from '@/storage/db';
-import type { SessionPayload, SessionSummary } from './protocol';
+import type { SessionCard, SessionPayload, SessionSummary } from './protocol';
 
 const CHECKPOINT_KEY = 'checkpoint';
 const CHECKPOINT_EVERY = 200;
@@ -36,7 +37,7 @@ export class Service {
 
   private async load() {
     const cp = await getMeta<Checkpoint>(CHECKPOINT_KEY).catch(() => undefined);
-    if (cp?.state?.version === 1) {
+    if (cp?.state?.version === STATE_VERSION) {
       this.st = cp.state;
       this.seq = this.checkpointSeq = cp.seq;
     }
@@ -76,7 +77,42 @@ export class Service {
       const children = Object.values(this.st.sessions)
         .filter((x) => x.spawnedFrom?.sessionId === s.id && x.visitIds.length)
         .map((x) => this.summary(x.id)!);
-      return structuredClone({ session: s, visits, parent: s.spawnedFrom ? this.summary(s.spawnedFrom.sessionId) : undefined, children });
+      const from = s.spawnedFrom?.visitId ? this.st.visits[s.spawnedFrom.visitId] : undefined;
+      return structuredClone({
+        session: s,
+        visits,
+        parent: s.spawnedFrom ? this.summary(s.spawnedFrom.sessionId) : undefined,
+        spawnVisit: from ? { title: from.title, url: from.url } : undefined,
+        children,
+      });
+    });
+  }
+
+  /** Sessions with at least one visit, most recently active first (sessions app list). */
+  sessions(q: { before?: number; limit?: number }): Promise<SessionCard[]> {
+    return this.after(() => {
+      const cards: SessionCard[] = [];
+      for (const s of Object.values(this.st.sessions)) {
+        if (!s.visitIds.length) continue;
+        const visits = s.visitIds.map((id) => this.st.visits[id]).filter(Boolean);
+        const lastAt = Math.max(...visits.map((v) => v.lastAt));
+        if (q.before !== undefined && lastAt >= q.before) continue;
+        const cur = s.cursorId ? this.st.visits[s.cursorId] : visits.at(-1);
+        const from = s.spawnedFrom?.visitId ? this.st.visits[s.spawnedFrom.visitId] : undefined;
+        const parent = s.spawnedFrom ? this.summary(s.spawnedFrom.sessionId) : undefined;
+        cards.push({
+          id: s.id,
+          open: s.closedAt === undefined,
+          createdAt: s.createdAt,
+          lastAt,
+          title: cur?.title ?? cur?.url,
+          visitCount: visits.filter((v) => !v.inheritedFrom).length,
+          thumbs: visits.flatMap((v) => (v.screenshots.length ? [v.screenshots.at(-1)!.id] : [])).slice(0, 6),
+          spawnedFrom: s.spawnedFrom ? { sessionId: s.spawnedFrom.sessionId, kind: s.spawnedFrom.kind, title: from?.title ?? from?.url ?? parent?.title } : undefined,
+        });
+      }
+      cards.sort((a, b) => b.lastAt - a.lastAt);
+      return cards.slice(0, q.limit ?? 200);
     });
   }
 
@@ -105,9 +141,29 @@ export class Service {
     }));
   }
 
+  /** The visit a tab shows for `url` right now, if any (capture dedupe, text dedupe). */
+  pageOf(tabId: number, url: string): Promise<{ lastShot?: { hash: string; at: number }; shots: number; textHash?: string } | undefined> {
+    return this.after(() => {
+      const tab = this.st.tabs[tabId];
+      const s = tab && this.st.sessions[tab.sessionId];
+      const v = s && visitFor(this.st, s, url);
+      if (!v) return undefined;
+      return { lastShot: v.screenshots.at(-1), shots: v.screenshots.length, textHash: v.text?.hash };
+    });
+  }
+
+  /**
+   * Blob bookkeeping for maintenance: every referenced id, and the screenshots whose
+   * previews can go — visits looked at for less than `minDwellMs` that are no longer
+   * current, and anything older than `maxAgeMs` (S2 #7, E2).
+   */
+  media(now: number, minDwellMs: number, maxAgeMs: number): Promise<MediaPlan> {
+    return this.after(() => mediaPlan(this.st, now, minDwellMs, maxAgeMs));
+  }
+
   /** Sessions touched since `since`, ids normalised (E2E checks). */
-  describeSince(since: number): Promise<string> {
-    return this.after(() => describeSince(this.st, since));
+  describeSince(since: number, media = false): Promise<string> {
+    return this.after(() => describeSince(this.st, since, { media }));
   }
 
   /** Throw the projection away and replay the whole log (after a projector fix). */

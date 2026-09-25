@@ -67,6 +67,14 @@ export default defineContentScript({
       }
     });
 
+    // Capture guard (D6): never screenshot a page while a password field is visible.
+    browser.runtime.onMessage.addListener((msg: { cmd?: string }, _sender, sendResponse) => {
+      if (msg?.cmd !== 'probe.sensitive') return undefined;
+      const visible = [...document.querySelectorAll<HTMLInputElement>('input[type=password]')].some((i) => i.getClientRects().length > 0 && getComputedStyle(i).visibility !== 'hidden');
+      sendResponse({ password: visible });
+      return undefined;
+    });
+
     window.addEventListener(
       'submit',
       (e) => {

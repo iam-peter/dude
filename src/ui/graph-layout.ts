@@ -1,12 +1,10 @@
-// Left-to-right layout of the Network view with ELK's layered algorithm (F5, F7).
+// Left-to-right layout of a derived View with ELK's layered algorithm (F5, F7).
 // Nodes keep first-visit order ("model order"), so time runs left to right and edges that
-// close a cycle — returning to an earlier page — are the ones ELK reverses.
+// close a cycle are the ones ELK reverses. Only the `layout` link kinds shape the graph;
+// the others (same-page links, back/forward moves) are drawn on top as curves.
 
 import type { ELK as Elk, ElkNode } from 'elkjs/lib/elk-api';
-import type { View } from '@/core/views';
-
-export const NODE_W = 168;
-export const NODE_H = 38;
+import type { Link, View } from '@/core/views';
 
 export interface PlacedNode {
   row: number;
@@ -17,20 +15,24 @@ export interface PlacedNode {
 export interface PlacedEdge {
   from: number;
   to: number;
+  kind: Link['kind'];
   n: number;
   d: string; // SVG path
   labelX: number;
   labelY: number;
 }
 
-export interface NetworkLayout {
+export interface GraphLayout {
   width: number;
   height: number;
+  nodeW: number;
+  nodeH: number;
   nodes: PlacedNode[];
   edges: PlacedEdge[];
+  overlay: PlacedEdge[];
 }
 
-// ELK is ~1.4 MB; load it only when the Network view is first shown.
+// ELK is ~1.4 MB; load it only when a graph is first shown.
 let elk: Promise<Elk> | undefined;
 const getElk = () => (elk ??= import('elkjs/lib/elk.bundled.js').then((m) => new m.default()));
 
@@ -51,12 +53,14 @@ interface Pt {
   y: number;
 }
 
-export async function layoutNetwork(view: View): Promise<NetworkLayout> {
+export async function layoutGraph(view: View, opts: { nodeW: number; nodeH: number; layout: Link['kind'][] }): Promise<GraphLayout> {
+  const { nodeW, nodeH } = opts;
+  const shaping = view.links.map((l, i) => ({ l, i })).filter(({ l }) => opts.layout.includes(l.kind));
   const input: ElkNode = {
     id: 'root',
     layoutOptions: OPTIONS,
-    children: view.rows.map((_, i) => ({ id: `n${i}`, width: NODE_W, height: NODE_H })),
-    edges: view.links.map((l, i) => ({ id: `e${i}`, sources: [`n${l.from}`], targets: [`n${l.to}`] })),
+    children: view.rows.map((_, i) => ({ id: `n${i}`, width: nodeW, height: nodeH })),
+    edges: shaping.map(({ l, i }) => ({ id: `e${i}`, sources: [`n${l.from}`], targets: [`n${l.to}`] })),
   };
   const graph = await (await getElk()).layout(input);
 
@@ -68,9 +72,27 @@ export async function layoutNetwork(view: View): Promise<NetworkLayout> {
     if (!link || !sec) return;
     const pts: Pt[] = [sec.startPoint, ...(sec.bendPoints ?? []), sec.endPoint];
     const mid = pts[Math.floor(pts.length / 2)];
-    edges.push({ from: link.from, to: link.to, n: link.n ?? 1, d: pathOf(sec.startPoint, sec.bendPoints ?? [], sec.endPoint), labelX: mid.x, labelY: mid.y });
+    edges.push({ from: link.from, to: link.to, kind: link.kind, n: link.n ?? 1, d: pathOf(sec.startPoint, sec.bendPoints ?? [], sec.endPoint), labelX: mid.x, labelY: mid.y });
   });
-  return { width: graph.width ?? 0, height: graph.height ?? 0, nodes, edges };
+
+  // Overlay links: a curve from the bottom of one node to the bottom of the other.
+  const at = new Map(nodes.map((n) => [n.row, n]));
+  const overlay: PlacedEdge[] = view.links
+    .filter((l) => !opts.layout.includes(l.kind))
+    .flatMap((l) => {
+      const a = at.get(l.from);
+      const b = at.get(l.to);
+      if (!a || !b) return [];
+      const x1 = a.x + nodeW / 2;
+      const y1 = a.y + nodeH;
+      const x2 = b.x + nodeW / 2;
+      const y2 = b.y + nodeH;
+      const dip = 18 + Math.min(60, Math.abs(x2 - x1) / 6);
+      const d = `M ${x1} ${y1} C ${x1} ${y1 + dip}, ${x2} ${y2 + dip}, ${x2} ${y2}`;
+      return [{ from: l.from, to: l.to, kind: l.kind, n: l.n ?? 1, d, labelX: (x1 + x2) / 2, labelY: Math.max(y1, y2) + dip * 0.75 }];
+    });
+  const overlayDepth = overlay.length ? 70 : 0;
+  return { width: graph.width ?? 0, height: (graph.height ?? 0) + overlayDepth, nodeW, nodeH, nodes, edges, overlay };
 }
 
 /** ELK spline bend points are cubic Bézier control points; fall back to a polyline. */

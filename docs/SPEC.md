@@ -220,10 +220,14 @@ which signal fired, so wrong guesses can be diagnosed.
 - **Background tabs:** Firefox captures them with `captureTab`, which S2 confirmed for
   never-shown tabs and minimised windows (S2 #1). Chrome shows a favicon placeholder
   until the tab is viewed (D2).
-- **Encoding:** a thumbnail about 320 px wide and a preview `min(1280, source)` px wide,
-  both WebP, encoded with `OffscreenCanvas` directly in the background; this works in
-  Chrome's service worker too, so no offscreen document (D4, S2 #4, #6). The PNG data URL
-  from the capture API is never stored. The preview size vs the 2 GB cap is open (S2 #7).
+- **Encoding:** a thumbnail about 320 px wide (WebP, quality 0.75) and a preview
+  `min(1024, source)` px wide (WebP, quality 0.7), encoded with `OffscreenCanvas`
+  directly in the background; this works in Chrome's service worker too, so no offscreen
+  document (D4, S2 #4, #6). The PNG data URL from the capture API is never stored.
+- **Preview budget** (decided 2026-09-25, S2 #7): previews are kept only for visits looked
+  at for at least 3 s, pruned once the visit is no longer current, and for at most 90 days.
+  Every visit keeps its thumbnails. A maintenance alarm runs every 10 minutes and also
+  deletes blobs no visit references.
 - **Changes after load:** up to N distinct screenshots per visit (default N = 5), deduped
   by perceptual hash (dHash) (D5).
 - **Sensitive pages:** no capture on deny-listed sites, and none while a password field
@@ -240,11 +244,14 @@ not extracted.
 ### 8.1 Surfaces (F2, F3)
 
 - **Toolbar button with popup:** shows the ancestor path of the current page ("you came
-  here from …") with thumbnails, the pause toggles, and **Open history**. This button is
-  the only way into the history app besides the omnibox. There is no global shortcut to
-  open it (F2).
-- **History app:** a full extension page (`history.html`). It never replaces
-  `chrome://history` or `about:history` (F1).
+  here from …") with thumbnails, link texts and search terms, plus **Show tree** (opens the
+  sidebar / side panel) and **All sessions**. The pause toggles come with M6. This button
+  is the only way into the history app besides the omnibox. There is no global shortcut
+  to open it (F2).
+- **History app:** a full extension page, `sessions.html`. It never replaces
+  `chrome://history` or `about:history` (F1). Note: WXT turns an entrypoint *named*
+  `history` into a `chrome_url_overrides.history` override, so the entrypoint must never
+  be called that.
 - **Sidebar / side panel:** live tree of the *current* tab with the cursor highlighted.
   Clicking a node opens it (§9). It also has the *Semantic back* button (G4).
 - **Page context menu:** "Show where I came from" opens the sidebar focused on the parent.
@@ -377,7 +384,7 @@ storage/       Dexie over IndexedDB: events, sessions, visits, edges, blobs, tex
 | **M1** (H4) | Firefox only: recorder, projector, IndexedDB log, sidebar tree of the current tab with all three views (§5.2). No screenshots. Goal: validate the model on real browsing. *Built 2026-09-25; in real-browsing validation* |
 | **M2** | Chrome parity: platform adapter, restart heuristics, side panel, E2E in both browsers. *Built 2026-09-25: `npm run e2e` checks the live projection of all 19 scenarios in both browsers. A real Chrome restart is only covered by rule tests so far (the manual S1 Chromium runs are still open)* |
 | **S2** | Spike: Firefox `captureTab` on background tabs; capture cost in both browsers. *Done, see [S2-FINDINGS](S2-FINDINGS.md)* |
-| **M3** | Screenshots and page text, history app (session list, graph view, details panel), toolbar popup |
+| **M3** | Screenshots and page text, history app (session list, graph view, details panel), toolbar popup. *Built 2026-09-25. Not yet: pause toggles (M6), deleting visits/sessions from the details panel (M6)* |
 | **S3** | Spike: renderer comparison behind `GraphView` (F7) |
 | **M4** | Search, visual browse, omnibox, context menu, open / open with path, semantic back |
 | **M5** | Playback (all three scopes) |

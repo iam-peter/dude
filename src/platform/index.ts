@@ -27,17 +27,12 @@ export function tabValues(): TabValues | undefined {
 }
 
 /**
- * Toolbar button → live tree of the current tab (SPEC §8.1). Firefox toggles its sidebar;
- * Chromium opens the side panel by itself once told to, which also keeps the user gesture.
+ * Open the live tree next to the page (SPEC §8.1): Firefox's sidebar or Chromium's side
+ * panel. Must run in a user-gesture handler (a popup button click qualifies).
  */
-export function openPanelFromToolbar(): void {
-  const sidebar = (browser as unknown as { sidebarAction?: { toggle(): Promise<void> } }).sidebarAction;
-  if (sidebar) {
-    browser.action.onClicked.addListener(() => {
-      sidebar.toggle();
-    });
-    return;
-  }
-  const panel = (browser as unknown as { sidePanel?: { setPanelBehavior(o: { openPanelOnActionClick: boolean }): Promise<void> } }).sidePanel;
-  panel?.setPanelBehavior({ openPanelOnActionClick: true }).catch((e) => console.error('dude: side panel', e));
+export async function openPanel(windowId?: number): Promise<void> {
+  const sidebar = (browser as unknown as { sidebarAction?: { open(): Promise<void> } }).sidebarAction;
+  if (sidebar) return sidebar.open();
+  const panel = (browser as unknown as { sidePanel?: { open(o: { windowId: number }): Promise<void> } }).sidePanel;
+  if (panel && windowId !== undefined) return panel.open({ windowId });
 }

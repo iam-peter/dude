@@ -1,6 +1,6 @@
 {
   "name": "dude",
-  "description": "Per-tab navigation graphs with screenshots and playback \u2014 an own history next to the browser's",
+  "description": "Per-tab navigation graphs with screenshots and playback — an own history next to the browser's",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -44,6 +44,7 @@
     "wxt": "^0.21.4"
   },
   "dependencies": {
+    "@mozilla/readability": "^0.6.0",
     "elkjs": "^0.12.0"
   }
 }

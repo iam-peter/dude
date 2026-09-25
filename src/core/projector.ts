@@ -14,6 +14,7 @@ const PROBE_MATCH_MS = 1000; // S1 #30
 const CLICK_MATCH_MS = 5000; // SPEC §6.2
 const UNFOCUS_DEBOUNCE_MS = 300; // S1 #27
 const ADOPT_MS = 5000;
+export const MAX_SHOTS = 5; // D5
 
 const JUMP_TRANSITIONS = new Set(['typed', 'generated', 'auto_bookmark', 'keyword', 'keyword_generated', 'start_page', 'auto_toplevel']);
 
@@ -85,6 +86,10 @@ export function apply(st: State, o: Observation): Set<string> {
       break;
     case 'recorder.wake':
       onWake(ctx, o);
+      break;
+    case 'page.capture':
+    case 'page.text':
+      onMedia(ctx, o);
       break;
   }
 
@@ -602,6 +607,36 @@ function onFragment(ctx: Ctx, o: Extract<Observation, { type: 'nav.fragment' }>)
   ctx.changed.add(s.id);
 }
 
+// ---------------------------------------------------------------- screenshots and text
+
+/** Attach to the tab's visit for that URL: the cursor if it matches, else the nearest one. */
+function onMedia(ctx: Ctx, o: Extract<Observation, { type: 'page.capture' | 'page.text' }>) {
+  const tab = ctx.st.tabs[o.tabId];
+  if (!tab) return;
+  const s = ctx.st.sessions[tab.sessionId];
+  const v = visitFor(ctx.st, s, o.url);
+  if (!v) return;
+  if (o.type === 'page.text') {
+    v.text = { id: o.textId, hash: o.hash, at: o.t };
+  } else {
+    const shot = { id: o.shotId, hash: o.hash, at: o.t };
+    // Keep the first ones and always the latest (how the page looked when you left it).
+    if (v.screenshots.length >= MAX_SHOTS) v.screenshots[MAX_SHOTS - 1] = shot;
+    else v.screenshots.push(shot);
+  }
+  ctx.changed.add(s.id);
+}
+
+export function visitFor(st: State, s: Session, url: string): Visit | undefined {
+  const cursor = s.cursorId ? st.visits[s.cursorId] : undefined;
+  if (cursor && sameEntry(cursor, url)) return cursor;
+  for (let i = s.visitIds.length - 1; i >= 0; i--) {
+    const v = st.visits[s.visitIds[i]];
+    if (v && sameEntry(v, url)) return v;
+  }
+  return undefined;
+}
+
 // ---------------------------------------------------------------- tree helpers
 
 function addVisit(
@@ -629,6 +664,7 @@ function addVisit(
     redirectChain: [],
     fragments: [],
     searchQuery: searchQuery(p.url),
+    screenshots: [],
     samePushes: 0,
     createdBy: p.createdBy,
   };

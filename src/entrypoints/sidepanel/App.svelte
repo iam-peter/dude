@@ -141,7 +141,7 @@
       <h1 title={title}>{title}</h1>
       {#if data.parent}
         <button class="link" onclick={() => show(data!.parent)} title="Show the tab this one was opened from">
-          {data.session.spawnedFrom?.kind === 'duplicate' ? 'duplicated from' : 'opened from'}: {data.parent.title ?? '…'}
+          {data.session.spawnedFrom?.kind === 'duplicate' ? 'duplicated from' : 'opened from'}: {data.spawnVisit?.title ?? data.parent.title ?? '…'}
         </button>
       {/if}
       {#if data.session.closedAt !== undefined}<p class="note">This tab is closed.</p>{/if}
@@ -170,6 +170,7 @@
 
   <footer>
     <button class="link" onclick={() => (debug ? (debug = null) : refreshDebug())}>{debug ? 'hide' : 'debug'}</button>
+    <a href={browser.runtime.getURL('/sessions.html') + (data ? `?session=${data.session.id}` : '')} target="_blank">All sessions</a>
     <a href={browser.runtime.getURL('/s1.html')} target="_blank">S1 recorder</a>
   </footer>
   {#if debug}

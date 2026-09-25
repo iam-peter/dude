@@ -30,6 +30,10 @@ export interface Visit {
   searchQuery?: string;
   /** Duplicated tabs start with copies of the source's path (B13); this points at the original. */
   inheritedFrom?: string;
+  /** Screenshot ids, oldest first; at most MAX_SHOTS (D5). */
+  screenshots: { id: string; hash: string; at: number }[];
+  /** Latest readable text of the page (C7). */
+  text?: { id: string; hash: string; at: number };
   /** Same-URL pushState entries stacked on this visit (S1 #32). */
   samePushes: number;
   createdBy: 'commit' | 'spa' | 'inherit' | 'wake' | 'unknown-back';
@@ -84,8 +88,11 @@ export interface TabState {
   openerTabId?: number;
 }
 
+/** Bump when the shape changes: older checkpoints are then ignored and the log replayed. */
+export const STATE_VERSION = 2;
+
 export interface State {
-  version: 1;
+  version: typeof STATE_VERSION;
   nextId: number;
   sessions: Record<string, Session>;
   visits: Record<string, Visit>;
@@ -98,7 +105,7 @@ export interface State {
 
 export function createState(): State {
   return {
-    version: 1,
+    version: STATE_VERSION,
     nextId: 0,
     sessions: {},
     visits: {},

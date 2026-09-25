@@ -5,6 +5,7 @@ import { createState, type State } from '@/core/model';
 import type { Observation } from '@/core/observations';
 import { apply } from '@/core/projector';
 import { describeAll } from '@/core/describe';
+import { mediaPlan } from '@/core/media';
 
 const U = (p: string) => `http://localhost:8765${p}`;
 type O = Observation;
@@ -134,6 +135,57 @@ describe('Chrome identity without tab values (S1 #14, #16, R2)', () => {
 
   test('a reload in a tab that already has history is just a reload', () => {
     expect(tree([...browse, commit(2000, 1, '/b', 'reload')])).toBe('s1 open\n  /a (jump)\n    /b ↻1 *');
+  });
+});
+
+describe('screenshots and text (SPEC §7, D5)', () => {
+  const shot = (t: number, tabId: number, path: string, id: string): O => ({ type: 'page.capture', t, tabId, url: U(path), shotId: id, hash: id });
+  const nav = [created(0, 1), commit(10, 1, '/a', 'typed'), click(900, 1, '/b'), commit(1000, 1, '/b')];
+
+  test('a capture lands on the visit of its URL, even after the tab moved on', () => {
+    const st = run([...nav, shot(1100, 1, '/a', 'late')]);
+    expect(st.visits.v2.screenshots.map((x) => x.id)).toEqual(['late']);
+    expect(st.visits.v3.screenshots).toEqual([]);
+  });
+
+  test('at most five per visit: the first four stay, the last slot keeps the latest', () => {
+    const shots = ['1', '2', '3', '4', '5', '6', '7'].map((id, i) => shot(1100 + i, 1, '/b', id));
+    const st = run([...nav, ...shots]);
+    expect(st.visits.v3.screenshots.map((x) => x.id)).toEqual(['1', '2', '3', '4', '7']);
+  });
+
+  test('page text replaces the previous text', () => {
+    const text = (t: number, id: string): O => ({ type: 'page.text', t, tabId: 1, url: U('/b'), textId: id, hash: id });
+    const st = run([...nav, text(1200, 'x'), text(1300, 'y')]);
+    expect(st.visits.v3.text?.id).toBe('y');
+  });
+});
+
+describe('preview retention (S2 #7, E2)', () => {
+  const shot = (t: number, tabId: number, path: string, id: string): O => ({ type: 'page.capture', t, tabId, url: U(path), shotId: id, hash: id });
+  const focus: O[] = [{ type: 'tab.activated', t: 0, tabId: 1, windowId: 1 }, { type: 'window.focus', t: 0, windowId: 1 }];
+  // A glanced at for 1 s, B looked at for 10 s, C is the current page.
+  const st = run([
+    created(0, 1), ...focus,
+    commit(0, 1, '/a', 'typed'), shot(500, 1, '/a', 'A'),
+    click(900, 1, '/b'), commit(1000, 1, '/b'), shot(1500, 1, '/b', 'B'),
+    click(10_900, 1, '/c'), commit(11_000, 1, '/c'), shot(11_500, 1, '/c', 'C'),
+  ]);
+
+  test('short glances lose their preview once settled; the current page keeps it', () => {
+    const plan = mediaPlan(st, 120_000, 3000, 90 * 864e5);
+    expect([...plan.prunePreviews]).toEqual(['A']);
+    expect([...plan.shots].sort()).toEqual(['A', 'B', 'C']);
+  });
+
+  test('nothing is pruned in the first minute', () => {
+    expect(mediaPlan(st, 30_000, 3000, 90 * 864e5).prunePreviews.size).toBe(0);
+  });
+
+  test('after 90 days every preview goes, thumbnails stay referenced', () => {
+    const plan = mediaPlan(st, 91 * 864e5, 3000, 90 * 864e5);
+    expect([...plan.prunePreviews].sort()).toEqual(['A', 'B', 'C']);
+    expect(plan.shots.size).toBe(3);
   });
 });
 

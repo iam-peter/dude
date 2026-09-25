@@ -22,7 +22,12 @@ export type Observation =
   | { type: 'page.click'; t: number; tabId: number; href: string; text: string; button: number; newTab: boolean }
   | { type: 'page.submit'; t: number; tabId: number; action: string; method: string }
   | { type: 'page.history'; t: number; tabId: number; kind: 'push' | 'replace'; url: string; lengthBefore: number; lengthAfter: number }
-  | { type: 'recorder.wake'; t: number; tabs: WakeTab[] };
+  | { type: 'recorder.wake'; t: number; tabs: WakeTab[] }
+  // Screenshots and page text (SPEC §7). Blobs live in IndexedDB under the id; the log only
+  // says which page of which tab they belong to, so a replay attaches them correctly even
+  // if visit ids change after a projector fix.
+  | { type: 'page.capture'; t: number; tabId: number; url: string; shotId: string; hash: string }
+  | { type: 'page.text'; t: number; tabId: number; url: string; textId: string; hash: string };
 
 export interface WakeTab {
   tabId: number;

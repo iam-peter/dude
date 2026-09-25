@@ -6,7 +6,7 @@
 //
 // Markers: * cursor · (jump|form|spa|spawn|unknown) edge · POST · ↻n reloads ·
 // via[/rjs] redirect hops · ⤳ server redirect · {inh} inherited copy · #n fragments ·
-// +n same-URL pushes. Lifecycle: ~ heuristic match (Chrome), ~? with medium confidence.
+// +n same-URL pushes · ▣n screenshots · ¶ page text. Lifecycle: ~ heuristic match (Chrome), ~? with medium confidence.
 
 import type { State, Visit } from './model';
 
@@ -17,7 +17,7 @@ export function shortUrl(url: string): string {
   return url.replace(/^https?:\/\//, '');
 }
 
-export function describeSession(st: State, sessionId: string, { titles = false } = {}): string {
+export function describeSession(st: State, sessionId: string, { titles = false, media = true } = {}): string {
   const s = st.sessions[sessionId];
   if (!s) return `${sessionId} (gone)`;
   let head = `${s.id} ${s.closedAt === undefined ? 'open' : 'closed'}`;
@@ -33,14 +33,14 @@ export function describeSession(st: State, sessionId: string, { titles = false }
   const lines = [head];
   const walk = (id: string, depth: number) => {
     const v = st.visits[id];
-    lines.push('  '.repeat(depth + 1) + describeVisit(v, id === s.cursorId, titles));
+    lines.push('  '.repeat(depth + 1) + describeVisit(v, id === s.cursorId, titles, media));
     for (const c of v.children) walk(c, depth + 1);
   };
   if (s.rootId) walk(s.rootId, 0);
   return lines.join('\n');
 }
 
-function describeVisit(v: Visit, cursor: boolean, titles: boolean): string {
+function describeVisit(v: Visit, cursor: boolean, titles: boolean, media: boolean): string {
   const parts = [shortUrl(v.url)];
   if (titles && v.title) parts.push(JSON.stringify(v.title));
   if (v.edge !== 'link') parts.push(`(${v.edge})`);
@@ -51,12 +51,14 @@ function describeVisit(v: Visit, cursor: boolean, titles: boolean): string {
   if (v.fragments.length) parts.push(`#${v.fragments.length}`);
   if (v.samePushes) parts.push(`+${v.samePushes}`);
   if (v.inheritedFrom) parts.push('{inh}');
+  if (media && v.screenshots.length) parts.push(`▣${v.screenshots.length}`);
+  if (media && v.text) parts.push('¶');
   if (cursor) parts.push('*');
   return parts.join(' ');
 }
 
 /** All sessions in creation order. */
-export function describeAll(st: State, opts?: { titles?: boolean }): string {
+export function describeAll(st: State, opts?: { titles?: boolean; media?: boolean }): string {
   return Object.keys(st.sessions)
     .sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)))
     .map((id) => describeSession(st, id, opts))
@@ -67,14 +69,15 @@ export function describeAll(st: State, opts?: { titles?: boolean }): string {
  * Sessions created or re-bound at or after `since`, with session ids renumbered in order of
  * appearance (s1, s2, …) so the text is stable across runs (E2E expectations).
  */
-export function describeSince(st: State, since: number): string {
+export function describeSince(st: State, since: number, { media = false } = {}): string {
   const ids = Object.keys(st.sessions)
     .filter((id) => {
       const s = st.sessions[id];
       return s.visitIds.length > 0 && (s.createdAt >= since || s.lifecycle.some((l) => l.kind !== 'closed' && l.at >= since));
     })
     .sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
-  return normalizeIds(ids.map((id) => describeSession(st, id)).join('\n'));
+  // Screenshots and text depend on timing, so E2E expectations leave them out by default.
+  return normalizeIds(ids.map((id) => describeSession(st, id, { media })).join('\n'));
 }
 
 export function normalizeIds(text: string): string {

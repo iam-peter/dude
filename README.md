@@ -4,9 +4,9 @@ A Firefox/Chrome WebExtension that records every tab as its own navigation tree,
 branches, cross-tab provenance, screenshots and playback: an own history next to the
 browser's. See [docs/SPEC.md](docs/SPEC.md).
 
-Current state: **M2**. Every tab is recorded as its own tree and shown live in the Firefox
-sidebar or the Chrome side panel, in three views (Tree, Tree + moves, Network). No
-screenshots yet. The S1
+Current state: **M3**. Every tab is recorded as its own tree with screenshots and page
+text. It's shown live in the Firefox sidebar or the Chrome side panel, and in full in the
+sessions app. Search comes with M4. The S1
 spike findings behind the recording rules are in [docs/S1-FINDINGS.md](docs/S1-FINDINGS.md).
 
 ## Using it
@@ -15,8 +15,18 @@ spike findings behind the recording rules are in [docs/S1-FINDINGS.md](docs/S1-F
 npm run dev:firefox
 ```
 
-- Click the **dude** toolbar button to open the sidebar (Firefox) or side panel (Chrome:
-  `npm run dev` opens Chrome for Testing). It shows the tree of the active
+- The **dude** toolbar button opens a popup with the path that led to the current page
+  ("you came here from …"). From there, **Show tree** opens the sidebar (Firefox) or side
+  panel (Chrome; `npm run dev` opens Chrome for Testing), and **All sessions** opens the
+  sessions app.
+- **Sessions app** (`sessions.html`): every tab session by day with thumbnails. For the
+  selected session it shows a left-to-right graph with screenshot cards and the three
+  views; click a page for its details (screenshots, how you got there, link text, search
+  terms, redirects, stored page text), double-click to open it.
+- **Screenshots** are taken about 1 s after a page loads (Firefox also captures
+  background tabs), never on banking, payment or password-manager sites, and never while
+  a password field is visible. Previews of pages you only glanced at are pruned; thumbnails
+  stay. It shows the tree of the active
   tab: following a link adds a child, Back then another link starts a branch, and tabs
   opened from a link are linked both ways ("opened from …", ↗ badges).
 - **Tree / + Moves / Network** switch between the three renderings of the same data
@@ -38,7 +48,15 @@ scripts/node22.sh node scripts/m1/screens.mjs /tmp/dude-screens
 ```
 
 The sidebar page also works as a normal tab: `sidepanel.html?tab=<id>&mode=network`
-(or `?session=<id>`).
+(or `?session=<id>`). The same goes for `popup.html?tab=<id>` and
+`sessions.html?session=<id>&mode=…`. Screenshots of the popup and the sessions app:
+
+```bash
+scripts/node22.sh node scripts/m3/screens.mjs /tmp/dude-screens
+```
+
+`scripts/m3/capture-check.mjs chromium|firefox` browses slowly and prints which pages got
+screenshots (▣) and text (¶).
 
 Tests (the projector against every S1 fixture, plus rule tests):
 

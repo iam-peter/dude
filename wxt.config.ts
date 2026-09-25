@@ -8,9 +8,9 @@ export default defineConfig({
   manifest: ({ browser }) => ({
     name: 'dude',
     description: "Per-tab navigation graphs — an own history next to the browser's",
-    permissions: ['webNavigation', 'tabs', 'sessions', 'storage', 'unlimitedStorage'],
+    permissions: ['webNavigation', 'tabs', 'sessions', 'storage', 'unlimitedStorage', 'alarms'],
     host_permissions: ['<all_urls>'],
-    action: { default_title: 'dude — where did I come from?' },
+    action: { default_title: 'dude — where did I come from?' }, // popup: entrypoints/popup
     ...(browser === 'firefox' && {
       browser_specific_settings: {
         gecko: {

@@ -6,15 +6,41 @@ import type { Observation } from '@/core/observations';
 const DB_NAME = 'dude';
 const LOG = 'log';
 const META = 'meta';
+const SHOTS = 'shots';
+const TEXTS = 'texts';
+
+/** One screenshot (SPEC §7.1): a thumbnail always, a preview until pruned (S2 #7). */
+export interface Shot {
+  id: string;
+  t: number;
+  hash: string;
+  w: number;
+  h: number;
+  thumb: Blob;
+  preview?: Blob;
+}
+
+/** Readable page text (§7.2), gzip-compressed. */
+export interface PageText {
+  id: string;
+  t: number;
+  url: string;
+  title?: string;
+  chars: number;
+  gz: Blob;
+}
 
 let dbp: Promise<IDBDatabase> | null = null;
 
 function db(): Promise<IDBDatabase> {
   dbp ??= new Promise((resolve, reject) => {
-    const req = indexedDB.open(DB_NAME, 1);
+    const req = indexedDB.open(DB_NAME, 2);
     req.onupgradeneeded = () => {
-      req.result.createObjectStore(LOG, { autoIncrement: true });
-      req.result.createObjectStore(META);
+      const d = req.result;
+      if (!d.objectStoreNames.contains(LOG)) d.createObjectStore(LOG, { autoIncrement: true });
+      if (!d.objectStoreNames.contains(META)) d.createObjectStore(META);
+      if (!d.objectStoreNames.contains(SHOTS)) d.createObjectStore(SHOTS, { keyPath: 'id' });
+      if (!d.objectStoreNames.contains(TEXTS)) d.createObjectStore(TEXTS, { keyPath: 'id' });
     };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);
@@ -81,3 +107,51 @@ export async function deleteMeta(key: string): Promise<void> {
   t.objectStore(META).delete(key);
   await done(t);
 }
+
+// ---------------------------------------------------------------- blobs
+
+async function put(store: string, value: unknown): Promise<void> {
+  const t = (await db()).transaction(store, 'readwrite');
+  t.objectStore(store).put(value);
+  await done(t);
+}
+
+async function get<T>(store: string, key: string): Promise<T | undefined> {
+  const t = (await db()).transaction(store, 'readonly');
+  const req = t.objectStore(store).get(key);
+  await done(t);
+  return req.result as T | undefined;
+}
+
+async function remove(store: string, keys: string[]): Promise<void> {
+  if (!keys.length) return;
+  const t = (await db()).transaction(store, 'readwrite');
+  for (const k of keys) t.objectStore(store).delete(k);
+  await done(t);
+}
+
+/** Visit every record of a store without loading them all at once. */
+async function each<T>(store: string, fn: (value: T) => void): Promise<void> {
+  const t = (await db()).transaction(store, 'readonly');
+  await new Promise<void>((resolve, reject) => {
+    const req = t.objectStore(store).openCursor();
+    req.onsuccess = () => {
+      const c = req.result;
+      if (!c) return resolve();
+      fn(c.value as T);
+      c.continue();
+    };
+    req.onerror = () => reject(req.error);
+  });
+}
+
+export const putShot = (s: Shot) => put(SHOTS, s);
+export const getShot = (id: string) => get<Shot>(SHOTS, id);
+export const deleteShots = (ids: string[]) => remove(SHOTS, ids);
+export const eachShot = (fn: (s: Shot) => void) => each<Shot>(SHOTS, fn);
+
+export const putText = (x: PageText) => put(TEXTS, x);
+export const getText = (id: string) => get<PageText>(TEXTS, id);
+export const deleteTexts = (ids: string[]) => remove(TEXTS, ids);
+export const eachText = (fn: (x: PageText) => void) => each<PageText>(TEXTS, fn);
+
