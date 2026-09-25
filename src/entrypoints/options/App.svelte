@@ -4,6 +4,7 @@
   import { request } from '@/background/protocol';
   import { KEYS, DEFAULTS, type Settings } from '@/background/settings';
   import type { StorageReport } from '@/background/maintenance';
+  import type { CaptureAttempt } from '@/background/capture';
   import { pack, readAll, unpack, writeBlobs } from '@/storage/backup';
 
   const firefox = import.meta.env.BROWSER === 'firefox';
@@ -16,6 +17,8 @@
   let denySaved = $state(true);
   let settings = $state<Settings>({ ...DEFAULTS });
   let report = $state<StorageReport | null>(null);
+  let attempts = $state<CaptureAttempt[]>([]);
+  const loadAttempts = async () => (attempts = await request<CaptureAttempt[]>({ cmd: 'dude.captureLog' }));
   let busy = $state<string | null>(null);
   let note = $state<{ kind: 'ok' | 'err'; text: string } | null>(null);
 
@@ -27,6 +30,7 @@
       settings = { ...DEFAULTS, ...((r[KEYS.settings] as Partial<Settings>) ?? {}) };
       paused = r[KEYS.paused] === true;
       report = await request<StorageReport | undefined>({ cmd: 'dude.storageReport' }) ?? null;
+      await loadAttempts();
     })();
   });
 
@@ -177,6 +181,26 @@
       go first, oldest first, then the oldest screenshots. Page text and the history itself are never removed automatically.
     </p>
     <button onclick={tidy} disabled={!!busy}>{busy === 'tidy' ? 'Tidying…' : 'Tidy up now'}</button>
+
+    <h3>Recent screenshot and text attempts</h3>
+    <p class="hint">Why a page did or didn't get a screenshot or its text, newest first (since the browser started).</p>
+    {#if attempts.length}
+      <table class="attempts">
+        <tbody>
+          {#each attempts.slice(0, 20) as a}
+            <tr class:good={a.ok}>
+              <td>{new Date(a.t).toLocaleTimeString()}</td>
+              <td>{a.what}</td>
+              <td class="u" title={a.url}>{a.url.replace(/^https?:\/\//, '').slice(0, 60)}</td>
+              <td>{a.outcome}</td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    {:else}
+      <p class="hint">None yet.</p>
+    {/if}
+    <button onclick={loadAttempts}>Refresh</button>
   </section>
 
   <section>
@@ -329,6 +353,21 @@
     font-weight: normal;
     opacity: 0.7;
     padding: 2px 12px 2px 0;
+  }
+  table.attempts {
+    font-size: 12px;
+    width: 100%;
+  }
+  table.attempts td {
+    padding: 1px 8px 1px 0;
+    vertical-align: top;
+  }
+  table.attempts tr:not(.good) td:last-child {
+    color: #c0392b;
+  }
+  table.attempts td.u {
+    opacity: 0.75;
+    word-break: break-all;
   }
   .note {
     padding: 8px 12px;

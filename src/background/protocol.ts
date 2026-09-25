@@ -57,6 +57,7 @@ export type Request =
   | { cmd: 'dude.importLog'; observations: Observation[] }
   | { cmd: 'dude.importHistory'; days: number }
   | { cmd: 'dude.storageReport' }
+  | { cmd: 'dude.captureLog' }
   | { cmd: 'dude.setDenyHosts'; hosts: string[] }
   | { cmd: 'dude.grepLog'; needle: string };
 

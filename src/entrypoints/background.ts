@@ -19,7 +19,7 @@ export default defineBackground(() => {
   const service = new Service();
   const settings = new LiveSettings();
   const recorder = installRecorder(service, settings);
-  installCapture(service, settings);
+  const capture = installCapture(service, settings);
   installMaintenance(service, settings);
   const nav = installNavigation(service);
   if (__DUDE_TEST_HOOKS__) {
@@ -98,6 +98,8 @@ export default defineBackground(() => {
         return reply(service.importLog(msg.observations).then((n) => (recorder.restart(), n)));
       case 'dude.importHistory':
         return reply(importChromeHistory(service, settings, msg.days));
+      case 'dude.captureLog':
+        return reply(Promise.resolve(capture.attempts()));
       case 'dude.storageReport':
         return reply(getMeta(REPORT_KEY));
       case 'dude.delete':

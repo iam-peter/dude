@@ -120,8 +120,20 @@ export function installRecorder(service: Service, settings: LiveSettings) {
     });
   });
 
+  // Chrome prerendering: a page can load in the background (speculation rules, address-bar
+  // predictions) and is only shown when the user clicks. Its navigation events carry
+  // documentLifecycle "prerender", and activation fires none. Hold them until the tab
+  // actually switches to that URL.
+  const prerendered = new Map<number, { commit: Browser.webNavigation.WebNavigationTransitionCallbackDetails; completed?: unknown; t: number }>();
+  const isPrerender = (d: unknown) => (d as { documentLifecycle?: string }).documentLifecycle === 'prerender';
+  const bare = (u: string) => u.split('#')[0];
+
   browser.webNavigation.onCommitted.addListener((d) => {
     if (d.frameId !== 0 || privateTabs.has(d.tabId)) return;
+    if (isPrerender(d)) {
+      prerendered.set(d.tabId, { commit: d, t: now() });
+      return;
+    }
     const t = now();
     enqueue(async () => {
       const obs: Observation[] = [];
@@ -134,9 +146,35 @@ export function installRecorder(service: Service, settings: LiveSettings) {
     });
   });
 
-  browser.webNavigation.onHistoryStateUpdated.addListener((d) => record('webNavigation.onHistoryStateUpdated', d, d.tabId));
-  browser.webNavigation.onReferenceFragmentUpdated.addListener((d) => record('webNavigation.onReferenceFragmentUpdated', d, d.tabId));
-  browser.webNavigation.onCompleted.addListener((d) => record('webNavigation.onCompleted', d, d.tabId));
+  browser.webNavigation.onHistoryStateUpdated.addListener((d) => !isPrerender(d) && record('webNavigation.onHistoryStateUpdated', d, d.tabId));
+  browser.webNavigation.onReferenceFragmentUpdated.addListener((d) => !isPrerender(d) && record('webNavigation.onReferenceFragmentUpdated', d, d.tabId));
+  browser.webNavigation.onCompleted.addListener((d) => {
+    if (d.frameId === 0 && isPrerender(d)) {
+      const p = prerendered.get(d.tabId);
+      if (p && bare(p.commit.url) === bare(d.url)) p.completed = d;
+      return;
+    }
+    record('webNavigation.onCompleted', d, d.tabId);
+  });
+
+  // Activation of a prerendered page: the tab's URL changes to it without a new commit.
+  browser.tabs.onUpdated.addListener((tabId, changeInfo) => {
+    const p = prerendered.get(tabId);
+    if (!p || !changeInfo.url) return;
+    prerendered.delete(tabId);
+    if (bare(changeInfo.url) !== bare(p.commit.url) || privateTabs.has(tabId)) return;
+    const t = now();
+    enqueue(async () => {
+      const obs: Observation[] = [];
+      if (values && !identified.has(tabId)) {
+        const id = await resolve(tabId);
+        if (id) obs.push({ type: 'tab.identity', t, tabId, value: id.value, copiedFrom: id.copiedFrom });
+      }
+      obs.push(...fromBrowserEvent('webNavigation.onCommitted', { ...p.commit, documentLifecycle: 'active' }, t));
+      if (p.completed) obs.push(...fromBrowserEvent('webNavigation.onCompleted', p.completed, t));
+      return obs;
+    });
+  });
   browser.webNavigation.onCreatedNavigationTarget.addListener((d) => record('webNavigation.onCreatedNavigationTarget', d, d.tabId));
 
   browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => record('tabs.onUpdated', { tabId, changeInfo, tab: { url: tab.url } }, tabId));

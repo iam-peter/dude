@@ -39,7 +39,12 @@ export default defineContentScript({
       clearTimeout(timer);
       timer = setTimeout(extract, ms);
     };
-    later(SETTLE_MS);
+    // A prerendered page (Chrome) isn't shown yet: extract once it is.
+    if ((document as Document & { prerendering?: boolean }).prerendering) {
+      document.addEventListener('prerenderingchange', () => later(SETTLE_MS), { once: true });
+    } else {
+      later(SETTLE_MS);
+    }
     window.addEventListener(HISTORY_EVENT, () => later(SPA_SETTLE_MS));
     window.addEventListener('popstate', () => later(SPA_SETTLE_MS));
   },

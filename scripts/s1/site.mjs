@@ -66,6 +66,13 @@ ${Array.from({ length: 6 }, (_, i) => `<h2>Section ${i + 1}</h2><p>${'Lorem ipsu
 <canvas id="noise" width="400" height="220" style="position:fixed;right:10px;top:80px"></canvas>
 <script>const c=document.getElementById('noise').getContext('2d');const d=c.createImageData(400,220);for(let i=0;i<d.data.length;i++)d.data[i]=i%4===3?255:Math.random()*255;c.putImageData(d,0,0)</script>`,
     ),
+  // Chrome prerenders /b as soon as this page loads (speculation rules); clicking the link
+  // then only activates the finished page.
+  '/prerender': () =>
+    page(
+      'Prerender',
+      `<script type="speculationrules">{"prerender":[{"source":"list","urls":["/b"]}]}</script>${nav}`,
+    ),
   '/s1-control': () => page('S1 control', '<p>Automation control tab — the dude content script relays messages from here.</p>'),
   '/form': () =>
     page(
