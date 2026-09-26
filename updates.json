@@ -1,0 +1,18 @@
+{
+  "addons": {
+    "{53952834-ba6a-4072-9c32-c836b5a38a3c}": {
+      "updates": [
+        {
+          "version": "0.1.2",
+          "update_link": "https://raw.githubusercontent.com/iam-peter/dude/updates/dude-0.1.2.xpi",
+          "update_hash": "sha256:ceb9299a744a64dd4cd0e91dadc2b207c4becfb523fbe9841fba42eaa24f7cf5",
+          "applications": {
+            "gecko": {
+              "strict_min_version": "140.0"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
