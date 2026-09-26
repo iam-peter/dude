@@ -3,6 +3,7 @@
   // window; "opened from" / "opened here" links let you look at related tab sessions.
   import GraphView from '@/ui/GraphView.svelte';
   import NetworkView from '@/ui/NetworkView.svelte';
+  import Legend from '@/ui/Legend.svelte';
   import { buildView, type Row, type ViewMode } from '@/core/views';
   import { request, type ChangedMessage, type SessionPayload, type SessionSummary } from '@/background/protocol';
   import { shortUrl } from '@/core/describe';
@@ -185,6 +186,7 @@
     {:else}
       <GraphView {view} {mode} onOpen={open} {tooltip} {badge} {highlight} />
     {/if}
+    <div class="legend"><Legend {view} {mode} spawned={view.rows.some((r) => !!badge(r))} collapsible /></div>
     {#if data && data.children.length}
       <section class="children">
         <h2>Opened from this tab</h2>
@@ -280,6 +282,9 @@
     opacity: 0.7;
     margin: 4px 0;
     padding: 0 6px;
+  }
+  .legend {
+    margin: 8px 0 0;
   }
   .children {
     padding: 0 6px;

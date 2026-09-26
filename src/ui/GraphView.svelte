@@ -144,8 +144,9 @@
     stroke: CanvasText;
     stroke-width: 1.6;
   }
+  /* Dash patterns as in Legend.svelte. */
   .tree.edge-jump {
-    stroke-dasharray: 4 3;
+    stroke-dasharray: 5 3;
   }
   .tree.edge-unknown {
     stroke-dasharray: 1 3;

@@ -7,6 +7,7 @@
   import type { Row, View, ViewMode } from '@/core/views';
   import PanZoom from './PanZoom.svelte';
   import { layoutGraph, type GraphLayout } from './graph-layout';
+  import Legend from './Legend.svelte';
 
   interface Props {
     view: View;
@@ -65,7 +66,7 @@
 
       {#each layout.edges as e (e.kind + e.from + '>' + e.to)}
         {@const child = view.rows[e.to]}
-        <path d={e.d} class="edge {e.kind}" class:jump={child?.edge === 'jump'} class:back={e.to < e.from} style:stroke-width={1.3 + Math.log2(e.n)} marker-end="url(#sg-{e.kind})" />
+        <path d={e.d} class="edge {e.kind}" class:jump={mode !== 'network' && child?.edge === 'jump'} class:unknown={mode !== 'network' && child?.edge === 'unknown'} class:back={e.to < e.from} style:stroke-width={1.3 + Math.log2(e.n)} marker-end="url(#sg-{e.kind})" />
         {#if e.n > 1}<text class="weight" x={e.labelX} y={e.labelY - 5}>{e.n}</text>{/if}
       {/each}
       {#each layout.overlay as e, i (e.kind + i)}
@@ -120,6 +121,7 @@
       {/each}
     </svg>
   </PanZoom>
+  <div class="legend"><Legend {view} {mode} spawned={view.rows.some((r) => (spawned?.(r) ?? 0) > 0)} /></div>
 {/if}
 
 <style>
@@ -127,8 +129,15 @@
     fill: none;
     stroke: color-mix(in srgb, CanvasText 40%, transparent);
   }
+  /* Dash patterns as in Legend.svelte. */
   .edge.jump {
-    stroke-dasharray: 6 4;
+    stroke-dasharray: 5 3;
+  }
+  .edge.unknown {
+    stroke-dasharray: 1 3;
+  }
+  .legend {
+    margin: 6px 2px 0;
   }
   .edge.net.back {
     stroke: color-mix(in srgb, #2f7de1 75%, transparent);
