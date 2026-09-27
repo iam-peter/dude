@@ -34,6 +34,16 @@ Neither has a layout engine better than ELK, which stays in all cases.
    It is loaded from disk, not the network, so this mostly costs parse time.
 6. **Minimap** helps on long sessions but covers part of the graph; at 150 × 84 px it is
    acceptable in a 500 px tall graph.
+7. **Busy sessions tangled** (user report): cards too close, several lines meeting at one
+   point of a card, spline curves bundling. Tried on a recorded tangle of 27 visits over
+   four pages: more spacing alone helps little; **orthogonal routing** gives every link
+   its own lane and its own point on the card side and reads best. Routing links that
+   go back around the whole graph (`elk.layered.feedbackEdges`) makes big loops and more
+   crossings, with splines as well as orthogonal. → Orthogonal with wider spacing is now
+   the default, for both renderers; corners are rounded (`roundedPath`).
+8. **Fitting a long session into view makes the cards unreadable.** Flow now starts at a
+   readable zoom around the current page (about two steps either side), like Classic;
+   the ⛶ button still fits everything.
 
 ## Open
 

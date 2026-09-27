@@ -107,6 +107,16 @@
     generation++;
   }
   const anyMoved = $derived(Object.keys(moved).length > 0);
+
+  // Start readable around the current page (about two steps either side) rather than
+  // squeezing a long session into view; the ⛶ button still shows everything.
+  const start = $derived.by(() => {
+    if (!base) return undefined;
+    const cur = base.nodes.find((n) => view.rows[n.row]?.cursor) ?? base.nodes.at(-1);
+    if (!cur) return undefined;
+    const reach = 2.5 * (W + 110);
+    return base.nodes.filter((n) => Math.abs(n.x - cur.x) <= reach).map((n) => ({ id: view.rows[n.row].key }));
+  });
 </script>
 
 <div class="flow" style:height="{height ?? Math.max(300, Math.round(window.innerHeight * 0.5))}px">
@@ -119,7 +129,7 @@
         {edgeTypes}
         colorMode="system"
         fitView
-        fitViewOptions={{ maxZoom: 1, minZoom: 0.3, padding: 0.08 }}
+        fitViewOptions={{ nodes: start, maxZoom: 0.9, minZoom: 0.45, padding: 0.1 }}
         minZoom={0.1}
         maxZoom={2.5}
         nodesConnectable={false}
