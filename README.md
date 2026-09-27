@@ -58,6 +58,34 @@ npm run release
   `https://raw.githubusercontent.com/iam-peter/dude/updates/dude-<version>.xpi`, then
   install it from file.
 
+### Getting a local build into Firefox
+
+Release Firefox installs only signed add-ons for good, so a local build can't simply
+replace the installed dude. Depending on what it's for:
+
+- **Try it in your normal profile, until the next restart.** Build, then load it at
+  `about:debugging#/runtime/this-firefox` → *Load Temporary Add-on…* →
+  `.output/firefox-mv3/manifest.json`:
+
+  ```bash
+  npm run build -- -b firefox
+  ```
+
+  It has the same add-on ID as the installed dude, so it takes its place, with the
+  recorded data, until Firefox restarts; then the signed version is back. After the next
+  build, press *Reload* on dude's card there.
+- **Develop with automatic reloading:** `npm run dev:firefox` opens a separate Firefox with
+  the dev profile in `.profiles/` and reloads dude on every change. Your normal profile
+  isn't touched.
+- **Install it for good:** make it a signed release. Raise `version` in `package.json`
+  (AMO takes every version only once), commit and push to `main`; the Release workflow
+  signs and publishes it (see *Publishing* above). The installed dude updates within a
+  day, or right away with `about:addons` → ⚙ → *Check for Updates*.
+
+Self-updating works from the first version with the `update_url` (0.1.2) on. An older
+installed copy has to be replaced once: install that version's xpi from file, as for a
+first install.
+
 The installed extension keeps its data in your normal browser profile, separate from the
 dev profile in `.profiles/` that `npm run dev:firefox` uses.
 
