@@ -4,7 +4,7 @@
   click on the content underneath.
 -->
 <script lang="ts">
-  import type { Snippet } from 'svelte';
+  import { untrack, type Snippet } from 'svelte';
 
   interface Props {
     contentW: number;
@@ -48,19 +48,27 @@
     if (y0 < 0 || y0 + focus.h * scale > height) ty = Math.min(8, height / 2 - (focus.y + focus.h / 2) * scale);
   }
 
+  // Place the view once, then bring the focus back only when it moves to another page.
+  // Panning must not count: reading tx/scale here would snap back as soon as the user
+  // pans the current page out of view.
+  let lastFocus = '';
   $effect(() => {
-    // re-run when the content or the focus changes
-    void contentW;
-    void focus;
-    if (!placed && width > 0 && contentW > 0) {
-      scale = Math.max(readable, Math.min(1, (width - 16) / contentW));
-      tx = 8;
-      ty = 8;
-      if (!focusVisible()) showFocus();
-      placed = true;
-    } else if (placed && !focusVisible()) {
-      showFocus();
-    }
+    const w = width;
+    const cw = contentW;
+    const key = focus ? `${focus.x},${focus.y}` : '';
+    untrack(() => {
+      if (!placed && w > 0 && cw > 0) {
+        scale = Math.max(readable, Math.min(1, (w - 16) / cw));
+        tx = 8;
+        ty = 8;
+        if (!focusVisible()) showFocus();
+        placed = true;
+        lastFocus = key;
+      } else if (placed && key !== lastFocus) {
+        lastFocus = key;
+        if (!focusVisible()) showFocus();
+      }
+    });
   });
 
   function zoomAt(factor: number, cx: number, cy: number) {
