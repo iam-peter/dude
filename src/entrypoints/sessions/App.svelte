@@ -9,6 +9,7 @@
   import VisitDetails from '@/ui/VisitDetails.svelte';
   import SearchResults from '@/ui/SearchResults.svelte';
   import ThumbWall from '@/ui/ThumbWall.svelte';
+  import Splitter from '@/ui/Splitter.svelte';
   import { shotUrls } from '@/ui/shots';
   import { resync, searchIndex } from '@/ui/search-client';
   import type { Hit, SearchDoc, SearchIndex } from '@/search';
@@ -52,6 +53,16 @@
   let job = $state<OpenPathProgress | null>(null);
 
   $effect(() => localStorage.setItem('dude.sessions.mode', mode));
+
+  // Graph height from the splitter, per view mode (the network is usually more compact).
+  const graphKey = (m: ViewMode) => `dude.sessions.graphH.${m}`;
+  let graphH = $state<Record<string, number | undefined>>(Object.fromEntries(MODES.map((m) => [m.id, Number(localStorage.getItem(graphKey(m.id))) || undefined])));
+  let graphEl = $state<HTMLElement>();
+  function setGraphH(h: number | undefined) {
+    graphH[mode] = h;
+    if (h === undefined) localStorage.removeItem(graphKey(mode));
+    else localStorage.setItem(graphKey(mode), String(h));
+  }
 
   const view = $derived(data ? buildView(data, mode) : null);
   const selectedRow = $derived(view?.rows.find((r) => r.key === selectedKey) ?? view?.rows.find((r) => r.cursor) ?? view?.rows.at(-1));
@@ -357,9 +368,12 @@
           {/key}
         {:else}<p class="empty">This session isn't in the log (it may predate a rebuild).</p>{/if}
       {:else}
-      {#key data.session.id + mode}
-        <SessionGraph {view} {mode} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
-      {/key}
+      <div class="graph" bind:this={graphEl}>
+        {#key data.session.id + mode}
+          <SessionGraph {view} {mode} height={graphH[mode]} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
+        {/key}
+      </div>
+      <Splitter value={graphH[mode]} measure={() => graphEl?.querySelector('.canvas')?.clientHeight ?? 300} label="Graph height" onChange={setGraphH} />
       {#if selectedVisits.length}
         <VisitDetails
           visits={selectedVisits}

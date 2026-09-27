@@ -13,10 +13,12 @@
     focus?: { x: number; y: number; w: number; h: number };
     readable?: number;
     maxHeight?: number;
+    /** Fixed canvas height (a splitter's), instead of fitting the content up to maxHeight. */
+    height?: number;
     hint?: string;
     children: Snippet;
   }
-  let { contentW, contentH, focus, readable = 0.8, maxHeight = 0.7 * window.innerHeight, hint = 'drag to pan · wheel to zoom', children }: Props = $props();
+  let { contentW, contentH, focus, readable = 0.8, maxHeight = 0.7 * window.innerHeight, height: fixed, hint = 'drag to pan · wheel to zoom', children }: Props = $props();
 
   const MIN = 0.2;
   const MAX = 2.5;
@@ -27,7 +29,7 @@
   let placed = false;
   let el: HTMLDivElement;
 
-  const height = $derived(Math.min(Math.max(100, contentH * scale + 16), maxHeight));
+  const height = $derived(fixed ?? Math.min(Math.max(100, contentH * scale + 16), maxHeight));
 
   function fit() {
     scale = Math.max(MIN, Math.min(1, (width - 16) / Math.max(1, contentW), (height - 16) / Math.max(1, contentH)));

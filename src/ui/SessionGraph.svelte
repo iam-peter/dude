@@ -17,10 +17,12 @@
     /** Number of tabs opened from a row. */
     spawned?: (row: Row) => number;
     selected?: string;
+    /** Graph height set with the splitter below it; automatic when undefined. */
+    height?: number;
     onSelect: (row: Row) => void;
     onOpen: (row: Row) => void;
   }
-  let { view, mode, thumb, spawned, selected, onSelect, onOpen }: Props = $props();
+  let { view, mode, thumb, spawned, selected, height, onSelect, onOpen }: Props = $props();
 
   const W = 184;
   const IMG_H = 104;
@@ -53,7 +55,7 @@
 </script>
 
 {#if layout}
-  <PanZoom contentW={layout.width} contentH={layout.height} {focus} readable={0.6} maxHeight={Math.max(260, window.innerHeight * 0.5)} hint="click a page for details · double-click to open · drag to pan · wheel to zoom">
+  <PanZoom contentW={layout.width} contentH={layout.height} {focus} readable={0.6} maxHeight={Math.max(260, window.innerHeight * 0.5)} {height} hint="click a page for details · double-click to open · drag to pan · wheel to zoom">
     <svg width={layout.width} height={layout.height} overflow="visible">
       <defs>
         {#each ['tree', 'back', 'forward', 'net'] as k}
