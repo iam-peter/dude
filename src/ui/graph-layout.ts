@@ -53,9 +53,14 @@ interface Pt {
   y: number;
 }
 
-export async function layoutGraph(view: View, opts: { nodeW: number; nodeH: number; layout: Link['kind'][] }): Promise<GraphLayout> {
+/**
+ * `routeAll` hands the other links to ELK as well, so they are routed around the nodes
+ * instead of drawn on top (spike S3); they then also take part in the layering.
+ */
+export async function layoutGraph(view: View, opts: { nodeW: number; nodeH: number; layout: Link['kind'][]; routeAll?: boolean }): Promise<GraphLayout> {
   const { nodeW, nodeH } = opts;
-  const shaping = view.links.map((l, i) => ({ l, i })).filter(({ l }) => opts.layout.includes(l.kind));
+  const routed = (l: Link) => opts.routeAll || opts.layout.includes(l.kind);
+  const shaping = view.links.map((l, i) => ({ l, i })).filter(({ l }) => routed(l));
   const input: ElkNode = {
     id: 'root',
     layoutOptions: OPTIONS,
@@ -70,15 +75,14 @@ export async function layoutGraph(view: View, opts: { nodeW: number; nodeH: numb
     const link = view.links[Number(e.id.slice(1))];
     const sec = e.sections?.[0];
     if (!link || !sec) return;
-    const pts: Pt[] = [sec.startPoint, ...(sec.bendPoints ?? []), sec.endPoint];
-    const mid = pts[Math.floor(pts.length / 2)];
+    const mid = midpoint(sec.startPoint, sec.bendPoints ?? [], sec.endPoint);
     edges.push({ from: link.from, to: link.to, kind: link.kind, n: link.n ?? 1, d: pathOf(sec.startPoint, sec.bendPoints ?? [], sec.endPoint), labelX: mid.x, labelY: mid.y });
   });
 
   // Overlay links: a curve from the bottom of one node to the bottom of the other.
   const at = new Map(nodes.map((n) => [n.row, n]));
   const overlay: PlacedEdge[] = view.links
-    .filter((l) => !opts.layout.includes(l.kind))
+    .filter((l) => !routed(l))
     .flatMap((l) => {
       const a = at.get(l.from);
       const b = at.get(l.to);
@@ -95,8 +99,19 @@ export async function layoutGraph(view: View, opts: { nodeW: number; nodeH: numb
   return { width: graph.width ?? 0, height: (graph.height ?? 0) + overlayDepth, nodeW, nodeH, nodes, edges, overlay };
 }
 
+/** Middle of an ELK route (see pathOf): the middle Bézier segment at t = ½, else the middle point. */
+function midpoint(start: Pt, bends: Pt[], end: Pt): Pt {
+  const pts: Pt[] = [start, ...bends, end];
+  if (bends.length % 3 === 2) {
+    const k = Math.floor((pts.length - 1) / 3 / 2) * 3; // first point of the middle segment
+    const [a, b, c, d] = pts.slice(k, k + 4);
+    return { x: (a.x + 3 * b.x + 3 * c.x + d.x) / 8, y: (a.y + 3 * b.y + 3 * c.y + d.y) / 8 };
+  }
+  return pts[Math.floor(pts.length / 2)];
+}
+
 /** ELK spline bend points are cubic Bézier control points; fall back to a polyline. */
-function pathOf(start: Pt, bends: Pt[], end: Pt): string {
+export function pathOf(start: Pt, bends: Pt[], end: Pt): string {
   const p = (q: Pt) => `${q.x.toFixed(1)} ${q.y.toFixed(1)}`;
   const rest = [...bends, end];
   if (rest.length % 3 === 0) {

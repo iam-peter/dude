@@ -39,6 +39,7 @@
     "@tsconfig/svelte": "^5.0.8",
     "@types/node": "^26.6.2",
     "@wxt-dev/module-svelte": "^2.0.5",
+    "@xyflow/svelte": "^1.7.0",
     "jose": "^5.9.6",
     "playwright": "^1.63.0",
     "selenium-webdriver": "^4.49.0",

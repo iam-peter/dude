@@ -10,6 +10,7 @@
   import SearchResults from '@/ui/SearchResults.svelte';
   import ThumbWall from '@/ui/ThumbWall.svelte';
   import Splitter from '@/ui/Splitter.svelte';
+  import FlowGraph from '@/ui/flow/FlowGraph.svelte';
   import { ShotScope } from '@/ui/shots';
   import { resync, searchIndex } from '@/ui/search-client';
   import type { Hit, SearchDoc, SearchIndex } from '@/search';
@@ -53,6 +54,10 @@
   let job = $state<OpenPathProgress | null>(null);
 
   $effect(() => localStorage.setItem('dude.sessions.mode', mode));
+
+  // Spike S3: the classic SVG renderer or Svelte Flow, side by side on the same data.
+  let renderer = $state<'classic' | 'flow'>(localStorage.getItem('dude.sessions.renderer') === 'flow' ? 'flow' : 'classic');
+  $effect(() => localStorage.setItem('dude.sessions.renderer', renderer));
 
   // Graph height from the splitter, per view mode (the network is usually more compact).
   const graphKey = (m: ViewMode) => `dude.sessions.graphH.${m}`;
@@ -379,6 +384,10 @@
                 <button role="tab" aria-selected={mode === m.id} class:on={mode === m.id} onclick={() => (mode = m.id)}>{m.label}</button>
               {/each}
             </div>
+            <div class="modes" role="radiogroup" aria-label="Renderer (spike S3)" title="Renderer (spike S3): the own SVG graph or Svelte Flow">
+              <button role="radio" aria-checked={renderer === 'classic'} class:on={renderer === 'classic'} onclick={() => (renderer = 'classic')}>Classic</button>
+              <button role="radio" aria-checked={renderer === 'flow'} class:on={renderer === 'flow'} onclick={() => (renderer = 'flow')}>Flow</button>
+            </div>
           {/if}
         </div>
       </header>
@@ -391,11 +400,15 @@
         {:else}<p class="empty">This session isn't in the log (it may predate a rebuild).</p>{/if}
       {:else}
       <div class="graph" bind:this={graphEl}>
-        {#key data.session.id + mode}
-          <SessionGraph {view} {mode} height={graphH[mode]} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
+        {#key data.session.id + mode + renderer}
+          {#if renderer === 'flow'}
+            <FlowGraph {view} {mode} sessionId={data.session.id} height={graphH[mode]} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
+          {:else}
+            <SessionGraph {view} {mode} height={graphH[mode]} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
+          {/if}
         {/key}
       </div>
-      <Splitter value={graphH[mode]} measure={() => graphEl?.querySelector('.canvas')?.clientHeight ?? 300} label="Graph height" onChange={setGraphH} />
+      <Splitter value={graphH[mode]} measure={() => graphEl?.querySelector('.canvas, .flow')?.clientHeight ?? 300} label="Graph height" onChange={setGraphH} />
       {#if selectedVisits.length}
         <VisitDetails
           visits={selectedVisits}
