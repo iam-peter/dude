@@ -50,6 +50,10 @@
     };
   });
 
+  // Cards being dragged: their lines follow them right away, not only after the drop.
+  let dragging = $state<ReadonlySet<string>>(new Set());
+  const loose = (id: string) => !!moved[id] || dragging.has(id);
+
   let nodes = $state.raw<Node<CardData>[]>([]);
   let edges = $state.raw<Edge<LinkData>[]>([]);
   $effect(() => {
@@ -66,6 +70,10 @@
         data: { row: r, img: thumb(r), kids: spawned?.(r) ?? 0, selected: selected === r.key, onSelect, onOpen },
       };
     });
+  });
+  // Separate from the cards, so starting a drag doesn't rebuild the card being dragged.
+  $effect(() => {
+    if (!base) return;
     edges = base.edges.map((e, i) => {
       const from = view.rows[e.from];
       const to = view.rows[e.to];
@@ -78,12 +86,13 @@
         type: 'link',
         selectable: false,
         markerEnd: e.kind === 'same' ? undefined : { type: MarkerType.ArrowClosed, color, width: 16, height: 16 },
-        data: { kind: e.kind, n: e.n, variant, d: e.d, labelX: e.labelX, labelY: e.labelY, routed: !moved[from.key] && !moved[to.key] },
+        data: { kind: e.kind, n: e.n, variant, d: e.d, labelX: e.labelX, labelY: e.labelY, routed: !loose(from.key) && !loose(to.key) },
       };
     });
   });
 
   function keep(dragged: Node[]) {
+    dragging = new Set();
     const next = { ...moved };
     for (const n of dragged) next[n.id] = { x: Math.round(n.position.x), y: Math.round(n.position.y) };
     moved = next;
@@ -93,6 +102,7 @@
   let generation = $state(0);
   function tidy() {
     moved = {};
+    dragging = new Set();
     localStorage.removeItem(posKey);
     generation++;
   }
@@ -114,6 +124,7 @@
         maxZoom={2.5}
         nodesConnectable={false}
         onnodeclick={({ node }) => onSelect((node.data as CardData).row)}
+        onnodedragstart={({ nodes: dragged }) => (dragging = new Set(dragged.map((n) => n.id)))}
         onnodedragstop={({ nodes: dragged }) => keep(dragged)}
       >
         <Background gap={24} size={1} />
