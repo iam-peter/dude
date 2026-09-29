@@ -22,6 +22,12 @@
   let { data }: NodeProps & { data: CardData } = $props();
 
   const r = $derived(data.row);
+  const site = $derived(host(r.url).replace(/^www\./, ''));
+  // Pages without a screenshot: a colour per site, so the same site always looks the same.
+  const hue = $derived([...site].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7) % 360);
+  // IP addresses (and [IPv6]) have no meaningful initial
+  const initial = $derived(/^[\d[]/.test(site) ? '#' : (site[0] ?? '?').toUpperCase());
+  let favFailed = $state(false);
   function host(url: string) {
     try {
       return new URL(url).host;
@@ -44,8 +50,17 @@
   ondblclick={() => data.onOpen(r)}
   onkeydown={(e) => e.key === 'Enter' && data.onOpen(r)}
 >
-  <div class="shot">
-    {#if data.img}<img src={data.img} alt="" draggable="false" />{:else if r.favIconUrl}<img class="fav" src={r.favIconUrl} alt="" draggable="false" />{/if}
+  <div class="shot" class:blank={!data.img} style:--hue={hue}>
+    {#if data.img}
+      <img src={data.img} alt="" draggable="false" />
+    {:else}
+      {#if r.favIconUrl && !favFailed}
+        <img class="fav" src={r.favIconUrl} alt="" draggable="false" onerror={() => (favFailed = true)} />
+      {:else}
+        <span class="initial">{initial}</span>
+      {/if}
+      <span class="site">{site || r.url}</span>
+    {/if}
     {#if r.visits > 1}<span class="badge">×{r.visits}</span>{/if}
   </div>
   <div class="text">
@@ -101,9 +116,35 @@
     object-fit: cover;
     object-position: top;
   }
+  .shot.blank {
+    flex-direction: column;
+    gap: 6px;
+    background: light-dark(hsl(var(--hue) 55% 90%), hsl(var(--hue) 28% 24%));
+    color: light-dark(hsl(var(--hue) 45% 30%), hsl(var(--hue) 45% 80%));
+  }
   .shot img.fav {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+  .initial {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 700;
+    background: light-dark(hsl(var(--hue) 50% 80%), hsl(var(--hue) 30% 34%));
+  }
+  .site {
+    max-width: 90%;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .badge {
     position: absolute;
