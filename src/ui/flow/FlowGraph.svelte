@@ -23,10 +23,16 @@
     spawned?: (row: Row) => number;
     selected?: string;
     height?: number;
+    /** Tree views: fold straight runs (views.ts foldRuns), switched here. */
+    folding?: boolean;
+    onFolding?: (on: boolean) => void;
+    onUnfold?: (row: Row) => void;
     onSelect: (row: Row) => void;
     onOpen: (row: Row) => void;
   }
-  let { view, mode, sessionId, thumb, spawned, selected, height, onSelect, onOpen }: Props = $props();
+  let { view, mode, sessionId, thumb, spawned, selected, height, folding, onFolding, onUnfold, onSelect, onOpen }: Props = $props();
+  // Double-click and Enter open a page, or open up a fold.
+  const activate = (r: Row) => (r.fold ? onUnfold?.(r) : onOpen(r));
 
   const W = 184;
   const H = 138;
@@ -69,7 +75,7 @@
         width: W,
         height: H,
         selectable: false,
-        data: { row: r, img: thumb(r), kids: spawned?.(r) ?? 0, selected: selected === r.key, time: mode === 'network' ? undefined : clock(r.at), onSelect, onOpen },
+        data: { row: r, img: thumb(r), kids: spawned?.(r) ?? 0, selected: selected === r.key, time: mode === 'network' ? undefined : clock(r.at), onSelect, onOpen: activate },
       };
     });
   });
@@ -131,7 +137,7 @@
     if (!current) return;
     if (e.key === 'Enter') {
       e.preventDefault();
-      onOpen(current);
+      activate(current);
       return;
     }
     const dir = DIRS[e.key];
@@ -184,6 +190,9 @@
         <Controls showLock={false} />
         {#if showMap}<MiniMap width={150} height={84} pannable zoomable nodeColor={(n) => ((n.data as CardData).row.cursor ? '#2f7de1' : '#9a9a9a')} />{/if}
         <Panel position="top-right">
+          {#if mode !== 'network' && onFolding}
+            <button class="tidy" aria-pressed={folding} class:on={folding} onclick={() => onFolding(!folding)} title="Fold straight runs of pages and consent or login bounces into one card; double-click a fold to open it">Fold</button>
+          {/if}
           <button class="tidy" aria-pressed={showMap} class:on={showMap} onclick={() => (showMap = !showMap)} title="Show an overview map of the whole graph">Map</button>
           <button class="tidy" onclick={tidy} disabled={!anyMoved} title="Lay the graph out again, forgetting the cards you moved">Tidy up</button>
         </Panel>

@@ -46,14 +46,18 @@
   class:path={r.onPath}
   class:inherited={r.inherited}
   class:selected={data.selected}
-  title="{r.title ?? ''}&#10;{r.url}"
+  class:folded={!!r.fold}
+  title={r.fold ? `${r.title}\n${r.fold.hosts.join(', ')}\nDouble-click to show these pages` : `${r.title ?? ''}\n${r.url}`}
   role="button"
   tabindex="-1"
   ondblclick={() => data.onOpen(r)}
   onkeydown={(e) => e.key === 'Enter' && data.onOpen(r)}
 >
-  <div class="shot" class:blank={!data.img} style:--hue={hue}>
-    {#if data.img}
+  <div class="shot" class:blank={!data.img || !!r.fold} style:--hue={hue}>
+    {#if r.fold}
+      <span class="count">{r.fold.interstitial ? '↪' : r.fold.count}</span>
+      <span class="site">{r.fold.interstitial ? 'consent / login' : 'pages folded'}</span>
+    {:else if data.img}
       <img src={data.img} alt="" draggable="false" />
     {:else}
       {#if r.favIconUrl && !favFailed}
@@ -63,11 +67,11 @@
       {/if}
       <span class="site">{site || r.url}</span>
     {/if}
-    {#if r.visits > 1}<span class="badge">×{r.visits}</span>{/if}
+    {#if r.visits > 1 && !r.fold}<span class="badge">×{r.visits}</span>{/if}
   </div>
   <div class="text">
     <span class="title">{r.title || r.url}</span>
-    <span class="meta"><span class="host">{host(r.url)}</span>{#if data.time}<span class="time">{data.time}</span>{/if}</span>
+    <span class="meta"><span class="host">{r.fold ? r.fold.hosts.join(', ') : host(r.url)}</span>{#if data.time}<span class="time">{data.time}</span>{/if}</span>
   </div>
   {#if data.kids}<span class="spawn" title={data.kids === 1 ? 'A tab was opened from here' : `${data.kids} tabs were opened from here`}>↗{data.kids}</span>{/if}
 </div>
@@ -99,6 +103,23 @@
   .card.cursor {
     border: 2px solid #2f7de1;
     background: color-mix(in srgb, #2f7de1 10%, Canvas);
+  }
+  /* a fold: a small stack of cards */
+  .card.folded {
+    overflow: visible;
+    box-shadow:
+      4px -4px 0 -1px Canvas,
+      4px -4px 0 0 color-mix(in srgb, CanvasText 25%, transparent),
+      8px -8px 0 -1px Canvas,
+      8px -8px 0 0 color-mix(in srgb, CanvasText 15%, transparent);
+  }
+  .card.folded .shot {
+    border-radius: 7px 7px 0 0;
+  }
+  .count {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
   }
   .card.selected {
     outline: 3px solid #e8912d;

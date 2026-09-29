@@ -4,7 +4,7 @@
   // thumbnail wall; for the selected session its graph with screenshots and the details
   // of the selected page.
   import { request, type ChangedMessage, type SessionCard, type SessionPayload } from '@/background/protocol';
-  import { buildView, type Row, type ViewMode } from '@/core/views';
+  import { buildView, foldRuns, type Row, type ViewMode } from '@/core/views';
   import VisitDetails from '@/ui/VisitDetails.svelte';
   import SearchResults from '@/ui/SearchResults.svelte';
   import ThumbWall from '@/ui/ThumbWall.svelte';
@@ -64,7 +64,24 @@
     else localStorage.setItem(graphKey(mode), String(h));
   }
 
-  const view = $derived(data ? buildView(data, mode) : null);
+  // Straight runs and consent/login bounces fold into one card in the tree views; a
+  // double-click opens a fold up again (per session).
+  let folding = $state(localStorage.getItem('dude.sessions.fold') !== '0');
+  $effect(() => localStorage.setItem('dude.sessions.fold', folding ? '1' : '0'));
+  let expanded = $state<ReadonlySet<string>>(new Set());
+  const view = $derived.by(() => {
+    if (!data) return null;
+    const v = buildView(data, mode);
+    return mode === 'network' || !folding ? v : foldRuns(v, data.visits, { expanded, keep: (r) => spawnedFrom(r) > 0 });
+  });
+  const unfold = (r: Row) => (expanded = new Set([...expanded, r.key]));
+  /** Key of the row showing a visit, opening its fold if it's in one. */
+  function reveal(visitId: string): string | undefined {
+    const r = view?.rows.find((x) => x.visitIds.includes(visitId));
+    if (!r?.fold) return r?.key;
+    unfold(r);
+    return visitId; // in the tree views a visit's own row has its id as key
+  }
   const selectedRow = $derived(view?.rows.find((r) => r.key === selectedKey) ?? view?.rows.find((r) => r.cursor) ?? view?.rows.at(-1));
   const selectedVisits = $derived(selectedRow && data ? selectedRow.visitIds.map((id) => data!.visits[id]).filter(Boolean).sort((a, b) => a.firstAt - b.firstAt) : []);
 
@@ -79,7 +96,7 @@
     if (data && pendingVisit) {
       const id = pendingVisit;
       pendingVisit = undefined;
-      selectedKey = buildView(data, mode).rows.find((r) => r.visitIds.includes(id))?.key;
+      selectedKey = reveal(id);
     }
   }
 
@@ -114,6 +131,7 @@
   });
 
   function select(id: string) {
+    if (id !== selectedId) expanded = new Set();
     selectedId = id;
     selectedKey = undefined;
     history.replaceState(null, '', `?session=${id}${q ? `&q=${encodeURIComponent(q)}` : ''}`);
@@ -126,7 +144,7 @@
     pendingVisit = d.id;
     if (d.sessionId === selectedId && data) {
       pendingVisit = undefined;
-      selectedKey = buildView(data, mode).rows.find((r) => r.visitIds.includes(d.id))?.key;
+      selectedKey = reveal(d.id);
     } else select(d.sessionId);
   }
 
@@ -392,7 +410,7 @@
       {:else}
       <div class="graph" bind:this={graphEl}>
         {#key data.session.id + mode}
-          <FlowGraph {view} {mode} sessionId={data.session.id} height={graphH[mode]} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
+          <FlowGraph {view} {mode} {folding} onFolding={(on) => (folding = on)} onUnfold={unfold} sessionId={data.session.id} height={graphH[mode]} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
         {/key}
       </div>
       <Splitter value={graphH[mode]} measure={() => graphEl?.querySelector('.flow')?.clientHeight ?? 300} label="Graph height" onChange={setGraphH} />

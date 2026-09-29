@@ -23,6 +23,8 @@ export interface Row {
   at: number;
   /** Tree modes: time since the page opened before this one in the tab (none for the first). */
   pause?: number;
+  /** A folded run of pages (foldRuns): how many, and their sites in order. */
+  fold?: { count: number; hosts: string[]; interstitial: boolean };
 }
 
 export interface Link {
@@ -145,3 +147,109 @@ function network(s: Session, visits: Record<string, Visit>): View {
   for (const m of s.moves) add(m.from, m.to);
   return { rows, links: [...weights.values()] };
 }
+
+/** Fold runs of at least this many pages that each have one page before and one after. */
+export const FOLD_MIN = 3;
+/** Consent, login and SSO bounces: folded even alone when passed quickly (R7, S1 #24). */
+const INTERSTITIAL = /^(consent\.|accounts\.google\.|login\.|signin\.|auth\.|sso\.|idp\.)|\/(consent|login|signin|oauth2?|authorize|sso)(\/|\?|$)/i;
+const INTERSTITIAL_MAX_DWELL = 15_000;
+
+const hostOf = (url: string) => {
+  try {
+    return new URL(url).host.replace(/^www\./, '');
+  } catch {
+    return '';
+  }
+};
+
+export function isInterstitial(v: Pick<Visit, 'url' | 'dwellMs'>): boolean {
+  if (v.dwellMs > INTERSTITIAL_MAX_DWELL) return false;
+  try {
+    const u = new URL(v.url);
+    return INTERSTITIAL.test(u.host) || INTERSTITIAL.test(u.pathname);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Tree views only: replace straight runs of pages (each with one page before and one
+ * after, at least FOLD_MIN in a row) and quick consent/login bounces by one row. The pages
+ * before and after a run stay visible. Rows `keep` says yes to (the current page, pages
+ * tabs were opened from) and folds listed in `expanded` are never folded. Links into a
+ * fold attach to it; links inside it are dropped.
+ */
+export function foldRuns(view: View, visits: Record<string, Visit>, opts: { expanded?: ReadonlySet<string>; keep?: (row: Row) => boolean } = {}): View {
+  const { rows, links } = view;
+  const parent = new Map<number, number>();
+  const kids = new Map<number, number[]>();
+  for (const l of links) {
+    if (l.kind !== 'tree') continue;
+    parent.set(l.to, l.from);
+    kids.set(l.from, [...(kids.get(l.from) ?? []), l.to]);
+  }
+  const foldable = (i: number) => parent.has(i) && kids.get(i)?.length === 1 && !rows[i].cursor && !opts.keep?.(rows[i]);
+  const bounce = (i: number) => rows[i].visitIds.every((id) => visits[id] && isInterstitial(visits[id]));
+
+  // segments of foldable rows, each starting below a row that isn't foldable
+  const segments: number[][] = [];
+  rows.forEach((_, i) => {
+    if (!foldable(i) || foldable(parent.get(i)!)) return;
+    const seg = [i];
+    for (let c = kids.get(i)![0]; foldable(c); c = kids.get(c)![0]) seg.push(c);
+    segments.push(seg);
+  });
+
+  const into = new Map<number, number>(); // old row → folded row (new index)
+  const fold = new Map<number, number[]>(); // first old row of a fold → its rows
+  for (const seg of segments) {
+    const key = `fold:${rows[seg[0]].key}`;
+    if (opts.expanded?.has(key)) continue;
+    if (seg.length >= FOLD_MIN || seg.every(bounce)) fold.set(seg[0], seg);
+  }
+  if (!fold.size) return view;
+
+  const out: Row[] = [];
+  const index = new Map<number, number>();
+  rows.forEach((r, i) => {
+    const seg = fold.get(i);
+    if (seg) {
+      const first = rows[seg[0]];
+      const hosts = [...new Set(seg.map((k) => hostOf(rows[k].url)))];
+      const interstitial = seg.every(bounce);
+      out.push({
+        ...first,
+        key: `fold:${first.key}`,
+        visitIds: seg.flatMap((k) => rows[k].visitIds),
+        title: interstitial ? `via ${hosts.join(', ')}` : `${seg.length} pages`,
+        cursor: false,
+        onPath: seg.some((k) => rows[k].onPath),
+        inherited: seg.every((k) => rows[k].inherited),
+        visits: seg.reduce((n, k) => n + rows[k].visits, 0),
+        fold: { count: seg.length, hosts, interstitial },
+      });
+      for (const k of seg) into.set(k, out.length - 1);
+      return;
+    }
+    if (into.has(i)) return;
+    index.set(i, out.length);
+    out.push(r);
+  });
+  const at = (i: number) => index.get(i) ?? into.get(i)!;
+  const seen = new Set<string>();
+  const outLinks: Link[] = [];
+  for (const l of links) {
+    const from = at(l.from);
+    const to = at(l.to);
+    if (from === to) continue;
+    // moves keep every occurrence (they carry their order); tree and same-page links once
+    const key = `${l.kind}:${from}>${to}`;
+    if (l.kind !== 'back' && l.kind !== 'forward') {
+      if (seen.has(key)) continue;
+      seen.add(key);
+    }
+    outLinks.push({ ...l, from, to });
+  }
+  return { rows: out, links: outLinks };
+}
+

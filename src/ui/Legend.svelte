@@ -41,7 +41,8 @@
       if (view.links.some((l) => l.kind === 'forward')) out.push({ swatch: { line: 'var(--lg-forward)', arrow: true }, label: 'Forward' });
       if (view.rows.some((r) => (r.pause ?? 0) >= PAUSE_LABEL_MS)) out.push({ swatch: { mark: '2 h later' }, label: 'a pause before that page' });
     }
-    if (view.rows.some((r) => r.visits > 1)) out.push({ swatch: { mark: '×2' }, label: 'visited more than once' });
+    if (view.rows.some((r) => r.fold)) out.push({ swatch: { mark: '3 ▤' }, label: 'pages folded into one card; double-click to show them' });
+    if (view.rows.some((r) => r.visits > 1 && !r.fold)) out.push({ swatch: { mark: '×2' }, label: 'visited more than once' });
     if (view.rows.some((r) => r.inherited)) out.push({ swatch: { mark: 'inherited' }, label: 'copied from the tab this one was duplicated from' });
     if (spawned) out.push({ swatch: { mark: '↗1' }, label: 'tabs opened from this page' });
     return out;
