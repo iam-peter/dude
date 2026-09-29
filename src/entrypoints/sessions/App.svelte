@@ -76,6 +76,15 @@
     void data?.session.id;
     if (wide && graphEl) graphTop = graphEl.getBoundingClientRect().top + (document.querySelector('main')?.scrollTop ?? 0);
   });
+  // Width of the details column, set with the splitter between it and the graph.
+  const DETAILS_W = 420;
+  let detailsW = $state<number | undefined>(Number(localStorage.getItem('dude.sessions.detailsW')) || undefined);
+  function setDetailsW(w: number | undefined) {
+    detailsW = w;
+    if (w === undefined) localStorage.removeItem('dude.sessions.detailsW');
+    else localStorage.setItem('dude.sessions.detailsW', String(w));
+  }
+  let workEl = $state<HTMLElement>();
   // room for the hint line above, the legend below and main's bottom padding
   const sideH = $derived(Math.max(360, winH - graphTop - 104));
   function setGraphH(h: number | undefined) {
@@ -425,13 +434,17 @@
           {/key}
         {:else}<p class="empty">This session isn't in the log (it may predate a rebuild).</p>{/if}
       {:else}
-      <div class="work" class:wide>
+      <div class="work" class:wide bind:this={workEl} style:--details-w="{detailsW ?? DETAILS_W}px">
       <div class="graph" bind:this={graphEl}>
         {#key data.session.id + mode}
           <FlowGraph {view} {mode} {folding} onFolding={(on) => (folding = on)} onUnfold={unfold} sessionId={data.session.id} height={wide ? sideH : graphH[mode]} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
         {/key}
       </div>
-      {#if !wide}<Splitter value={graphH[mode]} measure={() => graphEl?.querySelector('.flow')?.clientHeight ?? 300} label="Graph height" onChange={setGraphH} />{/if}
+      {#if wide}
+        <Splitter vertical value={detailsW} measure={() => DETAILS_W} min={280} max={Math.max(320, (workEl?.clientWidth ?? 1200) - 420)} label="Details width" onChange={setDetailsW} />
+      {:else}
+        <Splitter value={graphH[mode]} measure={() => graphEl?.querySelector('.flow')?.clientHeight ?? 300} label="Graph height" onChange={setGraphH} />
+      {/if}
       {#if selectedVisits.length}
         <VisitDetails
           side={wide}
@@ -576,9 +589,12 @@
   }
   .work.wide {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 420px;
-    gap: 18px;
+    grid-template-columns: minmax(0, 1fr) auto var(--details-w);
+    gap: 8px;
     align-items: start;
+  }
+  .work.wide > :global(.splitter) {
+    align-self: stretch;
   }
   main {
     overflow-y: auto;

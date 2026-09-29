@@ -1,36 +1,43 @@
 <!--
-  Horizontal splitter: drag (or arrow keys) to set the height of the element above it;
-  double-click (or Home) goes back to its automatic height.
+  Splitter: drag (or arrow keys) to set the height of the element above it, or with
+  `vertical` the width of the element to its right; double-click (or Home) goes back to
+  the automatic or default size.
 -->
 <script lang="ts">
   interface Props {
-    /** Current height; undefined while automatic. */
+    /** Current size; undefined while automatic. */
     value: number | undefined;
-    /** The element's height right now, to start a drag from while automatic. */
+    /** The element's size right now, to start a drag from while automatic. */
     measure: () => number;
+    /** Between two columns, sizing the right one. */
+    vertical?: boolean;
     min?: number;
     max?: number;
     label?: string;
     onChange: (height: number | undefined) => void;
   }
-  let { value, measure, min = 120, max = window.innerHeight - 120, label = 'Resize', onChange }: Props = $props();
+  let { value, measure, vertical = false, min = 120, max = window.innerHeight - 120, label = 'Resize', onChange }: Props = $props();
 
   const clamp = (h: number) => Math.round(Math.max(min, Math.min(max, h)));
-  let drag: { y: number; h: number } | null = null;
+  // moving right or down grows the element above, but shrinks the one to the right
+  const sign = $derived(vertical ? -1 : 1);
+  const pos = (e: PointerEvent) => (vertical ? e.clientX : e.clientY);
+  let drag: { at: number; size: number } | null = null;
 
   function down(e: PointerEvent) {
     if (e.button !== 0) return;
-    drag = { y: e.clientY, h: value ?? measure() };
+    drag = { at: pos(e), size: value ?? measure() };
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
     e.preventDefault(); // no text selection while dragging
   }
   function move(e: PointerEvent) {
-    if (drag) onChange(clamp(drag.h + e.clientY - drag.y));
+    if (drag) onChange(clamp(drag.size + sign * (pos(e) - drag.at)));
   }
   function key(e: KeyboardEvent) {
     const step = e.shiftKey ? 80 : 20;
-    if (e.key === 'ArrowUp') onChange(clamp((value ?? measure()) - step));
-    else if (e.key === 'ArrowDown') onChange(clamp((value ?? measure()) + step));
+    const [back, on] = vertical ? ['ArrowLeft', 'ArrowRight'] : ['ArrowUp', 'ArrowDown'];
+    if (e.key === back) onChange(clamp((value ?? measure()) - sign * step));
+    else if (e.key === on) onChange(clamp((value ?? measure()) + sign * step));
     else if (e.key === 'Home') onChange(undefined);
     else return;
     e.preventDefault();
@@ -42,8 +49,9 @@
 <div
   class="splitter"
   class:set={value !== undefined}
+  class:vertical
   role="separator"
-  aria-orientation="horizontal"
+  aria-orientation={vertical ? 'vertical' : 'horizontal'}
   aria-label={label}
   aria-valuenow={value ?? measure()}
   aria-valuemin={min}
@@ -71,6 +79,16 @@
     cursor: row-resize;
     touch-action: none;
     border-radius: 5px;
+  }
+  .splitter.vertical {
+    height: auto;
+    width: 10px;
+    margin: 0 -4px;
+    cursor: col-resize;
+  }
+  .splitter.vertical .grip {
+    width: 4px;
+    height: 44px;
   }
   .grip {
     width: 44px;
