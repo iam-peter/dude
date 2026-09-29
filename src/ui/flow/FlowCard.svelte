@@ -11,6 +11,8 @@
     img?: string;
     kids: number;
     selected: boolean;
+    /** Visit time, in the tree views. */
+    time?: string;
     onSelect: (row: Row) => void;
     onOpen: (row: Row) => void;
   }
@@ -65,7 +67,7 @@
   </div>
   <div class="text">
     <span class="title">{r.title || r.url}</span>
-    <span class="host">{host(r.url)}</span>
+    <span class="meta"><span class="host">{host(r.url)}</span>{#if data.time}<span class="time">{data.time}</span>{/if}</span>
   </div>
   {#if data.kids}<span class="spawn" title={data.kids === 1 ? 'A tab was opened from here' : `${data.kids} tabs were opened from here`}>↗{data.kids}</span>{/if}
 </div>
@@ -174,7 +176,19 @@
     text-overflow: ellipsis;
     padding-right: 30px;
   }
+  .meta {
+    display: flex;
+    gap: 6px;
+    min-width: 0;
+  }
+  .time {
+    flex: none;
+    margin-left: auto;
+    opacity: 0.6;
+    font-variant-numeric: tabular-nums;
+  }
   .host {
+    min-width: 0;
     opacity: 0.6;
     white-space: nowrap;
     overflow: hidden;

@@ -19,6 +19,10 @@ export interface Row {
   onPath: boolean;
   inherited: boolean;
   visits: number;
+  /** First visit of the row. */
+  at: number;
+  /** Tree modes: time since the page opened before this one in the tab (none for the first). */
+  pause?: number;
 }
 
 export interface Link {
@@ -73,11 +77,16 @@ function tree(s: Session, visits: Record<string, Visit>, withMoves: boolean): Vi
       onPath: path.has(id),
       inherited: !!v.inheritedFrom,
       visits: 1,
+      at: v.firstAt,
     });
     if (parentRow !== undefined) links.push({ from: parentRow, to: i, kind: 'tree' });
     for (const c of v.children) walk(c, depth + 1, i);
   };
   if (s.rootId) walk(s.rootId, 0);
+
+  // Pauses: time between one page opening and the next, in the order they were opened.
+  const byTime = [...rows].sort((a, b) => a.at - b.at);
+  byTime.forEach((r, k) => k > 0 && (r.pause = r.at - byTime[k - 1].at));
 
   // Faint "same page" connectors between consecutive rows sharing a normUrl (B2).
   const lastByNorm = new Map<string, number>();
@@ -109,7 +118,7 @@ function network(s: Session, visits: Record<string, Visit>): View {
     if (i === undefined) {
       i = rows.length;
       byNorm.set(v.normUrl, i);
-      rows.push({ key: v.normUrl, visitIds: [], depth: 0, url: v.url, title: v.title, favIconUrl: v.favIconUrl, edge: v.edge, cursor: false, onPath: false, inherited: !!v.inheritedFrom, visits: 0 });
+      rows.push({ key: v.normUrl, visitIds: [], depth: 0, url: v.url, title: v.title, favIconUrl: v.favIconUrl, edge: v.edge, cursor: false, onPath: false, inherited: !!v.inheritedFrom, visits: 0, at: v.firstAt });
     }
     const r = rows[i];
     r.visitIds.push(v.id);

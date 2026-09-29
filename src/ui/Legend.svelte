@@ -5,6 +5,7 @@
 -->
 <script lang="ts">
   import type { View, ViewMode } from '@/core/views';
+  import { PAUSE_LABEL_MS } from './flow/time';
 
   interface Props {
     view: View;
@@ -38,6 +39,7 @@
       if (view.links.some((l) => l.kind === 'same')) out.push({ swatch: { line: 'var(--lg-same)', dash: '2 3' }, label: 'same page again' });
       if (view.links.some((l) => l.kind === 'back')) out.push({ swatch: { line: 'var(--lg-back)', arrow: true }, label: 'Back, numbered in order' });
       if (view.links.some((l) => l.kind === 'forward')) out.push({ swatch: { line: 'var(--lg-forward)', arrow: true }, label: 'Forward' });
+      if (view.rows.some((r) => (r.pause ?? 0) >= PAUSE_LABEL_MS)) out.push({ swatch: { mark: '2 h later' }, label: 'a pause before that page' });
     }
     if (view.rows.some((r) => r.visits > 1)) out.push({ swatch: { mark: '×2' }, label: 'visited more than once' });
     if (view.rows.some((r) => r.inherited)) out.push({ swatch: { mark: 'inherited' }, label: 'copied from the tab this one was duplicated from' });
@@ -105,6 +107,7 @@
   }
   .mark {
     min-width: 30px;
+    white-space: nowrap;
     text-align: center;
     font-size: 10px;
     font-weight: 600;

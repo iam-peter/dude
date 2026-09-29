@@ -16,6 +16,8 @@
     labelX: number;
     labelY: number;
     routed: boolean;
+    /** "2 h later": a long pause before the page this link leads to. */
+    gap?: string;
   }
 </script>
 
@@ -30,7 +32,7 @@
   const labelX = $derived(data.routed ? data.labelX : curve[1]);
   const labelY = $derived(data.routed ? data.labelY - 5 : curve[2]);
   // Moves carry their order; the network its counts.
-  const label = $derived(data.kind === 'back' || data.kind === 'forward' ? String(data.n) : data.n > 1 ? String(data.n) : undefined);
+  const label = $derived(data.gap ?? (data.kind === 'back' || data.kind === 'forward' ? String(data.n) : data.n > 1 ? String(data.n) : undefined));
 </script>
 
 <BaseEdge

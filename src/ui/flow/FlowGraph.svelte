@@ -13,6 +13,7 @@
   import FlowEdge, { type LinkData } from './FlowEdge.svelte';
   import FlowFocus from './FlowFocus.svelte';
   import { nextCard, type Dir } from './nav';
+  import { clock, later, PAUSE_LABEL_MS } from './time';
 
   interface Props {
     view: View;
@@ -68,7 +69,7 @@
         width: W,
         height: H,
         selectable: false,
-        data: { row: r, img: thumb(r), kids: spawned?.(r) ?? 0, selected: selected === r.key, onSelect, onOpen },
+        data: { row: r, img: thumb(r), kids: spawned?.(r) ?? 0, selected: selected === r.key, time: mode === 'network' ? undefined : clock(r.at), onSelect, onOpen },
       };
     });
   });
@@ -87,7 +88,16 @@
         type: 'link',
         selectable: false,
         markerEnd: e.kind === 'same' ? undefined : { type: MarkerType.ArrowClosed, color, width: 16, height: 16 },
-        data: { kind: e.kind, n: e.n, variant, d: e.d, labelX: e.labelX, labelY: e.labelY, routed: !loose(from.key) && !loose(to.key) },
+        data: {
+          kind: e.kind,
+          n: e.n,
+          variant,
+          d: e.d,
+          labelX: e.labelX,
+          labelY: e.labelY,
+          routed: !loose(from.key) && !loose(to.key),
+          gap: e.kind === 'tree' && (to.pause ?? 0) >= PAUSE_LABEL_MS ? later(to.pause!) : undefined,
+        },
       };
     });
   });
