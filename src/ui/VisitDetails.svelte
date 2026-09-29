@@ -19,8 +19,10 @@
     onOpenPath: (v: Visit) => void;
     onShowSession: (id: string) => void;
     onDelete: (v: Visit) => void;
+    /** In a narrow column beside the graph: screenshot above the facts. */
+    side?: boolean;
   }
-  let { visits, children, onOpen, onOpenPath, onShowSession, onDelete }: Props = $props();
+  let { visits, children, onOpen, onOpenPath, onShowSession, onDelete, side = false }: Props = $props();
 
   const v = $derived(visits.at(-1)!);
   const shots = $derived(visits.flatMap((x) => x.screenshots));
@@ -82,7 +84,7 @@
   };
 </script>
 
-<section class="details">
+<section class="details" class:side>
   <div class="shot">
     {#if big}<img src={big} alt="Screenshot of {v.title ?? v.url}" />{:else}<div class="noshot">{shots.length ? 'loading…' : 'No screenshot of this page'}</div>{/if}
     {#if shots.length > 1}
@@ -142,6 +144,9 @@
     .details {
       grid-template-columns: 1fr;
     }
+  }
+  .details.side {
+    grid-template-columns: 1fr;
   }
   .shot > img {
     max-height: 62vh;

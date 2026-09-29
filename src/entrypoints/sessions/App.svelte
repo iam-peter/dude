@@ -58,6 +58,25 @@
   const graphKey = (m: ViewMode) => `dude.sessions.graphH.${m}`;
   let graphH = $state<Record<string, number | undefined>>(Object.fromEntries(MODES.map((m) => [m.id, Number(localStorage.getItem(graphKey(m.id))) || undefined])));
   let graphEl = $state<HTMLElement>();
+
+  // Wide windows: details in a column beside the graph, which then takes the full height.
+  const WIDE = '(min-width: 1600px)';
+  let wide = $state(matchMedia(WIDE).matches);
+  $effect(() => {
+    const m = matchMedia(WIDE);
+    const update = () => (wide = m.matches);
+    m.addEventListener('change', update);
+    return () => m.removeEventListener('change', update);
+  });
+  let winH = $state(window.innerHeight);
+  let graphTop = $state(0);
+  $effect(() => {
+    void winH;
+    void data?.session.id;
+    if (wide && graphEl) graphTop = graphEl.getBoundingClientRect().top + (document.querySelector('main')?.scrollTop ?? 0);
+  });
+  // room for the hint line above, the legend below and main's bottom padding
+  const sideH = $derived(Math.max(360, winH - graphTop - 104));
   function setGraphH(h: number | undefined) {
     graphH[mode] = h;
     if (h === undefined) localStorage.removeItem(graphKey(mode));
@@ -312,6 +331,8 @@
   const selectedCard = $derived(cards.find((c) => c.id === selectedId));
 </script>
 
+<svelte:window bind:innerHeight={winH} />
+
 <div class="app">
   <aside>
     <header><h1>dude</h1><span class="sub">tab sessions</span><a class="settings" href={browser.runtime.getURL('/options.html')}>settings</a></header>
@@ -408,14 +429,16 @@
           {/key}
         {:else}<p class="empty">This session isn't in the log (it may predate a rebuild).</p>{/if}
       {:else}
+      <div class="work" class:wide>
       <div class="graph" bind:this={graphEl}>
         {#key data.session.id + mode}
-          <FlowGraph {view} {mode} {folding} onFolding={(on) => (folding = on)} onUnfold={unfold} sessionId={data.session.id} height={graphH[mode]} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
+          <FlowGraph {view} {mode} {folding} onFolding={(on) => (folding = on)} onUnfold={unfold} sessionId={data.session.id} height={wide ? sideH : graphH[mode]} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
         {/key}
       </div>
-      <Splitter value={graphH[mode]} measure={() => graphEl?.querySelector('.flow')?.clientHeight ?? 300} label="Graph height" onChange={setGraphH} />
+      {#if !wide}<Splitter value={graphH[mode]} measure={() => graphEl?.querySelector('.flow')?.clientHeight ?? 300} label="Graph height" onChange={setGraphH} />{/if}
       {#if selectedVisits.length}
         <VisitDetails
+          side={wide}
           visits={selectedVisits}
           children={data.children.filter((c) => selectedVisits.some((v) => v.id === c.spawnedFromVisitId))}
           onOpen={(v) => open(v.url, v.id)}
@@ -424,6 +447,7 @@
           onDelete={deleteVisit}
         />
       {/if}
+      </div>
       {/if}
     {:else if selectedId}
       <p class="empty">Loading…</p>
@@ -538,6 +562,17 @@
     border-radius: 3px;
     flex: none;
     border: 1px solid color-mix(in srgb, CanvasText 10%, transparent);
+  }
+  .work {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .work.wide {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 420px;
+    gap: 18px;
+    align-items: start;
   }
   main {
     overflow-y: auto;
