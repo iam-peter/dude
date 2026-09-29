@@ -47,11 +47,18 @@
     moved = JSON.parse(localStorage.getItem(posKey) ?? '{}');
   });
 
+  // The layout and the view it was computed for. The `view` prop changes first (folding,
+  // a new visit) and the new layout arrives later; reading cards of the new view with the
+  // old layout's row numbers would mix them up or fail, so everything below uses `shown`.
   let base = $state<GraphLayout | null>(null);
+  let shown = $state.raw<View | null>(null);
   $effect(() => {
     let cancelled = false;
-    layoutGraph(view, { nodeW: W, nodeH: H, layout: mode === 'network' ? ['net'] : ['tree', 'same', 'back', 'forward'] }).then((l) => {
-      if (!cancelled) base = l;
+    const laying = view;
+    layoutGraph(laying, { nodeW: W, nodeH: H, layout: mode === 'network' ? ['net'] : ['tree', 'same', 'back', 'forward'] }).then((l) => {
+      if (cancelled) return;
+      shown = laying;
+      base = l;
     });
     return () => {
       cancelled = true;
@@ -62,12 +69,14 @@
   let dragging = $state<ReadonlySet<string>>(new Set());
   const loose = (id: string) => !!moved[id] || dragging.has(id);
 
+  const rowsOf = () => shown?.rows ?? [];
+
   let nodes = $state.raw<Node<CardData>[]>([]);
   let edges = $state.raw<Edge<LinkData>[]>([]);
   $effect(() => {
     if (!base) return;
     nodes = base.nodes.map((n) => {
-      const r = view.rows[n.row];
+      const r = rowsOf()[n.row];
       return {
         id: r.key,
         type: 'card',
@@ -83,8 +92,8 @@
   $effect(() => {
     if (!base) return;
     edges = base.edges.map((e, i) => {
-      const from = view.rows[e.from];
-      const to = view.rows[e.to];
+      const from = rowsOf()[e.from];
+      const to = rowsOf()[e.to];
       const variant = mode === 'network' ? (e.to < e.from ? 'back' : undefined) : e.kind === 'tree' && (to.edge === 'jump' || to.edge === 'unknown') ? to.edge : undefined;
       const color = variant === 'back' ? COLORS.back : COLORS[e.kind];
       return {
@@ -133,7 +142,7 @@
   let focusTarget = $state<{ x: number; y: number; seq: number }>();
   function key(e: KeyboardEvent) {
     if (!base) return;
-    const current = view.rows.find((r) => r.key === selected) ?? view.rows.find((r) => r.cursor);
+    const current = rowsOf().find((r) => r.key === selected) ?? rowsOf().find((r) => r.cursor);
     if (!current) return;
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -144,9 +153,9 @@
     if (!dir) return;
     e.preventDefault();
     const cards = nodes.map((n) => ({ id: n.id, x: n.position.x, y: n.position.y }));
-    const links = base.edges.map((l) => ({ from: view.rows[l.from].key, to: view.rows[l.to].key }));
+    const links = base.edges.map((l) => ({ from: rowsOf()[l.from].key, to: rowsOf()[l.to].key }));
     const next = nextCard(cards, links, current.key, dir, W, H);
-    const row = next && view.rows.find((r) => r.key === next);
+    const row = next && rowsOf().find((r) => r.key === next);
     const card = next && cards.find((c) => c.id === next);
     if (!row || !card) return;
     onSelect(row);
@@ -157,10 +166,10 @@
   // squeezing a long session into view; the ⛶ button still shows everything.
   const start = $derived.by(() => {
     if (!base) return undefined;
-    const cur = base.nodes.find((n) => view.rows[n.row]?.cursor) ?? base.nodes.at(-1);
+    const cur = base.nodes.find((n) => rowsOf()[n.row]?.cursor) ?? base.nodes.at(-1);
     if (!cur) return undefined;
     const reach = 2.5 * (W + 110);
-    return base.nodes.filter((n) => Math.abs(n.x - cur.x) <= reach).map((n) => ({ id: view.rows[n.row].key }));
+    return base.nodes.filter((n) => Math.abs(n.x - cur.x) <= reach).map((n) => ({ id: rowsOf()[n.row].key }));
   });
 </script>
 

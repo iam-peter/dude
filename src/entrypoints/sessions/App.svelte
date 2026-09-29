@@ -104,6 +104,11 @@
     return mode === 'network' || !folding ? v : foldRuns(v, data.visits, { expanded, keep: (r) => spawnedFrom(r) > 0 });
   });
   const unfold = (r: Row) => (expanded = new Set([...expanded, r.key]));
+  // The switch folds everything again, including folds opened by a double-click.
+  function setFolding(on: boolean) {
+    folding = on;
+    expanded = new Set();
+  }
   /** Key of the row showing a visit, opening its fold if it's in one. */
   function reveal(visitId: string): string | undefined {
     const r = view?.rows.find((x) => x.visitIds.includes(visitId));
@@ -437,7 +442,7 @@
       <div class="work" class:wide bind:this={workEl} style:--details-w="{detailsW ?? DETAILS_W}px">
       <div class="graph" bind:this={graphEl}>
         {#key data.session.id + mode}
-          <FlowGraph {view} {mode} {folding} onFolding={(on) => (folding = on)} onUnfold={unfold} sessionId={data.session.id} height={wide ? sideH : graphH[mode]} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
+          <FlowGraph {view} {mode} {folding} onFolding={setFolding} onUnfold={unfold} sessionId={data.session.id} height={wide ? sideH : graphH[mode]} thumb={thumbOf} spawned={spawnedFrom} selected={selectedRow?.key} onSelect={(r) => (selectedKey = r.key)} onOpen={(r) => open(r.url, r.visitIds.at(-1))} />
         {/key}
       </div>
       {#if wide}
