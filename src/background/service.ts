@@ -109,6 +109,7 @@ export class Service {
           createdAt: s.createdAt,
           lastAt,
           title: cur?.title ?? cur?.url,
+          host: cur ? hostOf(cur.url).replace(/^www\./, '') || undefined : undefined,
           visitCount: visits.filter((v) => !v.inheritedFrom).length,
           imported: s.imported,
           thumbs: visits.flatMap((v) => (v.screenshots.length ? [v.screenshots.at(-1)!.id] : [])).slice(0, 6),

@@ -9,6 +9,7 @@
   import SearchResults from '@/ui/SearchResults.svelte';
   import ThumbWall from '@/ui/ThumbWall.svelte';
   import Splitter from '@/ui/Splitter.svelte';
+  import { groupCards, type GroupBy } from '@/ui/session-list';
   import FlowGraph from '@/ui/flow/FlowGraph.svelte';
   import { ShotScope } from '@/ui/shots';
   import { resync, searchIndex } from '@/ui/search-client';
@@ -314,19 +315,10 @@
   /** Tabs opened from the visits of a row (↗ badge). */
   const spawnedFrom = (row: Row) => (data ? data.children.filter((c) => c.spawnedFromVisitId && row.visitIds.includes(c.spawnedFromVisitId)).length : 0);
 
-  // Group cards by day of last activity.
-  const days = $derived.by(() => {
-    const out: { label: string; cards: SessionCard[] }[] = [];
-    const today = new Date().toDateString();
-    const yesterday = new Date(Date.now() - 864e5).toDateString();
-    for (const c of cards) {
-      const d = new Date(c.lastAt).toDateString();
-      const label = d === today ? 'Today' : d === yesterday ? 'Yesterday' : new Date(c.lastAt).toLocaleDateString([], { weekday: 'long', day: 'numeric', month: 'long' });
-      if (out.at(-1)?.label !== label) out.push({ label, cards: [] });
-      out.at(-1)!.cards.push(c);
-    }
-    return out;
-  });
+  // Cards by day of last activity or by site; tabs opened from another tab below it.
+  let groupBy = $state<GroupBy>(localStorage.getItem('dude.sessions.groupBy') === 'site' ? 'site' : 'day');
+  $effect(() => localStorage.setItem('dude.sessions.groupBy', groupBy));
+  const groups = $derived(groupCards(cards, groupBy));
   const hm = (t: number) => new Date(t).toLocaleTimeString([], { timeStyle: 'short' });
   const selectedCard = $derived(cards.find((c) => c.id === selectedId));
 </script>
@@ -347,6 +339,10 @@
       <input type="text" placeholder="domain" bind:value={host} aria-label="Domain" />
       <label title="Only the selected session and the tabs linked to it by 'opened from'"><input type="checkbox" bind:checked={familyOnly} disabled={!selectedId} /> this tab family</label>
       <label title="Only sessions whose tab is still open"><input type="checkbox" bind:checked={openOnly} onchange={loadList} /> open tabs</label>
+      <select bind:value={groupBy} aria-label="Group sessions">
+        <option value="day">by day</option>
+        <option value="site">by site</option>
+      </select>
     </div>
     <div class="panels" role="tablist">
       <button role="tab" aria-selected={panel === 'sessions'} class:on={panel === 'sessions'} onclick={() => (panel = 'sessions')}>Sessions</button>
@@ -356,16 +352,16 @@
     {#if q.trim()}
       {#if ix}<SearchResults {hits} ancestors={(id) => ix!.ancestors(id)} {thumbs} onShow={showDoc} onOpen={(d) => open(d.url, d.id)} />{/if}
     {:else}
-    {#each days as day (day.label)}
-      <h2>{day.label}</h2>
-      {#each day.cards as c (c.id)}
-        <button class="card" class:on={c.id === selectedId} onclick={() => select(c.id)}>
+    {#each groups as group (group.label)}
+      <h2 class:site={groupBy === 'site'}>{group.label}</h2>
+      {#each group.items as { card: c, depth } (c.id)}
+        <button class="card" class:on={c.id === selectedId} class:nested={depth > 0} style:--depth={depth} onclick={() => select(c.id)}>
           <span class="top">
             <span class="title">{c.title ?? '…'}</span>
             {#if c.open}<span class="live" title="The tab is still open">open</span>{/if}
             <span class="time">{hm(c.createdAt)}{c.lastAt - c.createdAt > 60_000 ? `–${hm(c.lastAt)}` : ''}</span>
           </span>
-          {#if c.spawnedFrom}<span class="from">{c.spawnedFrom.kind === 'duplicate' ? '⧉ duplicate of' : '↳ from'} {c.spawnedFrom.title ?? '…'}</span>{/if}
+          {#if c.spawnedFrom && depth === 0}<span class="from">{c.spawnedFrom.kind === 'duplicate' ? '⧉ duplicate of' : '↳ from'} {c.spawnedFrom.title ?? '…'}</span>{/if}
           <span class="strip">
             {#each c.thumbs as id (id)}{#if thumbs[id]}<img src={thumbs[id]} alt="" />{/if}{/each}
           </span>
@@ -507,6 +503,16 @@
     padding: 7px 8px;
     border-radius: 8px;
     margin-bottom: 2px;
+  }
+  aside h2.site {
+    text-transform: none;
+  }
+  /* opened from the card above: indented, with a line back to it */
+  .card.nested {
+    margin-left: calc(var(--depth) * 14px);
+    width: calc(100% - var(--depth) * 14px);
+    border-left: 2px solid color-mix(in srgb, #2f7de1 35%, transparent);
+    border-radius: 0 8px 8px 0;
   }
   .card:hover {
     background: color-mix(in srgb, CanvasText 6%, transparent);

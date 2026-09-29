@@ -20,6 +20,8 @@ export interface SessionCard {
   createdAt: number;
   lastAt: number;
   title?: string;
+  /** Site of the current page, without www. */
+  host?: string;
   visitCount: number;
   imported?: boolean;
   /** Latest screenshot of the first few visits that have one, in visit order. */
