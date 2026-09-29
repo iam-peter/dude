@@ -11,7 +11,7 @@
   import type { Visit } from '@/core/model';
   import PanZoom from './PanZoom.svelte';
   import { layoutGraph } from './graph-layout';
-  import { shotUrl, shotUrls } from './shots';
+  import { ShotScope } from './shots';
 
   interface Props {
     tl: Timeline;
@@ -103,16 +103,20 @@
     return (v.screenshots.filter((x) => x.at <= s!.t + 3000).at(-1) ?? v.screenshots[0]).id;
   }
 
+  const scope = new ShotScope();
+  $effect(() => () => scope.dispose());
   let thumbs = $state<Record<string, string>>({});
   $effect(() => {
     const ids = [...new Set(steps.map(shotFor).filter((x): x is string => !!x))];
-    shotUrls(ids).then((u) => (thumbs = u));
+    scope.keepOnly(ids);
+    scope.urls(ids).then((u) => (thumbs = u));
   });
   let big = $state<string | undefined>();
   $effect(() => {
     const id = shotFor(step);
     big = id ? thumbs[id] : undefined; // thumbnail first, preview when it's there
-    if (id) shotUrl(id, 'preview').then((u) => shotFor(step) === id && (big = u));
+    scope.keepOnly(id ? [id] : [], 'preview');
+    if (id) scope.url(id, 'preview').then((u) => shotFor(step) === id && (big = u));
   });
 
   const focusBox = $derived.by(() => {

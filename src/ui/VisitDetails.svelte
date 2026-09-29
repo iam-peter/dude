@@ -9,7 +9,8 @@
   import { shortUrl } from '@/core/describe';
   import { getText } from '@/storage/db';
   import { gunzip } from '@/background/imaging';
-  import { shotUrl } from './shots';
+  import { ShotScope } from './shots';
+  import { untrack } from 'svelte';
 
   interface Props {
     visits: Visit[]; // oldest first
@@ -33,15 +34,23 @@
     shown = shots.at(-1)?.id;
     text = null;
   });
+  // Only the shown preview and the strip of the selected visits keep their URLs.
+  const scope = new ShotScope();
+  $effect(() => () => scope.dispose());
   $effect(() => {
     const id = shown;
     big = undefined;
-    if (id) shotUrl(id, 'preview').then((u) => id === shown && (big = u));
+    scope.keepOnly(id ? [id] : [], 'preview');
+    if (id) scope.url(id, 'preview').then((u) => id === shown && (big = u));
   });
 
   let strip = $state<Record<string, string>>({});
   $effect(() => {
-    for (const s of shots) if (!strip[s.id]) shotUrl(s.id).then((u) => u && (strip = { ...strip, [s.id]: u }));
+    const ids = shots.map((s) => s.id);
+    scope.keepOnly(ids);
+    const have = untrack(() => strip);
+    strip = Object.fromEntries(Object.entries(have).filter(([id]) => ids.includes(id)));
+    for (const id of ids) if (!have[id]) scope.url(id).then((u) => u && ids.includes(id) && (strip = { ...strip, [id]: u }));
   });
 
   async function showText() {

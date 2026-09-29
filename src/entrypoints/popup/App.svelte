@@ -5,7 +5,7 @@
   import type { Visit } from '@/core/model';
   import { shortUrl } from '@/core/describe';
   import { openPanel } from '@/platform';
-  import { shotUrls } from '@/ui/shots';
+  import { ShotScope } from '@/ui/shots';
 
   let windowId: number | undefined;
   let tabId: number | undefined;
@@ -17,6 +17,7 @@
   let data = $state<SessionPayload | null>(null);
   let loaded = $state(false);
   let thumbs = $state<Record<string, string>>({});
+  const shots = new ShotScope(); // the popup lives briefly; closing it frees everything
 
   const path = $derived.by(() => {
     if (!data) return [] as Visit[];
@@ -36,7 +37,7 @@
       data = tab?.id !== undefined ? await request<SessionPayload | null>({ cmd: 'dude.session', tabId: tab.id }) : null;
       loaded = true;
       const ids = path.map((v) => v.screenshots.at(-1)?.id).filter((x): x is string => !!x);
-      thumbs = await shotUrls(ids);
+      thumbs = await shots.urls(ids);
     })();
   });
 

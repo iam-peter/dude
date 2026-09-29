@@ -4,7 +4,7 @@
 -->
 <script lang="ts">
   import type { SearchDoc } from '@/search';
-  import { shotUrls } from './shots';
+  import { ShotScope } from './shots';
 
   interface Props {
     docs: SearchDoc[]; // already filtered, newest first, all with a shotId
@@ -17,9 +17,13 @@
   let urls = $state<Record<string, string>>({});
   const shown = $derived(docs.slice(0, limit));
 
+  const shots = new ShotScope();
+  $effect(() => () => shots.dispose());
   $effect(() => {
-    const missing = shown.map((d) => d.shotId!).filter((id) => !urls[id]);
-    if (missing.length) shotUrls(missing).then((u) => (urls = { ...urls, ...u }));
+    const ids = shown.map((d) => d.shotId!);
+    shots.keepOnly(ids); // a new filter drops the tiles it no longer shows
+    const missing = ids.filter((id) => !urls[id]);
+    if (missing.length) shots.urls(missing).then((u) => (urls = { ...urls, ...u }));
   });
 
   let sentinel: HTMLElement;

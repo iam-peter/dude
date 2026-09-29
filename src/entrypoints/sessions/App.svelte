@@ -10,7 +10,7 @@
   import SearchResults from '@/ui/SearchResults.svelte';
   import ThumbWall from '@/ui/ThumbWall.svelte';
   import Splitter from '@/ui/Splitter.svelte';
-  import { shotUrls } from '@/ui/shots';
+  import { ShotScope } from '@/ui/shots';
   import { resync, searchIndex } from '@/ui/search-client';
   import type { Hit, SearchDoc, SearchIndex } from '@/search';
   import type { Visit } from '@/core/model';
@@ -71,13 +71,11 @@
   async function loadList() {
     cards = await request<SessionCard[]>({ cmd: 'dude.sessions', limit: 300, open: openOnly || undefined });
     if (!selectedId && cards.length) select(cards[0].id);
-    loadThumbs(cards.flatMap((c) => c.thumbs));
   }
 
   async function loadSession() {
     if (!selectedId) return;
     data = await request<SessionPayload | null>({ cmd: 'dude.session', sessionId: selectedId });
-    if (data) loadThumbs(Object.values(data.visits).flatMap((v) => v.screenshots.map((s) => s.id)));
     if (data && pendingVisit) {
       const id = pendingVisit;
       pendingVisit = undefined;
@@ -85,10 +83,35 @@
     }
   }
 
-  async function loadThumbs(ids: string[]) {
-    const missing = ids.filter((id) => !thumbs[id]);
-    if (missing.length) thumbs = { ...thumbs, ...(await shotUrls(missing)) };
-  }
+  // Thumbnails of the session list, the open session and the first search hits; any
+  // other URL is released, so browsing many sessions doesn't pile up images.
+  const shots = new ShotScope();
+  $effect(() => () => shots.dispose());
+  const neededShots = $derived.by(() => {
+    const need = new Set<string>();
+    for (const c of cards) for (const id of c.thumbs) need.add(id);
+    if (data) for (const v of Object.values(data.visits)) for (const x of v.screenshots) need.add(x.id);
+    if (ix) {
+      for (const h of hits.slice(0, 60)) {
+        if (h.doc.shotId) need.add(h.doc.shotId);
+        for (const a of ix.ancestors(h.doc.id)) if (a.shotId) need.add(a.shotId);
+      }
+    }
+    return need;
+  });
+  $effect(() => {
+    const need = neededShots;
+    shots.keepOnly(need);
+    const have = untrack(() => thumbs);
+    thumbs = Object.fromEntries(Object.entries(have).filter(([id]) => need.has(id)));
+    const missing = [...need].filter((id) => !have[id]);
+    if (missing.length) {
+      shots.urls(missing).then((u) => {
+        const current = neededShots;
+        thumbs = { ...thumbs, ...Object.fromEntries(Object.entries(u).filter(([id]) => current.has(id))) };
+      });
+    }
+  });
 
   function select(id: string) {
     selectedId = id;
@@ -153,7 +176,6 @@
     ensureIndex().then((index) => {
       if (query !== q) return;
       hits = index.search(query, filters);
-      loadThumbs(hits.slice(0, 60).flatMap((h) => [h.doc.shotId, ...index.ancestors(h.doc.id).map((a) => a.shotId)]).filter((x): x is string => !!x));
     });
   });
 
