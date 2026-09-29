@@ -1,8 +1,7 @@
 <!--
-  Spike S3: the sessions page graph rendered with Svelte Flow instead of SessionGraph.
-  ELK still does the layout, now for every link (routeAll), so Back/Forward and
-  same-page links go around the cards. Cards can be dragged; their positions are kept per
-  session and view until "Tidy up" lays the graph out again.
+  The sessions page graph (SPEC §8.3, S3): ELK lays out every link, so Back/Forward and
+  same-page lines go around the cards, and Svelte Flow draws it. Cards can be dragged;
+  their positions are kept per session and view until "Tidy up" lays the graph out again.
 -->
 <script lang="ts">
   import { SvelteFlow, Controls, MiniMap, Background, Panel, MarkerType, type Node, type Edge } from '@xyflow/svelte';
@@ -12,6 +11,8 @@
   import Legend from '../Legend.svelte';
   import FlowCard, { type CardData } from './FlowCard.svelte';
   import FlowEdge, { type LinkData } from './FlowEdge.svelte';
+  import FlowFocus from './FlowFocus.svelte';
+  import { nextCard, type Dir } from './nav';
 
   interface Props {
     view: View;
@@ -42,7 +43,7 @@
   let base = $state<GraphLayout | null>(null);
   $effect(() => {
     let cancelled = false;
-    layoutGraph(view, { nodeW: W, nodeH: H, layout: mode === 'network' ? ['net'] : ['tree'], routeAll: true }).then((l) => {
+    layoutGraph(view, { nodeW: W, nodeH: H, layout: mode === 'network' ? ['net'] : ['tree', 'same', 'back', 'forward'] }).then((l) => {
       if (!cancelled) base = l;
     });
     return () => {
@@ -107,6 +108,34 @@
     generation++;
   }
   const anyMoved = $derived(Object.keys(moved).length > 0);
+  // The minimap covers the bottom-right corner, where the current page usually is.
+  let showMap = $state(localStorage.getItem('dude.flow.map') === '1');
+  $effect(() => localStorage.setItem('dude.flow.map', showMap ? '1' : '0'));
+
+  // Arrow keys move the selection between cards (nav.ts), Enter opens the page.
+  const DIRS: Record<string, Dir> = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' };
+  let focusTarget = $state<{ x: number; y: number; seq: number }>();
+  function key(e: KeyboardEvent) {
+    if (!base) return;
+    const current = view.rows.find((r) => r.key === selected) ?? view.rows.find((r) => r.cursor);
+    if (!current) return;
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      onOpen(current);
+      return;
+    }
+    const dir = DIRS[e.key];
+    if (!dir) return;
+    e.preventDefault();
+    const cards = nodes.map((n) => ({ id: n.id, x: n.position.x, y: n.position.y }));
+    const links = base.edges.map((l) => ({ from: view.rows[l.from].key, to: view.rows[l.to].key }));
+    const next = nextCard(cards, links, current.key, dir, W, H);
+    const row = next && view.rows.find((r) => r.key === next);
+    const card = next && cards.find((c) => c.id === next);
+    if (!row || !card) return;
+    onSelect(row);
+    focusTarget = { x: card.x + W / 2, y: card.y + H / 2, seq: (focusTarget?.seq ?? 0) + 1 };
+  }
 
   // Start readable around the current page (about two steps either side) rather than
   // squeezing a long session into view; the ⛶ button still shows everything.
@@ -119,7 +148,10 @@
   });
 </script>
 
-<div class="flow" style:height="{height ?? Math.max(300, Math.round(window.innerHeight * 0.5))}px">
+<p class="hint">click a page for details · double-click or Enter opens it · arrow keys move between pages · drag cards to arrange them</p>
+<!-- role="application": the graph handles its own arrow keys; Svelte's check doesn't count it as interactive. -->
+<!-- svelte-ignore a11y_no_noninteractive_tabindex, a11y_no_noninteractive_element_interactions -->
+<div class="flow" role="application" aria-label="Session graph" tabindex="0" onkeydown={key} style:height="{height ?? Math.max(300, Math.round(window.innerHeight * 0.5))}px">
   {#if base}
     {#key generation}
       <SvelteFlow
@@ -137,10 +169,12 @@
         onnodedragstart={({ nodes: dragged }) => (dragging = new Set(dragged.map((n) => n.id)))}
         onnodedragstop={({ nodes: dragged }) => keep(dragged)}
       >
+        <FlowFocus target={focusTarget} />
         <Background gap={24} size={1} />
         <Controls showLock={false} />
-        <MiniMap width={150} height={84} pannable zoomable nodeColor={(n) => ((n.data as CardData).row.cursor ? '#2f7de1' : '#9a9a9a')} />
+        {#if showMap}<MiniMap width={150} height={84} pannable zoomable nodeColor={(n) => ((n.data as CardData).row.cursor ? '#2f7de1' : '#9a9a9a')} />{/if}
         <Panel position="top-right">
+          <button class="tidy" aria-pressed={showMap} class:on={showMap} onclick={() => (showMap = !showMap)} title="Show an overview map of the whole graph">Map</button>
           <button class="tidy" onclick={tidy} disabled={!anyMoved} title="Lay the graph out again, forgetting the cards you moved">Tidy up</button>
         </Panel>
       </SvelteFlow>
@@ -156,6 +190,15 @@
     background: color-mix(in srgb, CanvasText 3%, Canvas);
     --xy-background-color: transparent;
   }
+  .flow:focus-visible {
+    outline: 2px solid #2f7de1;
+    outline-offset: 2px;
+  }
+  .hint {
+    margin: 0 2px 4px;
+    font-size: 11px;
+    opacity: 0.55;
+  }
   .tidy {
     font: 12px system-ui, sans-serif;
     padding: 3px 10px;
@@ -164,6 +207,10 @@
     background: Canvas;
     color: CanvasText;
     cursor: pointer;
+  }
+  .tidy.on {
+    background: color-mix(in srgb, #2f7de1 16%, Canvas);
+    border-color: #2f7de1;
   }
   .tidy:disabled {
     opacity: 0.45;

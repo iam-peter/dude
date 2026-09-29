@@ -1,5 +1,5 @@
 <!--
-  Legend for the graphs (SessionGraph, GraphView, NetworkView): only the kinds of lines and
+  Legend for the graphs (FlowGraph, GraphView, NetworkView): only the kinds of lines and
   marks that the current view actually shows. Swatches use the same dash patterns and colours
   as the graphs.
 -->

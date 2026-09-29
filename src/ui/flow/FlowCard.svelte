@@ -1,5 +1,5 @@
 <!--
-  A page card as a Svelte Flow node (spike S3): the same look as SessionGraph's cards.
+  A page card as a Svelte Flow node (FlowGraph).
   A click selects through FlowGraph's onnodeclick (Svelte Flow tells it from a drag), a
   double-click opens through `data`; the handles are only anchors, nothing connects by hand.
 -->

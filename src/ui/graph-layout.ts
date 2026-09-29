@@ -1,7 +1,7 @@
 // Left-to-right layout of a derived View with ELK's layered algorithm (F5, F7).
 // Nodes keep first-visit order ("model order"), so time runs left to right and edges that
-// close a cycle are the ones ELK reverses. Only the `layout` link kinds shape the graph;
-// the others (same-page links, back/forward moves) are drawn on top as curves.
+// close a cycle are the ones ELK reverses. ELK lays out and routes the `layout` link kinds,
+// so their lines go around the nodes; other links are left out of the result.
 
 import type { ELK as Elk, ElkNode } from 'elkjs/lib/elk-api';
 import type { Link, View } from '@/core/views';
@@ -29,7 +29,6 @@ export interface GraphLayout {
   nodeH: number;
   nodes: PlacedNode[];
   edges: PlacedEdge[];
-  overlay: PlacedEdge[];
 }
 
 // ELK is ~1.4 MB; load it only when a graph is first shown.
@@ -88,14 +87,9 @@ function polyMid(pts: Pt[]): Pt {
   return pts[pts.length - 1];
 }
 
-/**
- * `routeAll` hands the other links to ELK as well, so they are routed around the nodes
- * instead of drawn on top (spike S3); they then also take part in the layering.
- */
-export async function layoutGraph(view: View, opts: { nodeW: number; nodeH: number; layout: Link['kind'][]; routeAll?: boolean }): Promise<GraphLayout> {
+export async function layoutGraph(view: View, opts: { nodeW: number; nodeH: number; layout: Link['kind'][] }): Promise<GraphLayout> {
   const { nodeW, nodeH } = opts;
-  const routed = (l: Link) => opts.routeAll || opts.layout.includes(l.kind);
-  const shaping = view.links.map((l, i) => ({ l, i })).filter(({ l }) => routed(l));
+  const shaping = view.links.map((l, i) => ({ l, i })).filter(({ l }) => opts.layout.includes(l.kind));
   const input: ElkNode = {
     id: 'root',
     layoutOptions: OPTIONS,
@@ -110,52 +104,12 @@ export async function layoutGraph(view: View, opts: { nodeW: number; nodeH: numb
     const link = view.links[Number(e.id.slice(1))];
     const sec = e.sections?.[0];
     if (!link || !sec) return;
-    const bends = sec.bendPoints ?? [];
-    const ortho = input.layoutOptions!['elk.edgeRouting'] === 'ORTHOGONAL';
-    const mid = ortho ? polyMid([sec.startPoint, ...bends, sec.endPoint]) : midpoint(sec.startPoint, bends, sec.endPoint);
-    const d = ortho ? roundedPath([sec.startPoint, ...bends, sec.endPoint]) : pathOf(sec.startPoint, bends, sec.endPoint);
-    edges.push({ from: link.from, to: link.to, kind: link.kind, n: link.n ?? 1, d, labelX: mid.x, labelY: mid.y });
+    const pts = [sec.startPoint, ...(sec.bendPoints ?? []), sec.endPoint];
+    const mid = polyMid(pts);
+    edges.push({ from: link.from, to: link.to, kind: link.kind, n: link.n ?? 1, d: roundedPath(pts), labelX: mid.x, labelY: mid.y });
   });
 
-  // Overlay links: a curve from the bottom of one node to the bottom of the other.
-  const at = new Map(nodes.map((n) => [n.row, n]));
-  const overlay: PlacedEdge[] = view.links
-    .filter((l) => !routed(l))
-    .flatMap((l) => {
-      const a = at.get(l.from);
-      const b = at.get(l.to);
-      if (!a || !b) return [];
-      const x1 = a.x + nodeW / 2;
-      const y1 = a.y + nodeH;
-      const x2 = b.x + nodeW / 2;
-      const y2 = b.y + nodeH;
-      const dip = 18 + Math.min(60, Math.abs(x2 - x1) / 6);
-      const d = `M ${x1} ${y1} C ${x1} ${y1 + dip}, ${x2} ${y2 + dip}, ${x2} ${y2}`;
-      return [{ from: l.from, to: l.to, kind: l.kind, n: l.n ?? 1, d, labelX: (x1 + x2) / 2, labelY: Math.max(y1, y2) + dip * 0.75 }];
-    });
-  const overlayDepth = overlay.length ? 70 : 0;
-  return { width: graph.width ?? 0, height: (graph.height ?? 0) + overlayDepth, nodeW, nodeH, nodes, edges, overlay };
+  return { width: graph.width ?? 0, height: graph.height ?? 0, nodeW, nodeH, nodes, edges };
 }
 
-/** Middle of an ELK route (see pathOf): the middle Bézier segment at t = ½, else the middle point. */
-function midpoint(start: Pt, bends: Pt[], end: Pt): Pt {
-  const pts: Pt[] = [start, ...bends, end];
-  if (bends.length % 3 === 2) {
-    const k = Math.floor((pts.length - 1) / 3 / 2) * 3; // first point of the middle segment
-    const [a, b, c, d] = pts.slice(k, k + 4);
-    return { x: (a.x + 3 * b.x + 3 * c.x + d.x) / 8, y: (a.y + 3 * b.y + 3 * c.y + d.y) / 8 };
-  }
-  return pts[Math.floor(pts.length / 2)];
-}
 
-/** ELK spline bend points are cubic Bézier control points; fall back to a polyline. */
-export function pathOf(start: Pt, bends: Pt[], end: Pt): string {
-  const p = (q: Pt) => `${q.x.toFixed(1)} ${q.y.toFixed(1)}`;
-  const rest = [...bends, end];
-  if (rest.length % 3 === 0) {
-    let d = `M ${p(start)}`;
-    for (let i = 0; i < rest.length; i += 3) d += ` C ${p(rest[i])}, ${p(rest[i + 1])}, ${p(rest[i + 2])}`;
-    return d;
-  }
-  return `M ${p(start)} ${rest.map((q) => `L ${p(q)}`).join(' ')}`;
-}

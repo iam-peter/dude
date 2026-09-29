@@ -289,12 +289,10 @@ Light/dark follows the browser. UI text is English only (F10).
 
 ### 8.3 Graph rendering (F7)
 
-The first implementation uses **ELK.js** for layout and an own Svelte **SVG renderer**,
-with Canvas used for large graphs. Layout and rendering sit behind a `GraphView`
-interface (input: nodes, edges and view mode; output: events such as node click and
-hover), so a premade solution (Cytoscape.js, Svelte Flow, D3 + d3-dag) can be tried and
-swapped in later without touching the data layer. Spike S3 compares them once real
-recorded data exists.
+**ELK.js** does the layout; on the sessions page **Svelte Flow** draws it (spike S3,
+`docs/S3-FINDINGS.md`), the sidebar has an own Svelte **SVG renderer**. Both take the
+same derived `View` (nodes, links and view mode) and report node clicks, so a renderer can
+be swapped without touching the data layer; D3 is kept in mind for other kinds of views.
 
 ### 8.4 Visit details panel
 
