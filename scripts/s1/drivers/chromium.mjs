@@ -17,12 +17,13 @@ function findChromium() {
 }
 
 /** Launch Chromium with the chrome-mv3 build; returns the scenario driver (see runner.mjs). */
-export async function launchChromium({ headed = process.argv.includes('--headed') } = {}) {
+export async function launchChromium({ headed = process.argv.includes('--headed'), contextOptions = {} } = {}) {
   const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'dude-s1-chromium-'));
   const ctx = await chromium.launchPersistentContext(profile, {
     executablePath: findChromium(),
     headless: !headed,
     args: [`--disable-extensions-except=${EXT}`, `--load-extension=${EXT}`],
+    ...contextOptions,
   });
   const sw = ctx.serviceWorkers()[0] ?? (await ctx.waitForEvent('serviceworker'));
   const extId = new URL(sw.url()).host;

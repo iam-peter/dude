@@ -9,6 +9,40 @@ text. It's shown live in the Firefox sidebar or the Chrome side panel, and in fu
 sessions app, which also searches everything recorded. The S1
 spike findings behind the recording rules are in [docs/S1-FINDINGS.md](docs/S1-FINDINGS.md).
 
+## Screenshots
+
+A few minutes of reading on Wikipedia and MDN, as dude recorded it. The sessions app shows
+the tab as a graph of screenshot cards: the detour via Project Xanadu is a branch, ↗1
+marks the tab opened from *Vannevar Bush*, and the details panel tells how each page was
+reached.
+
+![Sessions app: one tab's pages as a graph, with the selected page's details](docs/screenshots/sessions-tree.png)
+
+The popup shows the path that led to the current page; the sidebar (Firefox) or side panel
+(Chrome) shows the active tab's tree live.
+
+<p>
+  <img src="docs/screenshots/popup.png" alt="Popup: you came here from …" width="320">
+  &nbsp;
+  <img src="docs/screenshots/sidepanel.png" alt="Side panel: the active tab's tree" width="340">
+</p>
+
+The **Network** view also draws the moves back to pages seen earlier:
+
+![Network view with the back moves drawn in](docs/screenshots/sessions-network.png)
+
+**Search** covers titles, addresses, page text, search terms and link texts, and shows the
+pages that led to each hit:
+
+![Search for “memex” with the paths that led to each hit](docs/screenshots/search.png)
+
+**Playback** steps through a tab, its family or the whole day; the **Wall** shows every
+screenshot:
+
+![Playback of the whole day, all tabs](docs/screenshots/playback.png)
+
+![The wall of screenshots](docs/screenshots/wall.png)
+
 ## Installing (release build)
 
 Builds a release for personal use (A4). The release check runs first, so no test hooks
@@ -154,6 +188,14 @@ The sidebar page also works as a normal tab: `sidepanel.html?tab=<id>&mode=netwo
 
 ```bash
 scripts/node22.sh node scripts/m3/screens.mjs /tmp/dude-screens
+```
+
+The README screenshots in `docs/screenshots/` come from a scripted session on Wikipedia and
+MDN (Chromium, headless, 2×; needs network and a `npm run build:test`, and quantizes the
+PNGs when Python with Pillow is around):
+
+```bash
+scripts/node22.sh node scripts/readme/screens.mjs
 ```
 
 `scripts/m3/capture-check.mjs chromium|firefox` browses slowly and prints which pages got
