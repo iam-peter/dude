@@ -1,8 +1,9 @@
 # Sign and publish a release when the version in package.json changes on main (or on demand
 # from the Actions tab). The AMO credentials are repository secrets, never part of the code:
 # Settings → Secrets and variables → Actions → AMO_JWT_ISSUER and AMO_JWT_SECRET.
-# Publishing pushes the xpi and updates.json to the `updates` branch and tags the commit
-# (scripts/lib/publish.mjs), with this workflow's own token.
+# Publishing pushes the xpi and updates.json to the `updates` branch, tags the commit and makes
+# a GitHub release with the xpi and the Chrome zip (scripts/lib/publish.mjs), with this
+# workflow's own token.
 name: Release
 
 on:
@@ -56,14 +57,8 @@ jobs:
         env:
           WEB_EXT_API_KEY: ${{ secrets.AMO_JWT_ISSUER }}
           WEB_EXT_API_SECRET: ${{ secrets.AMO_JWT_SECRET }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           npm run release -- --publish
-
-      - name: Keep the Chrome zip
-        if: steps.version.outputs.released != 'true'
-        uses: actions/upload-artifact@v4
-        with:
-          name: dude-chrome
-          path: .output/*-chrome.zip

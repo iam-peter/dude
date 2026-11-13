@@ -1,8 +1,9 @@
 // Build a release of dude (A4: personal use).
 //   npm run release              check, build and zip both browsers; Chrome folder → dist/chrome
 //   npm run release -- --sign    …and sign the Firefox build as an unlisted AMO add-on → dist/firefox
-//   npm run release -- --publish …sign, then publish it as a Firefox update on GitHub and tag it
-//                                  (scripts/lib/publish.mjs); needs a clean, committed tree
+//   npm run release -- --publish …sign, then publish it as a Firefox update on GitHub, tag it and
+//                                  make a GitHub release with the xpi and the Chrome zip
+//                                  (scripts/lib/publish.mjs); needs a clean, committed tree and gh
 //
 // Signing reads the AMO API credentials from WEB_EXT_API_KEY and WEB_EXT_API_SECRET, or
 // asks for them (secret hidden) when they aren't set. They never go into the repository.
@@ -11,7 +12,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ask, askHidden } from './lib/prompt.mjs';
 import { signUnlisted } from './lib/amo.mjs';
-import { checkPublishable, publishUpdate } from './lib/publish.mjs';
+import { checkPublishable, publishGithubRelease, publishUpdate } from './lib/publish.mjs';
 
 const publish = process.argv.includes('--publish');
 const sign = publish || process.argv.includes('--sign');
@@ -93,11 +94,14 @@ if (publish) {
   console.log('\n== publish the Firefox update');
   const gecko = JSON.parse(fs.readFileSync('.output/firefox-mv3/manifest.json', 'utf8')).browser_specific_settings.gecko;
   publishUpdate({ xpi: path.join(signedDir, signedXpi()), id: gecko.id, version: pkg.version, minVersion: gecko.strict_min_version });
+
+  console.log('\n== GitHub release with the prebuilt packages');
+  publishGithubRelease({ version: pkg.version, xpi: path.join(signedDir, signedXpi()), chromeZip: path.resolve(`.output/${pkg.name}-${pkg.version}-chrome.zip`) });
 }
 
 console.log(`
 == done: dude ${pkg.version}
 Chrome   chrome://extensions → Developer mode → Load unpacked → ${chromeDir}
          (after a new release: the reload button on dude's card)
-Firefox  ${publish ? `published: installed copies update themselves (about:addons → ⚙ → Check for Updates)` : sign ? `about:addons → ⚙ → Install Add-on From File → dist/firefox/${signedXpi()}` : `unsigned: ${firefoxZip} (run with --sign to get an installable .xpi)`}
+Firefox  ${publish ? `published (and on https://github.com/iam-peter/dude/releases): installed copies update themselves (about:addons → ⚙ → Check for Updates)` : sign ? `about:addons → ⚙ → Install Add-on From File → dist/firefox/${signedXpi()}` : `unsigned: ${firefoxZip} (run with --sign to get an installable .xpi)`}
 `);

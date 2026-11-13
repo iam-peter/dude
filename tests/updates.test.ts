@@ -8,7 +8,7 @@ import { describe, expect, test } from 'vitest';
 // @ts-expect-error plain JS module
 import { addRelease, RAW_BASE, UPDATE_URL } from '../scripts/lib/updates.mjs';
 // @ts-expect-error plain JS module
-import { checkPublishable, publishUpdate } from '../scripts/lib/publish.mjs';
+import { checkPublishable, publishGithubRelease, publishUpdate } from '../scripts/lib/publish.mjs';
 
 const ID = '{53952834-ba6a-4072-9c32-c836b5a38a3c}';
 
@@ -70,5 +70,39 @@ describe('publish', () => {
     expect(() => checkPublishable('0.1.2', work)).toThrow(/on origin/);
     fs.writeFileSync(path.join(work, 'a.txt'), 'dirty');
     expect(() => checkPublishable('0.1.9', work)).toThrow(/uncommitted/);
+  });
+});
+
+describe('GitHub release', () => {
+  const files = () => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'dude-ghrel-test-'));
+    const xpi = path.join(dir, 'd21ef16a8bb141bda391-0.2.0.xpi');
+    const chromeZip = path.join(dir, 'dude-0.2.0-chrome.zip');
+    fs.writeFileSync(xpi, 'xpi');
+    fs.writeFileSync(chromeZip, 'zip');
+    return { xpi, chromeZip };
+  };
+
+  test('attaches the xpi under its public name and the Chrome zip', () => {
+    const calls: string[][] = [];
+    let attached: string[] = [];
+    const gh = (args: string[]) => {
+      calls.push(args);
+      if (args[1] === 'view') throw new Error('release not found');
+      attached = args.slice(-2).map((f) => `${path.basename(f)}=${fs.readFileSync(f, 'utf8')}`);
+      return '';
+    };
+    const { xpi, chromeZip } = files();
+    expect(publishGithubRelease({ version: '0.2.0', xpi, chromeZip, gh })).toBe(true);
+    expect(calls.map((c) => c.slice(0, 3))).toEqual([['release', 'view', 'v0.2.0'], ['release', 'create', 'v0.2.0']]);
+    expect(calls[1]).toContain('--verify-tag');
+    expect(attached).toEqual(['dude-0.2.0.xpi=xpi', 'dude-0.2.0-chrome.zip=zip']);
+  });
+
+  test('leaves an existing release alone', () => {
+    const calls: string[][] = [];
+    const { xpi, chromeZip } = files();
+    expect(publishGithubRelease({ version: '0.2.0', xpi, chromeZip, gh: (a: string[]) => (calls.push(a), '{}') })).toBe(false);
+    expect(calls).toHaveLength(1);
   });
 });

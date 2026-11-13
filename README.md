@@ -43,6 +43,17 @@ screenshot:
 
 ![The wall of screenshots](docs/screenshots/wall.png)
 
+## Download
+
+Prebuilt packages are on the [releases page](https://github.com/iam-peter/dude/releases/latest),
+so trying dude needs no build:
+
+- **Firefox:** download `dude-<version>.xpi` (signed by Mozilla as an unlisted add-on), then
+  `about:addons` → ⚙ → *Install Add-on From File*. It updates itself from then on.
+- **Chrome:** download `dude-<version>-chrome.zip` and unzip it. In `chrome://extensions`
+  turn on *Developer mode*, choose *Load unpacked* and pick the unzipped folder. Keep the
+  folder: Chrome loads dude from there, and doesn't update it.
+
 ## Installing (release build)
 
 Builds a release for personal use (A4). The release check runs first, so no test hooks
@@ -86,11 +97,16 @@ npm run release
   ```
 
   Either way, it signs as above, adds the xpi and its entry in `updates.json` to the `updates`
-  branch and tags the commit `v<version>`. It stops before signing if the tree has
-  uncommitted changes or the tag exists. If the push fails, run it again: the signed xpi
-  is reused as long as it was built from the same commit. For a first install, download
-  `https://raw.githubusercontent.com/iam-peter/dude/updates/dude-<version>.xpi`, then
-  install it from file.
+  branch, tags the commit `v<version>` and makes a GitHub release with the xpi and the
+  Chrome zip attached (with the `gh` CLI; in the workflow it uses the workflow's own token).
+  It stops before signing if the tree has uncommitted changes or the tag exists. If the push
+  fails, run it again: the signed xpi is reused as long as it was built from the same
+  commit. If only the GitHub release is missing, make it by hand from the tagged commit,
+  with the xpi from the `updates` branch:
+
+  ```bash
+  gh release create v<version> --verify-tag --title "dude <version>" dude-<version>.xpi .output/dude-<version>-chrome.zip
+  ```
 
 ### Getting a local build into Firefox
 
