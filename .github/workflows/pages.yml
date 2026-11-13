@@ -1,0 +1,43 @@
+# The project website on GitHub Pages: site/index.html plus the icon and the README
+# screenshots, published whenever one of them changes on main (or by hand from the Actions
+# tab). The download buttons find the latest release at view time, so a release needs no
+# new deploy.
+name: Pages
+
+on:
+  push:
+    branches: [main]
+    paths: [site/**, docs/screenshots/**, assets/icon.svg, .github/workflows/pages.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Assemble the site
+        run: |
+          mkdir -p _site/screenshots
+          cp site/* _site/
+          cp assets/icon.svg _site/
+          cp docs/screenshots/*.png _site/screenshots/
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

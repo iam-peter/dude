@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>dude: every tab as its own history</title>
+<meta name="description" content="A Firefox and Chrome extension that records every tab as its own navigation tree, with branches, the tabs it opened, screenshots, full-text search and playback. Everything stays in your browser.">
+<meta property="og:title" content="dude: every tab as its own history">
+<meta property="og:description" content="Every tab as its own navigation tree, with screenshots, search and playback. Everything stays in your browser.">
+<meta property="og:image" content="screenshots/sessions-tree.png">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<style>
+  :root {
+    --bg: #fbfcfe;
+    --bg-alt: #f1f5fb;
+    --surface: #ffffff;
+    --text: #18202c;
+    --muted: #5a6576;
+    --line: #dde3ec;
+    --blue: #1f63c4;
+    --blue-hi: #4b93ec;
+    --orange: #e8912d;
+    --shadow: 0 1px 2px rgb(16 24 40 / 6%), 0 12px 32px -8px rgb(16 24 40 / 18%);
+    --radius: 14px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f141b;
+      --bg-alt: #151c26;
+      --surface: #1b2330;
+      --text: #e7ecf3;
+      --muted: #9aa6b8;
+      --line: #2a3442;
+      --blue: #5d9df0;
+      --blue-hi: #8bbcf7;
+      --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 16px 40px -10px rgb(0 0 0 / 60%);
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--blue); }
+  img { max-width: 100%; height: auto; display: block; }
+  code { font: 0.9em ui-monospace, "SF Mono", Menlo, Consolas, monospace; background: var(--bg-alt); border: 1px solid var(--line); border-radius: 5px; padding: 0.05em 0.35em; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* top bar */
+  header.bar { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  header.bar .wrap { display: flex; align-items: center; gap: 24px; height: 60px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; color: var(--text); text-decoration: none; margin-right: auto; }
+  .brand img { width: 30px; height: 30px; }
+  header.bar nav { display: flex; gap: 22px; }
+  header.bar nav a { color: var(--muted); text-decoration: none; font-size: 15px; }
+  header.bar nav a:hover { color: var(--text); }
+
+  /* hero */
+  .hero { padding: 72px 0 40px; text-align: center; }
+  .hero h1 { font-size: clamp(34px, 5.2vw, 58px); line-height: 1.1; letter-spacing: -0.02em; margin: 0 auto 18px; max-width: 16ch; }
+  .hero h1 em { font-style: normal; background: linear-gradient(120deg, var(--blue-hi), var(--blue)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p.lede { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 40em; margin: 0 auto 32px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 16px; text-decoration: none; border: 1px solid transparent; transition: transform .12s ease, box-shadow .12s ease; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.primary { background: linear-gradient(135deg, var(--blue-hi), #1f63c4); color: #fff; box-shadow: 0 6px 16px -6px rgb(31 99 196 / 60%); }
+  .btn.secondary { background: var(--surface); color: var(--text); border-color: var(--line); }
+  .btn svg { width: 20px; height: 20px; flex: none; }
+  .meta { margin-top: 14px; color: var(--muted); font-size: 14px; }
+  .shot { border-radius: var(--radius); border: 1px solid var(--line); box-shadow: var(--shadow); background: var(--surface); overflow: hidden; }
+  .hero .shot { margin: 48px auto 0; max-width: 1080px; }
+
+  /* sections */
+  section { padding: 72px 0; }
+  section.alt { background: var(--bg-alt); border-block: 1px solid var(--line); }
+  h2 { font-size: clamp(26px, 3.4vw, 36px); line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 14px; }
+  h3 { font-size: 20px; margin: 0 0 8px; }
+  .section-lede { color: var(--muted); max-width: 42em; margin: 0 0 40px; font-size: 18px; }
+  .center { text-align: center; }
+  .center .section-lede { margin-inline: auto; }
+
+  .points { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .point { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  .point p { margin: 0; color: var(--muted); }
+  .dot { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; margin-bottom: 14px; background: color-mix(in srgb, var(--blue) 14%, transparent); color: var(--blue); }
+  .dot svg { width: 20px; height: 20px; }
+
+  .feature { display: grid; grid-template-columns: 1fr 1.5fr; gap: 48px; align-items: center; margin-bottom: 80px; }
+  .feature:last-child { margin-bottom: 0; }
+  .feature.flip { grid-template-columns: 1.5fr 1fr; }
+  .feature.flip .text { order: 2; }
+  .feature .text p { color: var(--muted); margin: 0 0 12px; }
+  .feature .text ul { color: var(--muted); padding-left: 1.2em; margin: 0; }
+  .feature .text li { margin-bottom: 6px; }
+  .kicker { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--orange); margin-bottom: 8px; }
+  .pair { display: grid; grid-template-columns: 1fr 1.05fr; gap: 20px; align-items: start; }
+
+  .privacy { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 32px; }
+  .privacy div { display: flex; gap: 14px; }
+  .privacy svg { flex: none; width: 22px; height: 22px; color: var(--blue); margin-top: 3px; }
+  .privacy p { margin: 0; color: var(--muted); }
+  .privacy strong { color: var(--text); }
+
+  .install { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .install .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; }
+  .install ol { padding-left: 1.3em; margin: 4px 0 24px; color: var(--muted); }
+  .install li { margin-bottom: 8px; }
+  .install .btn { align-self: flex-start; margin-top: auto; }
+  .note { color: var(--muted); font-size: 15px; margin-top: 28px; }
+
+  footer { padding: 36px 0 48px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; }
+
+  @media (max-width: 860px) {
+    .points, .privacy, .install { grid-template-columns: 1fr; }
+    .feature, .feature.flip { grid-template-columns: 1fr; gap: 24px; margin-bottom: 64px; }
+    .feature.flip .text { order: 0; }
+    section { padding: 56px 0; }
+    .hero { padding-top: 48px; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 16px; }
+    header.bar nav a:not(.gh) { display: none; }
+    .pair { grid-template-columns: 1fr; }
+    .ctas .btn { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#"><img src="icon.svg" alt="" width="30" height="30">dude</a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#install">Install</a>
+      <a class="gh" href="https://github.com/iam-peter/dude">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero wrap">
+    <h1>Every tab, <em>its own history</em></h1>
+    <p class="lede">dude records each tab as a navigation tree: the branch you started after going back,
+      the tabs a page opened, a screenshot of every page and its text. Browse it, search it, replay it.
+      It's a history of your own, next to the browser's.</p>
+    <div class="ctas">
+      <a class="btn primary" data-asset="xpi" href="https://github.com/iam-peter/dude/releases/latest">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>
+        Get it for Firefox
+      </a>
+      <a class="btn secondary" data-asset="chrome" href="https://github.com/iam-peter/dude/releases/latest">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>
+        Get it for Chrome
+      </a>
+    </div>
+    <p class="meta"><span id="version">Latest release</span> · free and open source · <a href="#install">how to install</a></p>
+    <div class="shot">
+      <img src="screenshots/sessions-tree.png" width="1440" height="900"
+        alt="The sessions app: one tab's pages as a graph of screenshot cards, with a branch, and the details of the selected page below">
+    </div>
+  </div>
+
+  <section class="alt">
+    <div class="wrap">
+      <div class="points">
+        <div class="point">
+          <div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="7" r="2"/><circle cx="12" cy="7" r="2"/><circle cx="19" cy="17" r="2"/><path d="M7 7h3M12 9c0 5 3 8 5 8"/></svg></div>
+          <h3>Branches, not a list</h3>
+          <p>Follow a link, go back, follow another: the browser forgets the first path, dude keeps both as branches of one tree.</p>
+        </div>
+        <div class="point">
+          <div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></div>
+          <h3>Tabs know their parent</h3>
+          <p>A tab opened from a link stays linked to the page it came from, both ways, so the trail continues across tabs.</p>
+        </div>
+        <div class="point">
+          <div class="dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="m21 16-5-5-8 8"/></svg></div>
+          <h3>Pictures and words</h3>
+          <p>A screenshot and the readable text of every page, plus the link you clicked and what you searched for.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="feature">
+        <div class="text">
+          <span class="kicker">Where did I come from?</span>
+          <h2>The path to this page, one click away</h2>
+          <p>The toolbar popup lists the pages that led here, with the link text you followed. The Firefox sidebar or Chrome side panel shows the active tab's tree live as you browse.</p>
+          <p><strong>Semantic back</strong> (Alt+Shift+Up) takes you to the page you actually came from, even when Back would go somewhere else.</p>
+        </div>
+        <div class="pair">
+          <img class="shot" src="screenshots/popup.png" width="380" height="416" alt="The popup: you came here from Hypertext, Memex, Vannevar Bush and further pages, each with a thumbnail">
+          <img class="shot" src="screenshots/sidepanel.png" width="400" height="458" alt="The side panel: the active tab's tree, with a greyed-out branch and a badge for an opened tab">
+        </div>
+      </div>
+
+      <div class="feature flip">
+        <div class="text">
+          <span class="kicker">Three views of one tab</span>
+          <h2>Tree, moves and network</h2>
+          <p><strong>Tree</strong> shows where each page came from. <strong>+ Moves</strong> and <strong>Network</strong> also draw how you moved between pages, back moves included.</p>
+          <p>Straight runs fold into one card, and long pauses show between visits. Double-click a card to open the page; <strong>Open with path</strong> reopens it with the pages before it, so Back works again.</p>
+        </div>
+        <img class="shot" src="screenshots/sessions-network.png" width="1440" height="900" alt="The network view: the same tab, with dashed lines for going back to pages seen earlier">
+      </div>
+
+      <div class="feature">
+        <div class="text">
+          <span class="kicker">Find it again</span>
+          <h2>Search everything you read</h2>
+          <p>Titles, addresses, page text, search terms and link texts, filtered by time, site and tab family. Each hit shows the pages that led to it, across tabs too.</p>
+          <p>In the address bar, type <code>h</code> and a space, then your words.</p>
+        </div>
+        <img class="shot" src="screenshots/search.png" width="1440" height="900" alt="Search results for memex, each with the chain of pages that led to it">
+      </div>
+
+      <div class="feature flip">
+        <div class="text">
+          <span class="kicker">Replay a day</span>
+          <h2>Playback</h2>
+          <p>Step through one tab, a tab with the tabs it opened, or the whole day, with a screenshot at every step. Space plays and pauses, the arrow keys step, and idle time is shortened.</p>
+        </div>
+        <img class="shot" src="screenshots/playback.png" width="1440" height="480" alt="Playback of the whole day: two tabs as lanes, the current step highlighted, its screenshot on the right">
+      </div>
+
+      <div class="feature">
+        <div class="text">
+          <span class="kicker">At a glance</span>
+          <h2>The wall</h2>
+          <p>Every screenshot, newest first. Sometimes you remember what a page looked like better than what it was called.</p>
+        </div>
+        <img class="shot" src="screenshots/wall.png" width="1440" height="400" alt="A wall of page screenshots with their titles">
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy" class="alt">
+    <div class="wrap">
+      <h2>Your history stays yours</h2>
+      <p class="section-lede">dude has no server and no account. What it records lives in your browser's own storage, and you decide what goes in.</p>
+      <div class="privacy">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          <p><strong>Local only.</strong> Everything is kept in the extension's IndexedDB. dude sends nothing anywhere.</p>
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 22 12a17 17 0 0 1-3 3.9M6.6 6.6A17 17 0 0 0 2 12s4 7 10 7a9.7 9.7 0 0 0 5.4-1.6"/></svg>
+          <p><strong>No screenshots where they don't belong:</strong> never on banking, payment or password-manager sites, and never while a password field is visible.</p>
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+          <p><strong>Pause and exclude.</strong> Pause one tab or all of them, and list sites that are only recorded as anonymous placeholders.</p>
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>
+          <p><strong>Delete and take it with you.</strong> Delete by page, session, site, time range or everything. Export and import as a zip.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="install">
+    <div class="wrap">
+      <h2>Install</h2>
+      <p class="section-lede">Prebuilt packages come with every <a href="https://github.com/iam-peter/dude/releases">release</a>. dude isn't in the browsers' add-on stores, so it takes a few clicks.</p>
+      <div class="install">
+        <div class="card">
+          <h3>Firefox</h3>
+          <ol>
+            <li>Download <code>dude-<span class="v">version</span>.xpi</code>. Mozilla signed it as an unlisted add-on.</li>
+            <li>Open <code>about:addons</code>, click ⚙ and choose <em>Install Add-on From File</em>.</li>
+            <li>Pick the file. dude updates itself from then on.</li>
+          </ol>
+          <a class="btn primary" data-asset="xpi" href="https://github.com/iam-peter/dude/releases/latest">Download for Firefox</a>
+        </div>
+        <div class="card">
+          <h3>Chrome</h3>
+          <ol>
+            <li>Download <code>dude-<span class="v">version</span>-chrome.zip</code> and unzip it.</li>
+            <li>Open <code>chrome://extensions</code> and turn on <em>Developer mode</em>.</li>
+            <li>Choose <em>Load unpacked</em> and pick the unzipped folder. Keep the folder: Chrome loads dude from there, and doesn't update it.</li>
+          </ol>
+          <a class="btn secondary" data-asset="chrome" href="https://github.com/iam-peter/dude/releases/latest">Download for Chrome</a>
+        </div>
+      </div>
+      <p class="note">Rather build it yourself? The <a href="https://github.com/iam-peter/dude#readme">README</a> explains the build, the tests and the design behind the recording rules.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>dude · an own history next to the browser's</span>
+    <span><a href="https://github.com/iam-peter/dude">Source on GitHub</a> · <a href="https://github.com/iam-peter/dude/releases">Releases</a></span>
+  </div>
+</footer>
+
+<script>
+  // Point the download buttons straight at the latest release's files; without the API
+  // they keep linking to the release page.
+  fetch('https://api.github.com/repos/iam-peter/dude/releases/latest')
+    .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+    .then((rel) => {
+      const version = rel.tag_name.replace(/^v/, '');
+      const find = (re) => rel.assets.find((a) => re.test(a.name))?.browser_download_url;
+      const urls = { xpi: find(/\.xpi$/), chrome: find(/-chrome\.zip$/) };
+      document.querySelectorAll('[data-asset]').forEach((a) => {
+        if (urls[a.dataset.asset]) a.href = urls[a.dataset.asset];
+      });
+      document.getElementById('version').textContent = `Version ${version}`;
+      document.querySelectorAll('.v').forEach((s) => (s.textContent = version));
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>

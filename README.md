@@ -2,7 +2,7 @@
 
 A Firefox/Chrome WebExtension that records every tab as its own navigation tree, with
 branches, cross-tab provenance, screenshots and playback: an own history next to the
-browser's. See [docs/SPEC.md](docs/SPEC.md).
+browser's. Website: <https://iam-peter.github.io/dude/>. See [docs/SPEC.md](docs/SPEC.md).
 
 Current state: **M6**, all roadmap milestones built. Every tab is recorded as its own tree with screenshots and page
 text. It's shown live in the Firefox sidebar or the Chrome side panel, and in full in the
